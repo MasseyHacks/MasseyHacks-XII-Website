@@ -1,0 +1,486 @@
+import { useEffect, useState, useRef } from 'react';
+import { Fish, Calendar, Users, Trophy, ChevronDown, Mail, Instagram, Twitter, Youtube, Facebook } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+function App() {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [logoPopped, setLogoPopped] = useState(false);
+  const [bubbles, setBubbles] = useState<Array<{ id: number; x: number; y: number; size: number; delay: number; duration: number; zIndex: number }>>([]);
+  const [fish, setFish] = useState<Array<{ id: number; y: number; delay: number; duration: number; color: string }>>([]);
+  const carouselScrollRef = useRef<HTMLDivElement>(null);
+
+  const heroRef = useRef(null);
+  const aboutRef = useRef(null);
+  const carouselRef = useRef(null);
+  const faqRef = useRef(null);
+  const sponsorsRef = useRef(null);
+
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+
+  const faqs = [
+    { question: "How do I apply?", answer: "Applications have closed. Join our mailing list to be notified when applications open for MasseyHacks X!" },
+    { question: "Does it cost anything to attend?", answer: "Nope, MasseyHacks is absolutely free to attend!" },
+    { question: "Is MasseyHacks in-person or online?", answer: "MasseyHacks IX will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning." },
+    { question: "Will food be provided?", answer: "Yes, meals and snacks will be provided free of cost. We will accommodate any food sensitivities to the best of our ability." },
+    { question: "What about COVID-19?", answer: "We will have masks available and provided upon request. Any individuals who are sick or experiencing symptoms will be moved to an isolation room and asked to go home. This information may be updated in the future to further reflect local, provincial, and federal guidelines." },
+    { question: "Do I need a team to participate?", answer: "You don't need to be in a team to participate in MasseyHacks! It's up to you whether you choose to fly solo or group up with your friends. And who knows: you might meet some cool new people during the event!" },
+    { question: "Who can participate?", answer: "MasseyHacks welcomes students from grades 7-12." },
+    { question: "Do I need programming experience to participate?", answer: "Not at all! At MasseyHacks, we'll teach you the fundamentals you need to know to make your project through beginner workshops and mentors who will assist you if you ever need any help." },
+    { question: "How many people can I have on my team?", answer: "You can have as many as 4 people per team!" },
+    { question: "Where is MasseyHacks being held?", answer: "MasseyHacks will be held at Vincent Massey Secondary School at 1800 Liberty St, Windsor, ON." },
+    { question: "Will MasseyHacks run overnight?", answer: "Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to leave the venue Saturday evening and return to the venue Sunday morning. However, we will still be providing mentorship and support for hackers throughout the night as they continue working on their projects." },
+    { question: "What do I need to bring?", answer: "We recommend bringing: a piece of photo ID for check-in (e.g. student card, passport, or drivers license), your laptop, and laptop/phone chargers. Food, beverages, and the rest will all be provided! School computers will be available for use during the event, but we cannot guarantee one for everyone." },
+    { question: "What activities and workshops will be at MasseyHacks?", answer: "You can find the schedule on our website." }
+  ];
+
+  const sponsors = [
+    { name: "Tech Corp", tier: "Platinum" },
+    { name: "Innovation Labs", tier: "Gold" },
+    { name: "Code Academy", tier: "Gold" },
+    { name: "Digital Solutions", tier: "Silver" },
+    { name: "Future Tech", tier: "Silver" },
+    { name: "Dev Tools Inc", tier: "Bronze" }
+  ];
+
+  const carouselSlides = 8;
+
+  useEffect(() => {
+    const targetDate = new Date('May 9, 2026 00:00:00').getTime();
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000)
+      });
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const newBubbles = Array.from({ length: 50 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 30 + 10,
+      delay: Math.random() * 5,
+      duration: Math.random() * 10 + 15,
+      zIndex: Math.random() > 0.5 ? 10 : 1
+    }));
+    setBubbles(newBubbles);
+
+    const fishColors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#ffa07a', '#98d8c8', '#f7dc6f', '#bb8fce', '#85c1e2'];
+    const newFish = Array.from({ length: 15 }, (_, i) => ({
+      id: i,
+      y: Math.random() * 90 + 5,
+      delay: Math.random() * 5,
+      duration: Math.random() * 15 + 10,
+      color: fishColors[Math.floor(Math.random() * fishColors.length)]
+    }));
+    setFish(newFish);
+
+    const timer = setTimeout(() => {
+      setLogoPopped(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (logoPopped && heroRef.current) {
+        gsap.from('.countdown-item', {
+          scale: 0,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'back.out(1.7)'
+        });
+      }
+
+      if (aboutRef.current) {
+        gsap.from('.about-card', {
+          scrollTrigger: {
+            trigger: aboutRef.current,
+            start: 'top 80%',
+          },
+          y: 100,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: 'power3.out'
+        });
+      }
+
+      if (faqRef.current) {
+        gsap.from('.faq-item', {
+          scrollTrigger: {
+            trigger: faqRef.current,
+            start: 'top 80%',
+          },
+          x: -50,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power2.out'
+        });
+      }
+
+      if (sponsorsRef.current) {
+        gsap.from('.sponsor-card', {
+          scrollTrigger: {
+            trigger: sponsorsRef.current,
+            start: 'top 80%',
+          },
+          scale: 0,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'back.out(1.7)'
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, [logoPopped]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (carouselScrollRef.current) {
+        const scrollWidth = carouselScrollRef.current.scrollWidth;
+        const clientWidth = carouselScrollRef.current.clientWidth;
+        const currentScroll = carouselScrollRef.current.scrollLeft;
+
+        if (currentScroll >= scrollWidth - clientWidth - 10) {
+          carouselScrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          carouselScrollRef.current.scrollBy({ left: clientWidth, behavior: 'smooth' });
+        }
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const getBackgroundColor = () => {
+    const colors = [
+      { stop: 0, color: '#c6ffff' },
+      { stop: 0.15, color: '#85fcff' },
+      { stop: 0.35, color: '#008199' },
+      { stop: 0.5, color: '#21658d' },
+      { stop: 0.65, color: '#2e4579' },
+      { stop: 0.8, color: '#12306a' },
+      { stop: 0.9, color: '#002332' },
+      { stop: 1, color: '#00101e' }
+    ];
+
+    let gradientString = 'linear-gradient(to bottom, ';
+    colors.forEach((c, i) => {
+      gradientString += `${c.color} ${c.stop * 100}%`;
+      if (i < colors.length - 1) gradientString += ', ';
+    });
+    gradientString += ')';
+
+    return gradientString;
+  };
+
+  return (
+    <div className="relative overflow-x-hidden" style={{ background: getBackgroundColor() }}>
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/30 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center border-2 border-white/50 shadow-md">
+              <span className="text-white font-bold text-xs sm:text-sm drop-shadow-md">LOGO</span>
+            </div>
+            <span className="text-white font-bold text-lg sm:text-2xl drop-shadow-lg">MasseyHacks</span>
+          </div>
+          <div className="flex gap-3 sm:gap-8">
+            <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm sm:text-base">About</a>
+            <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm sm:text-base">Gallery</a>
+            <a href="#faq" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm sm:text-base">FAQ</a>
+            <a href="#sponsors" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm sm:text-base hidden sm:inline">Sponsors</a>
+          </div>
+        </div>
+      </nav>
+
+      {/* Bubbles */}
+      {bubbles.map((bubble) => (
+        <div
+          key={bubble.id}
+          className="bubble absolute rounded-full bg-white/20 backdrop-blur-sm border border-white/30 pointer-events-none"
+          style={{
+            left: `${bubble.x}%`,
+            bottom: `-${bubble.size}px`,
+            width: `${bubble.size}px`,
+            height: `${bubble.size}px`,
+            animation: `float ${bubble.duration}s ease-in-out ${bubble.delay}s infinite`,
+            zIndex: bubble.zIndex
+          }}
+        />
+      ))}
+
+      {/* Multi-colored Fish swimming horizontally */}
+      {fish.map((fishItem) => (
+        <div
+          key={fishItem.id}
+          className="fish absolute pointer-events-none"
+          style={{
+            top: `${fishItem.y}%`,
+            left: '-100px',
+            animation: `swim ${fishItem.duration}s linear ${fishItem.delay}s infinite`,
+            zIndex: 5
+          }}
+        >
+          <Fish className="w-10 h-10" style={{ color: fishItem.color, filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.3))' }} />
+        </div>
+      ))}
+
+      {/* Hero Section */}
+      <div ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 px-4">
+        <div className="relative z-20 flex flex-col items-center w-full max-w-4xl">
+          {!logoPopped && (
+            <div className="logo-bubble absolute inset-0 flex items-center justify-center">
+              <div className="bubble-animation w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center" />
+            </div>
+          )}
+
+          <div className={`logo-content transition-all duration-1000 ${logoPopped ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} w-full`}>
+            <div className="mb-8 sm:mb-12">
+              <div className="w-40 h-40 sm:w-56 sm:h-56 mx-auto rounded-full bg-white/30 backdrop-blur-sm border-4 border-white/50 flex items-center justify-center shadow-2xl">
+                <span className="text-white font-bold text-2xl sm:text-3xl drop-shadow-lg">LOGO</span>
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white text-center mt-6 sm:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-4">MasseyHacks 2026</h1>
+              <p className="text-xl sm:text-2xl md:text-3xl text-white text-center font-light drop-shadow-lg px-4">Dive Into Innovation</p>
+            </div>
+
+            {/* Countdown */}
+            <div className="bg-black/30 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-white/30 mb-6 shadow-2xl w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-4 sm:mb-6">
+                <div className="countdown-item text-center">
+                  <div className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.days}</div>
+                  <div className="text-xs sm:text-sm text-white/80 uppercase tracking-wider">Days</div>
+                </div>
+                <div className="countdown-item text-center">
+                  <div className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.hours}</div>
+                  <div className="text-xs sm:text-sm text-white/80 uppercase tracking-wider">Hours</div>
+                </div>
+                <div className="countdown-item text-center">
+                  <div className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.minutes}</div>
+                  <div className="text-xs sm:text-sm text-white/80 uppercase tracking-wider">Minutes</div>
+                </div>
+                <div className="countdown-item text-center">
+                  <div className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.seconds}</div>
+                  <div className="text-xs sm:text-sm text-white/80 uppercase tracking-wider">Seconds</div>
+                </div>
+              </div>
+              <div className="text-center text-white text-base sm:text-xl font-semibold drop-shadow-md">
+                Applications open in February
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* About Section */}
+      <section id="about" ref={aboutRef} className="relative py-16 sm:py-24 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-12 sm:mb-16 drop-shadow-lg">About MasseyHacks</h2>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+            <div className="about-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all">
+              <Calendar className="w-10 h-10 sm:w-12 sm:h-12 text-cyan-300 mb-3 sm:mb-4" />
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">24-Hour Event</h3>
+              <p className="text-white leading-relaxed drop-shadow-sm">
+                Join us for an exciting 24-hour hackathon where creativity meets technology. Work with your team to build amazing projects and compete for incredible prizes.
+              </p>
+            </div>
+            <div className="about-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all">
+              <Users className="w-10 h-10 sm:w-12 sm:h-12 text-cyan-300 mb-3 sm:mb-4" />
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">500+ Students</h3>
+              <p className="text-white leading-relaxed drop-shadow-sm">
+                Connect with over 500 passionate students from across the region. Network, collaborate, and make lasting friendships with like-minded innovators.
+              </p>
+            </div>
+            <div className="about-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all">
+              <Trophy className="w-10 h-10 sm:w-12 sm:h-12 text-cyan-300 mb-3 sm:mb-4" />
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">Amazing Prizes</h3>
+              <p className="text-white leading-relaxed drop-shadow-sm">
+                Compete for thousands of dollars in prizes, including the latest tech gadgets, exclusive swag, and opportunities to showcase your work to industry leaders.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Carousel Section */}
+      <section id="gallery" ref={carouselRef} className="relative py-16 sm:py-24 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-12 sm:mb-16 drop-shadow-lg">Gallery</h2>
+          <div
+            ref={carouselScrollRef}
+            className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 scrollbar-hide"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {Array.from({ length: carouselSlides }).map((_, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[280px] h-[200px] sm:w-[400px] sm:h-[280px] md:w-[600px] md:h-[400px] bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/20 overflow-hidden relative"
+              >
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
+                  <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-white/10 flex items-center justify-center mb-3 sm:mb-4">
+                    <Fish className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 text-white/40" />
+                  </div>
+                  <div className="text-white/60 text-base sm:text-xl md:text-2xl font-medium">
+                    Image {i + 1}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" ref={faqRef} className="relative py-16 sm:py-24 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-12 sm:mb-16 drop-shadow-lg">Frequently Asked Questions</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="faq-item bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 overflow-hidden hover:bg-white/15 transition-all"
+              >
+                <button
+                  onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                  className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-3"
+                >
+                  <h3 className="text-lg sm:text-xl font-bold text-white drop-shadow-md">{faq.question}</h3>
+                  <ChevronDown
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-white flex-shrink-0 transition-transform duration-300 ${
+                      openFAQ === index ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openFAQ === index ? 'max-h-96' : 'max-h-0'
+                  }`}
+                >
+                  <p className="px-5 sm:px-6 pb-5 sm:pb-6 text-white leading-relaxed drop-shadow-sm">{faq.answer}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sponsors Section */}
+      <section id="sponsors" ref={sponsorsRef} className="relative py-16 sm:py-24 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-12 sm:mb-16 drop-shadow-lg">Our Sponsors</h2>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            {sponsors.map((sponsor, index) => (
+              <div
+                key={index}
+                className="sponsor-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all text-center"
+              >
+                <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 rounded-full flex items-center justify-center ${
+                  sponsor.tier === 'Platinum' ? 'bg-slate-300/30' :
+                  sponsor.tier === 'Gold' ? 'bg-yellow-300/30' :
+                  sponsor.tier === 'Silver' ? 'bg-gray-300/30' :
+                  'bg-orange-300/30'
+                }`}>
+                  <span className="text-xl sm:text-2xl font-bold text-white">
+                    {sponsor.name.split(' ').map(w => w[0]).join('')}
+                  </span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-1 drop-shadow-md">{sponsor.name}</h3>
+                <p className="text-white/80 text-xs sm:text-sm uppercase tracking-wider drop-shadow-sm">{sponsor.tier} Sponsor</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative bg-black/30 backdrop-blur-md border-t border-white/20 py-12 sm:py-16 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 sm:gap-12">
+            {/* Left Column - Event Info */}
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 drop-shadow-lg">MasseyHacks XI</h3>
+              <p className="text-white/90 leading-relaxed drop-shadow-sm mb-2">Vincent Massey Secondary School</p>
+              <p className="text-white/90 leading-relaxed drop-shadow-sm mb-2">1800 Liberty St, Windsor,</p>
+              <p className="text-white/90 leading-relaxed drop-shadow-sm mb-6">ON N9E 1J2</p>
+              <p className="text-white/80 text-sm drop-shadow-sm">Copyright © 2024 MasseyHacks</p>
+              <p className="text-white/80 text-sm drop-shadow-sm">&lt;/&gt; made by the MasseyHacks Team with ❤️</p>
+            </div>
+
+            {/* Middle Column - Links */}
+            <div>
+              <nav className="flex flex-col gap-3">
+                <a href="#" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">Home</a>
+                <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">About</a>
+                <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">Schedule</a>
+                <a href="#faq" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">FAQ</a>
+                <a href="#sponsors" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">Sponsors</a>
+              </nav>
+            </div>
+
+            {/* Right Column - Mailing List */}
+            <div>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 drop-shadow-lg">Join our mailing list!</h3>
+              <div className="flex gap-2 mb-6">
+                <input
+                  type="email"
+                  placeholder="Email address"
+                  className="flex-1 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-cyan-300 transition-colors"
+                />
+                <button className="px-6 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-colors drop-shadow-md">
+                  Sign Up
+                </button>
+              </div>
+
+              {/* Social Icons */}
+              <div className="flex gap-4 mb-6">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Mail className="w-5 h-5 text-white" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Instagram className="w-5 h-5 text-white" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Twitter className="w-5 h-5 text-white" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Youtube className="w-5 h-5 text-white" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Facebook className="w-5 h-5 text-white" />
+                </a>
+              </div>
+
+              <a href="#" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md underline">
+                Code of Conduct
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  );
+}
+
+export default App;
