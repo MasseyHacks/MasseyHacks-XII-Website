@@ -124,6 +124,7 @@ function App() {
       }
 
       if (faqRef.current) {
+        gsap.set('.faq-item', { opacity: 1, x: 0 });
         gsap.from('.faq-item', {
           scrollTrigger: {
             trigger: faqRef.current,
@@ -199,18 +200,18 @@ function App() {
     <div className="relative overflow-x-hidden" style={{ background: getBackgroundColor() }}>
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/30 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-3 md:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center border-2 border-white/50 shadow-md">
-              <span className="text-white font-bold text-xs sm:text-sm drop-shadow-md">LOGO</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center border-2 border-white/50 shadow-md">
+              <span className="text-white font-bold text-[10px] sm:text-xs md:text-sm drop-shadow-md">LOGO</span>
             </div>
-            <span className="text-white font-bold text-lg sm:text-2xl drop-shadow-lg">MasseyHacks</span>
+            <span className="text-white font-bold text-base sm:text-lg md:text-2xl drop-shadow-lg">MasseyHacks</span>
           </div>
-          <div className="flex gap-3 sm:gap-8">
-            <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm sm:text-base">About</a>
-            <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm sm:text-base">Gallery</a>
-            <a href="#faq" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm sm:text-base">FAQ</a>
-            <a href="#sponsors" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm sm:text-base hidden sm:inline">Sponsors</a>
+          <div className="flex gap-2 sm:gap-4 md:gap-8">
+            <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-xs sm:text-sm md:text-base">About</a>
+            <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-xs sm:text-sm md:text-base">Gallery</a>
+            <a href="#faq" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-xs sm:text-sm md:text-base">FAQ</a>
+            <a href="#sponsors" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-xs sm:text-sm md:text-base hidden xs:inline">Sponsors</a>
           </div>
         </div>
       </nav>
@@ -248,44 +249,44 @@ function App() {
       ))}
 
       {/* Hero Section */}
-      <div ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 px-4">
+      <div ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-16 sm:pt-20 px-3 sm:px-4">
         <div className="relative z-20 flex flex-col items-center w-full max-w-4xl">
           {!logoPopped && (
             <div className="logo-bubble absolute inset-0 flex items-center justify-center">
-              <div className="bubble-animation w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center" />
+              <div className="bubble-animation w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center" />
             </div>
           )}
 
           <div className={`logo-content transition-all duration-1000 ${logoPopped ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} w-full`}>
-            <div className="mb-8 sm:mb-12">
-              <div className="w-40 h-40 sm:w-56 sm:h-56 mx-auto rounded-full bg-white/30 backdrop-blur-sm border-4 border-white/50 flex items-center justify-center shadow-2xl">
-                <span className="text-white font-bold text-2xl sm:text-3xl drop-shadow-lg">LOGO</span>
+            <div className="mb-6 sm:mb-8 md:mb-12">
+              <div className="w-28 h-28 sm:w-40 sm:h-40 md:w-56 md:h-56 mx-auto rounded-full bg-white/30 backdrop-blur-sm border-4 border-white/50 flex items-center justify-center shadow-2xl">
+                <span className="text-white font-bold text-xl sm:text-2xl md:text-3xl drop-shadow-lg">LOGO</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white text-center mt-6 sm:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-4">MasseyHacks 2026</h1>
-              <p className="text-xl sm:text-2xl md:text-3xl text-white text-center font-light drop-shadow-lg px-4">Dive Into Innovation</p>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white text-center mt-4 sm:mt-6 md:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-2 sm:px-4">MasseyHacks 2026</h1>
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white text-center font-light drop-shadow-lg px-2 sm:px-4">Dive Into Innovation</p>
             </div>
 
             {/* Countdown */}
-            <div className="bg-black/30 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-white/30 mb-6 shadow-2xl w-full">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-4 sm:mb-6">
+            <div className="bg-black/30 backdrop-blur-md rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 border border-white/30 mb-4 sm:mb-6 shadow-2xl w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 md:gap-8 mb-3 sm:mb-4 md:mb-6">
                 <div className="countdown-item text-center">
-                  <div className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.days}</div>
-                  <div className="text-xs sm:text-sm text-white/80 uppercase tracking-wider">Days</div>
+                  <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.days}</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">Days</div>
                 </div>
                 <div className="countdown-item text-center">
-                  <div className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.hours}</div>
-                  <div className="text-xs sm:text-sm text-white/80 uppercase tracking-wider">Hours</div>
+                  <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.hours}</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">Hours</div>
                 </div>
                 <div className="countdown-item text-center">
-                  <div className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.minutes}</div>
-                  <div className="text-xs sm:text-sm text-white/80 uppercase tracking-wider">Minutes</div>
+                  <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.minutes}</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">Minutes</div>
                 </div>
                 <div className="countdown-item text-center">
-                  <div className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.seconds}</div>
-                  <div className="text-xs sm:text-sm text-white/80 uppercase tracking-wider">Seconds</div>
+                  <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.seconds}</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">Seconds</div>
                 </div>
               </div>
-              <div className="text-center text-white text-base sm:text-xl font-semibold drop-shadow-md">
+              <div className="text-center text-white text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
                 Applications open in February
               </div>
             </div>
@@ -294,28 +295,28 @@ function App() {
       </div>
 
       {/* About Section */}
-      <section id="about" ref={aboutRef} className="relative py-16 sm:py-24 px-4 sm:px-6">
+      <section id="about" ref={aboutRef} className="relative py-12 sm:py-16 md:py-24 px-3 sm:px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-12 sm:mb-16 drop-shadow-lg">About MasseyHacks</h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-            <div className="about-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all">
-              <Calendar className="w-10 h-10 sm:w-12 sm:h-12 text-cyan-300 mb-3 sm:mb-4" />
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">24-Hour Event</h3>
-              <p className="text-white leading-relaxed drop-shadow-sm">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg px-2">About MasseyHacks</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <div className="about-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all">
+              <Calendar className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cyan-300 mb-2 sm:mb-3 md:mb-4" />
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">24-Hour Event</h3>
+              <p className="text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">
                 Join us for an exciting 24-hour hackathon where creativity meets technology. Work with your team to build amazing projects and compete for incredible prizes.
               </p>
             </div>
-            <div className="about-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all">
-              <Users className="w-10 h-10 sm:w-12 sm:h-12 text-cyan-300 mb-3 sm:mb-4" />
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">500+ Students</h3>
-              <p className="text-white leading-relaxed drop-shadow-sm">
+            <div className="about-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all">
+              <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cyan-300 mb-2 sm:mb-3 md:mb-4" />
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">500+ Students</h3>
+              <p className="text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">
                 Connect with over 500 passionate students from across the region. Network, collaborate, and make lasting friendships with like-minded innovators.
               </p>
             </div>
-            <div className="about-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all">
-              <Trophy className="w-10 h-10 sm:w-12 sm:h-12 text-cyan-300 mb-3 sm:mb-4" />
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">Amazing Prizes</h3>
-              <p className="text-white leading-relaxed drop-shadow-sm">
+            <div className="about-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all">
+              <Trophy className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cyan-300 mb-2 sm:mb-3 md:mb-4" />
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">Amazing Prizes</h3>
+              <p className="text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">
                 Compete for thousands of dollars in prizes, including the latest tech gadgets, exclusive swag, and opportunities to showcase your work to industry leaders.
               </p>
             </div>
@@ -352,22 +353,22 @@ function App() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" ref={faqRef} className="relative py-16 sm:py-24 px-4 sm:px-6">
+      <section id="faq" ref={faqRef} className="relative py-12 sm:py-16 md:py-24 px-3 sm:px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-12 sm:mb-16 drop-shadow-lg">Frequently Asked Questions</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg px-2">Frequently Asked Questions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="faq-item bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 overflow-hidden hover:bg-white/15 transition-all"
+                className="faq-item bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 overflow-hidden hover:bg-white/15 transition-all"
               >
                 <button
                   onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
-                  className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-3"
+                  className="w-full text-left p-4 sm:p-5 md:p-6 flex items-center justify-between gap-2 sm:gap-3"
                 >
-                  <h3 className="text-lg sm:text-xl font-bold text-white drop-shadow-md">{faq.question}</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-white drop-shadow-md pr-2">{faq.question}</h3>
                   <ChevronDown
-                    className={`w-5 h-5 sm:w-6 sm:h-6 text-white flex-shrink-0 transition-transform duration-300 ${
+                    className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white flex-shrink-0 transition-transform duration-300 ${
                       openFAQ === index ? 'rotate-180' : ''
                     }`}
                   />
@@ -377,7 +378,7 @@ function App() {
                     openFAQ === index ? 'max-h-96' : 'max-h-0'
                   }`}
                 >
-                  <p className="px-5 sm:px-6 pb-5 sm:pb-6 text-white leading-relaxed drop-shadow-sm">{faq.answer}</p>
+                  <p className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">{faq.answer}</p>
                 </div>
               </div>
             ))}
@@ -386,27 +387,27 @@ function App() {
       </section>
 
       {/* Sponsors Section */}
-      <section id="sponsors" ref={sponsorsRef} className="relative py-16 sm:py-24 px-4 sm:px-6">
+      <section id="sponsors" ref={sponsorsRef} className="relative py-12 sm:py-16 md:py-24 px-3 sm:px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-12 sm:mb-16 drop-shadow-lg">Our Sponsors</h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg px-2">Our Sponsors</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
             {sponsors.map((sponsor, index) => (
               <div
                 key={index}
-                className="sponsor-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all text-center"
+                className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all text-center"
               >
-                <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 rounded-full flex items-center justify-center ${
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-full flex items-center justify-center ${
                   sponsor.tier === 'Platinum' ? 'bg-slate-300/30' :
                   sponsor.tier === 'Gold' ? 'bg-yellow-300/30' :
                   sponsor.tier === 'Silver' ? 'bg-gray-300/30' :
                   'bg-orange-300/30'
                 }`}>
-                  <span className="text-xl sm:text-2xl font-bold text-white">
+                  <span className="text-lg sm:text-xl md:text-2xl font-bold text-white">
                     {sponsor.name.split(' ').map(w => w[0]).join('')}
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-1 drop-shadow-md">{sponsor.name}</h3>
-                <p className="text-white/80 text-xs sm:text-sm uppercase tracking-wider drop-shadow-sm">{sponsor.tier} Sponsor</p>
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 drop-shadow-md">{sponsor.name}</h3>
+                <p className="text-white/80 text-[10px] sm:text-xs md:text-sm uppercase tracking-wider drop-shadow-sm">{sponsor.tier} Sponsor</p>
               </div>
             ))}
           </div>
@@ -414,64 +415,64 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="relative bg-black/30 backdrop-blur-md border-t border-white/20 py-12 sm:py-16 px-4 sm:px-6">
+      <footer className="relative bg-black/30 backdrop-blur-md border-t border-white/20 py-8 sm:py-12 md:py-16 px-3 sm:px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 sm:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12">
             {/* Left Column - Event Info */}
             <div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 drop-shadow-lg">MasseyHacks XI</h3>
-              <p className="text-white/90 leading-relaxed drop-shadow-sm mb-2">Vincent Massey Secondary School</p>
-              <p className="text-white/90 leading-relaxed drop-shadow-sm mb-2">1800 Liberty St, Windsor,</p>
-              <p className="text-white/90 leading-relaxed drop-shadow-sm mb-6">ON N9E 1J2</p>
-              <p className="text-white/80 text-sm drop-shadow-sm">Copyright © 2024 MasseyHacks</p>
-              <p className="text-white/80 text-sm drop-shadow-sm">&lt;/&gt; made by the MasseyHacks Team with ❤️</p>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4 drop-shadow-lg">MasseyHacks XI</h3>
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed drop-shadow-sm mb-1 sm:mb-2">Vincent Massey Secondary School</p>
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed drop-shadow-sm mb-1 sm:mb-2">1800 Liberty St, Windsor,</p>
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed drop-shadow-sm mb-4 sm:mb-6">ON N9E 1J2</p>
+              <p className="text-xs sm:text-sm text-white/80 drop-shadow-sm">Copyright © 2024 MasseyHacks</p>
+              <p className="text-xs sm:text-sm text-white/80 drop-shadow-sm">&lt;/&gt; made by the MasseyHacks Team with ❤️</p>
             </div>
 
             {/* Middle Column - Links */}
             <div>
-              <nav className="flex flex-col gap-3">
-                <a href="#" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">Home</a>
-                <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">About</a>
-                <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">Schedule</a>
-                <a href="#faq" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">FAQ</a>
-                <a href="#sponsors" className="text-white hover:text-cyan-200 transition-colors font-semibold text-lg drop-shadow-md">Sponsors</a>
+              <nav className="flex flex-col gap-2 sm:gap-3">
+                <a href="#" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">Home</a>
+                <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">About</a>
+                <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">Schedule</a>
+                <a href="#faq" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">FAQ</a>
+                <a href="#sponsors" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">Sponsors</a>
               </nav>
             </div>
 
             {/* Right Column - Mailing List */}
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 drop-shadow-lg">Join our mailing list!</h3>
-              <div className="flex gap-2 mb-6">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 drop-shadow-lg">Join our mailing list!</h3>
+              <div className="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
                 <input
                   type="email"
                   placeholder="Email address"
-                  className="flex-1 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-cyan-300 transition-colors"
+                  className="flex-1 px-3 sm:px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/30 text-white text-sm sm:text-base placeholder-white/60 focus:outline-none focus:border-cyan-300 transition-colors"
                 />
-                <button className="px-6 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-colors drop-shadow-md">
+                <button className="px-4 sm:px-6 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white text-sm sm:text-base font-semibold rounded-lg transition-colors drop-shadow-md whitespace-nowrap">
                   Sign Up
                 </button>
               </div>
 
               {/* Social Icons */}
-              <div className="flex gap-4 mb-6">
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Mail className="w-5 h-5 text-white" />
+              <div className="flex gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Instagram className="w-5 h-5 text-white" />
+                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Twitter className="w-5 h-5 text-white" />
+                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Youtube className="w-5 h-5 text-white" />
+                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Youtube className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Facebook className="w-5 h-5 text-white" />
+                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
+                  <Facebook className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </a>
               </div>
 
-              <a href="#" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md underline">
+              <a href="#" className="text-sm sm:text-base text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md underline">
                 Code of Conduct
               </a>
             </div>
