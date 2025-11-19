@@ -69,10 +69,49 @@
   animation: bubblePop 1s ease-out 2.5s forwards;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
   overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Hide scrollbar for carousel but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth transitions for interactive elements */
+button, a {
+  transition: all 0.3s ease;
+}
+
+/* Improved card hover effects */
+.about-card, .faq-item, .sponsor-card {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.about-card:hover, .sponsor-card:hover {
+  transform: translateY(-5px);
+}
+
+.faq-item:hover {
+  transform: translateX(5px);
 }

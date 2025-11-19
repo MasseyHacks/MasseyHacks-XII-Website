@@ -36,15 +36,6 @@ function App() {
     { question: "What activities and workshops will be at MasseyHacks?", answer: "You can find the schedule on our website." }
   ];
 
-  const sponsors = [
-    { name: "Tech Corp", tier: "Platinum" },
-    { name: "Innovation Labs", tier: "Gold" },
-    { name: "Code Academy", tier: "Gold" },
-    { name: "Digital Solutions", tier: "Silver" },
-    { name: "Future Tech", tier: "Silver" },
-    { name: "Dev Tools Inc", tier: "Bronze" }
-  ];
-
   const carouselSlides = 8;
 
   useEffect(() => {
@@ -99,57 +90,72 @@ function App() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Only run animations on screens wider than 768px (tablet and up)
+      const shouldAnimate = window.innerWidth >= 768;
+
       if (logoPopped && heroRef.current) {
-        gsap.from('.countdown-item', {
-          scale: 0,
-          opacity: 0,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: 'back.out(1.7)'
-        });
+        if (shouldAnimate) {
+          gsap.from('.countdown-item', {
+            scale: 0,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'back.out(1.7)'
+          });
+        } else {
+          gsap.set('.countdown-item', { opacity: 1, scale: 1 });
+        }
       }
 
       if (aboutRef.current) {
-        gsap.from('.about-card', {
-          scrollTrigger: {
-            trigger: aboutRef.current,
-            start: 'top 80%',
-          },
-          y: 100,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: 'power3.out'
-        });
+        gsap.set('.about-card', { opacity: 1, y: 0 });
+        if (shouldAnimate) {
+          gsap.from('.about-card', {
+            scrollTrigger: {
+              trigger: aboutRef.current,
+              start: 'top 80%',
+            },
+            y: 100,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: 'power3.out'
+          });
+        }
       }
 
       if (faqRef.current) {
         gsap.set('.faq-item', { opacity: 1, x: 0 });
-        gsap.from('.faq-item', {
-          scrollTrigger: {
-            trigger: faqRef.current,
-            start: 'top 80%',
-          },
-          x: -50,
-          opacity: 0,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: 'power2.out'
-        });
+        if (shouldAnimate) {
+          gsap.from('.faq-item', {
+            scrollTrigger: {
+              trigger: faqRef.current,
+              start: 'top 80%',
+            },
+            x: -50,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'power2.out'
+          });
+        }
       }
 
       if (sponsorsRef.current) {
-        gsap.from('.sponsor-card', {
-          scrollTrigger: {
-            trigger: sponsorsRef.current,
-            start: 'top 80%',
-          },
-          scale: 0,
-          opacity: 0,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: 'back.out(1.7)'
-        });
+        gsap.set('.sponsor-card', { opacity: 1, scale: 1 });
+        if (shouldAnimate) {
+          gsap.from('.sponsor-card', {
+            scrollTrigger: {
+              trigger: sponsorsRef.current,
+              start: 'top 80%',
+            },
+            scale: 0,
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: 'back.out(1.7)'
+          });
+        }
       }
     });
 
@@ -197,7 +203,7 @@ function App() {
   };
 
   return (
-    <div className="relative overflow-x-hidden" style={{ background: getBackgroundColor() }}>
+    <div className="relative min-h-screen flex flex-col" style={{ background: getBackgroundColor() }}>
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/30 shadow-lg">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-3 md:py-4 flex items-center justify-between">
@@ -216,41 +222,45 @@ function App() {
         </div>
       </nav>
 
-      {/* Bubbles */}
-      {bubbles.map((bubble) => (
-        <div
-          key={bubble.id}
-          className="bubble absolute rounded-full bg-white/20 backdrop-blur-sm border border-white/30 pointer-events-none"
-          style={{
-            left: `${bubble.x}%`,
-            bottom: `-${bubble.size}px`,
-            width: `${bubble.size}px`,
-            height: `${bubble.size}px`,
-            animation: `float ${bubble.duration}s ease-in-out ${bubble.delay}s infinite`,
-            zIndex: bubble.zIndex
-          }}
-        />
-      ))}
+      {/* Background decorations - Bubbles */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+        {bubbles.map((bubble) => (
+          <div
+            key={bubble.id}
+            className="bubble absolute rounded-full bg-white/15 backdrop-blur-sm border border-white/20"
+            style={{
+              left: `${bubble.x}%`,
+              bottom: `-${bubble.size}px`,
+              width: `${bubble.size}px`,
+              height: `${bubble.size}px`,
+              animation: `float ${bubble.duration}s ease-in-out ${bubble.delay}s infinite`,
+              zIndex: bubble.zIndex
+            }}
+          />
+        ))}
 
-      {/* Multi-colored Fish swimming horizontally */}
-      {fish.map((fishItem) => (
-        <div
-          key={fishItem.id}
-          className="fish absolute pointer-events-none"
-          style={{
-            top: `${fishItem.y}%`,
-            left: '-100px',
-            animation: `swim ${fishItem.duration}s linear ${fishItem.delay}s infinite`,
-            zIndex: 5
-          }}
-        >
-          <Fish className="w-10 h-10" style={{ color: fishItem.color, filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.3))' }} />
-        </div>
-      ))}
+        {/* Multi-colored Fish swimming horizontally */}
+        {fish.map((fishItem) => (
+          <div
+            key={fishItem.id}
+            className="fish absolute"
+            style={{
+              top: `${fishItem.y}%`,
+              left: '-100px',
+              animation: `swim ${fishItem.duration}s linear ${fishItem.delay}s infinite`,
+              zIndex: 5
+            }}
+          >
+            <Fish className="w-8 h-8 sm:w-10 sm:h-10" style={{ color: fishItem.color, filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.3))' }} />
+          </div>
+        ))}
+      </div>
 
-      {/* Hero Section */}
-      <div ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-16 sm:pt-20 px-3 sm:px-4">
-        <div className="relative z-20 flex flex-col items-center w-full max-w-4xl">
+      {/* Main Content Wrapper */}
+      <main className="flex-1 relative" style={{ zIndex: 1 }}>
+        {/* Hero Section */}
+        <div ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 pb-12 px-3 sm:px-4">
+          <div className="relative z-10 flex flex-col items-center w-full max-w-4xl">
           {!logoPopped && (
             <div className="logo-bubble absolute inset-0 flex items-center justify-center">
               <div className="bubble-animation w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center" />
@@ -263,7 +273,7 @@ function App() {
                 <span className="text-white font-bold text-xl sm:text-2xl md:text-3xl drop-shadow-lg">LOGO</span>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white text-center mt-4 sm:mt-6 md:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-2 sm:px-4">MasseyHacks 2026</h1>
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white text-center font-light drop-shadow-lg px-2 sm:px-4">Dive Into Innovation</p>
+              {/* <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white text-center font-light drop-shadow-lg px-2 sm:px-4">Dive Into Innovation</p> */}
             </div>
 
             {/* Countdown */}
@@ -292,187 +302,192 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
+        </div>
 
-      {/* About Section */}
-      <section id="about" ref={aboutRef} className="relative py-12 sm:py-16 md:py-24 px-3 sm:px-4 md:px-6">
+        {/* About Section */}
+        <section id="about" ref={aboutRef} className="relative py-16 sm:py-20 md:py-28 px-3 sm:px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg px-2">About MasseyHacks</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-            <div className="about-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all">
-              <Calendar className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cyan-300 mb-2 sm:mb-3 md:mb-4" />
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">24-Hour Event</h3>
-              <p className="text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">
-                Join us for an exciting 24-hour hackathon where creativity meets technology. Work with your team to build amazing projects and compete for incredible prizes.
-              </p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-10 sm:mb-14 md:mb-20 drop-shadow-lg px-2">About MasseyHacks</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
+            <div className="about-card bg-white/10 backdrop-blur-lg rounded-xl sm:rounded-2xl p-6 sm:p-7 md:p-9 border border-white/20 hover:bg-white/15 shadow-lg hover:shadow-xl transition-all">
+              <Calendar className="w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14 text-cyan-300 mb-3 sm:mb-4 md:mb-5" />
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 drop-shadow-md">What is MasseyHacks</h3>
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed">
+                MasseyHacks is a high school hackathon perfect for students fascinated by the world of technology. This 24-hour event is an opportunity for students to explore the realm of computer science and bring their creative ideas to life by developing a project of their own. Never written a line of code in your life? Already created a robot to do your homework? No matter your skill level, we invite you to join us as a hacker to participate in workshops, engage in countless activities, and meet other like-minded students! Create memories and guide the story of your STEM journey at MasseyHacks XI!              </p>
             </div>
-            <div className="about-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all">
-              <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cyan-300 mb-2 sm:mb-3 md:mb-4" />
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">500+ Students</h3>
-              <p className="text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">
+            <div className="about-card bg-white/10 backdrop-blur-lg rounded-xl sm:rounded-2xl p-6 sm:p-7 md:p-9 border border-white/20 hover:bg-white/15 shadow-lg hover:shadow-xl transition-all">
+              <Users className="w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14 text-cyan-300 mb-3 sm:mb-4 md:mb-5" />
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 drop-shadow-md">500+ Students</h3>
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed">
                 Connect with over 500 passionate students from across the region. Network, collaborate, and make lasting friendships with like-minded innovators.
               </p>
             </div>
-            <div className="about-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all">
-              <Trophy className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cyan-300 mb-2 sm:mb-3 md:mb-4" />
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">Amazing Prizes</h3>
-              <p className="text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">
+            <div className="about-card bg-white/10 backdrop-blur-lg rounded-xl sm:rounded-2xl p-6 sm:p-7 md:p-9 border border-white/20 hover:bg-white/15 shadow-lg hover:shadow-xl transition-all">
+              <Trophy className="w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14 text-cyan-300 mb-3 sm:mb-4 md:mb-5" />
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 drop-shadow-md">Amazing Prizes</h3>
+              <p className="text-sm sm:text-base text-white/90 leading-relaxed">
                 Compete for thousands of dollars in prizes, including the latest tech gadgets, exclusive swag, and opportunities to showcase your work to industry leaders.
               </p>
             </div>
           </div>
         </div>
-      </section>
+        </section>
 
-      {/* Carousel Section */}
-      <section id="gallery" ref={carouselRef} className="relative py-16 sm:py-24 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-12 sm:mb-16 drop-shadow-lg">Gallery</h2>
-          <div
-            ref={carouselScrollRef}
-            className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 scrollbar-hide"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {Array.from({ length: carouselSlides }).map((_, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 w-[280px] h-[200px] sm:w-[400px] sm:h-[280px] md:w-[600px] md:h-[400px] bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/20 overflow-hidden relative"
-              >
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
-                  <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-white/10 flex items-center justify-center mb-3 sm:mb-4">
-                    <Fish className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 text-white/40" />
-                  </div>
-                  <div className="text-white/60 text-base sm:text-xl md:text-2xl font-medium">
-                    Image {i + 1}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" ref={faqRef} className="relative py-12 sm:py-16 md:py-24 px-3 sm:px-4 md:px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg px-2">Frequently Asked Questions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="faq-item bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 overflow-hidden hover:bg-white/15 transition-all"
-              >
-                <button
-                  onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
-                  className="w-full text-left p-4 sm:p-5 md:p-6 flex items-center justify-between gap-2 sm:gap-3"
-                >
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-white drop-shadow-md pr-2">{faq.question}</h3>
-                  <ChevronDown
-                    className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white flex-shrink-0 transition-transform duration-300 ${
-                      openFAQ === index ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
+        {/* Carousel Section */}
+        <section id="gallery" ref={carouselRef} className="relative py-16 sm:py-20 md:py-28 px-3 sm:px-4 md:px-6">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-10 sm:mb-14 md:mb-20 drop-shadow-lg px-2">Gallery</h2>
+            <div
+              ref={carouselScrollRef}
+              className="flex gap-4 sm:gap-5 md:gap-6 overflow-x-auto scroll-smooth pb-4 scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {Array.from({ length: carouselSlides }).map((_, i) => (
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openFAQ === index ? 'max-h-96' : 'max-h-0'
-                  }`}
+                  key={i}
+                  className="flex-shrink-0 w-[240px] h-[180px] sm:w-[320px] sm:h-[220px] md:w-[500px] md:h-[350px] lg:w-[600px] lg:h-[400px] bg-white/10 backdrop-blur-lg rounded-xl sm:rounded-2xl md:rounded-3xl border border-white/20 overflow-hidden relative shadow-lg hover:shadow-xl transition-all"
                 >
-                  <p className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">{faq.answer}</p>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-white/10 flex items-center justify-center mb-2 sm:mb-3 md:mb-4">
+                      <Fish className="w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 text-white/40" />
+                    </div>
+                    <div className="text-white/60 text-sm sm:text-base md:text-xl lg:text-2xl font-medium">
+                      Image {i + 1}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Sponsors Section */}
-      <section id="sponsors" ref={sponsorsRef} className="relative py-12 sm:py-16 md:py-24 px-3 sm:px-4 md:px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg px-2">Our Sponsors</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
-            {sponsors.map((sponsor, index) => (
-              <div
-                key={index}
-                className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all text-center"
-              >
-                <div className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-full flex items-center justify-center ${
-                  sponsor.tier === 'Platinum' ? 'bg-slate-300/30' :
-                  sponsor.tier === 'Gold' ? 'bg-yellow-300/30' :
-                  sponsor.tier === 'Silver' ? 'bg-gray-300/30' :
-                  'bg-orange-300/30'
-                }`}>
-                  <span className="text-lg sm:text-xl md:text-2xl font-bold text-white">
-                    {sponsor.name.split(' ').map(w => w[0]).join('')}
-                  </span>
+        {/* FAQ Section */}
+        <section id="faq" ref={faqRef} className="relative py-16 sm:py-20 md:py-28 px-3 sm:px-4 md:px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-10 sm:mb-14 md:mb-20 drop-shadow-lg px-2">Frequently Asked Questions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+              {faqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="faq-item bg-white/10 backdrop-blur-lg rounded-xl sm:rounded-2xl border border-white/20 overflow-hidden hover:bg-white/15 shadow-lg transition-all"
+                >
+                  <button
+                    onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                    className="w-full text-left p-5 sm:p-6 md:p-7 flex items-center justify-between gap-3"
+                  >
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-white drop-shadow-md pr-2">{faq.question}</h3>
+                    <ChevronDown
+                      className={`w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white flex-shrink-0 transition-transform duration-300 ${
+                        openFAQ === index ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${
+                      openFAQ === index ? 'max-h-96' : 'max-h-0'
+                    }`}
+                  >
+                    <p className="px-5 sm:px-6 md:px-7 pb-5 sm:pb-6 md:pb-7 text-sm sm:text-base text-white/90 leading-relaxed">{faq.answer}</p>
+                  </div>
                 </div>
-                <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 drop-shadow-md">{sponsor.name}</h3>
-                <p className="text-white/80 text-[10px] sm:text-xs md:text-sm uppercase tracking-wider drop-shadow-sm">{sponsor.tier} Sponsor</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Sponsors Section */}
+        <section id="sponsors" ref={sponsorsRef} className="relative py-16 sm:py-20 md:py-28 px-3 sm:px-4 md:px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-10 sm:mb-14 md:mb-20 drop-shadow-lg px-2">Our Sponsors</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
+              {/* {sponsors.map((sponsor, index) => (
+                <div
+                  key={index}
+                  className="sponsor-card bg-white/10 backdrop-blur-lg rounded-xl sm:rounded-2xl p-6 sm:p-7 md:p-9 border border-white/20 hover:bg-white/15 shadow-lg hover:shadow-xl transition-all text-center"
+                >
+                  <div className={`w-16 h-16 sm:w-18 sm:h-18 md:w-22 md:h-22 mx-auto mb-3 sm:mb-4 md:mb-5 rounded-full flex items-center justify-center ${
+                    sponsor.tier === 'Platinum' ? 'bg-slate-300/30' :
+                    sponsor.tier === 'Gold' ? 'bg-yellow-300/30' :
+                    sponsor.tier === 'Silver' ? 'bg-gray-300/30' :
+                    'bg-orange-300/30'
+                  }`}>
+                    <span className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                      {sponsor.name.split(' ').map(w => w[0]).join('')}
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2 drop-shadow-md">{sponsor.name}</h3>
+                  <p className="text-white/80 text-xs sm:text-sm uppercase tracking-wider">{sponsor.tier} Sponsor</p>
+                </div>
+              ))} */}
+            </div>
+          </div>
+        </section>
+      </main>
 
       {/* Footer */}
-      <footer className="relative bg-black/30 backdrop-blur-md border-t border-white/20 py-8 sm:py-12 md:py-16 px-3 sm:px-4 md:px-6">
+      <footer className="relative bg-black/40 backdrop-blur-lg border-t border-white/30 py-10 sm:py-14 md:py-20 px-3 sm:px-4 md:px-6 mt-auto" style={{ zIndex: 1 }}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-16">
             {/* Left Column - Event Info */}
             <div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4 drop-shadow-lg">MasseyHacks XI</h3>
-              <p className="text-sm sm:text-base text-white/90 leading-relaxed drop-shadow-sm mb-1 sm:mb-2">Vincent Massey Secondary School</p>
-              <p className="text-sm sm:text-base text-white/90 leading-relaxed drop-shadow-sm mb-1 sm:mb-2">1800 Liberty St, Windsor,</p>
-              <p className="text-sm sm:text-base text-white/90 leading-relaxed drop-shadow-sm mb-4 sm:mb-6">ON N9E 1J2</p>
-              <p className="text-xs sm:text-sm text-white/80 drop-shadow-sm">Copyright © 2024 MasseyHacks</p>
-              <p className="text-xs sm:text-sm text-white/80 drop-shadow-sm">&lt;/&gt; made by the MasseyHacks Team with ❤️</p>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-5 drop-shadow-lg">MasseyHacks XI</h3>
+              <div className="space-y-2 mb-6">
+                <p className="text-sm sm:text-base text-white/90 leading-relaxed">Vincent Massey Secondary School</p>
+                <p className="text-sm sm:text-base text-white/90 leading-relaxed">1800 Liberty St, Windsor,</p>
+                <p className="text-sm sm:text-base text-white/90 leading-relaxed">ON N9E 1J2</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs sm:text-sm text-white/70">Copyright © 2024 MasseyHacks</p>
+                <p className="text-xs sm:text-sm text-white/70">&lt;/&gt; made by the MasseyHacks Team with ❤️</p>
+              </div>
             </div>
 
             {/* Middle Column - Links */}
             <div>
-              <nav className="flex flex-col gap-2 sm:gap-3">
-                <a href="#" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">Home</a>
-                <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">About</a>
-                <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">Schedule</a>
-                <a href="#faq" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">FAQ</a>
-                <a href="#sponsors" className="text-white hover:text-cyan-200 transition-colors font-semibold text-base sm:text-lg drop-shadow-md">Sponsors</a>
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-5 drop-shadow-lg">Quick Links</h3>
+              <nav className="flex flex-col gap-3">
+                <a href="#" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-base sm:text-lg hover:translate-x-1 inline-block transition-transform">Home</a>
+                <a href="#about" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-base sm:text-lg hover:translate-x-1 inline-block transition-transform">About</a>
+                <a href="#gallery" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-base sm:text-lg hover:translate-x-1 inline-block transition-transform">Gallery</a>
+                <a href="#faq" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-base sm:text-lg hover:translate-x-1 inline-block transition-transform">FAQ</a>
+                <a href="#sponsors" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-base sm:text-lg hover:translate-x-1 inline-block transition-transform">Sponsors</a>
               </nav>
             </div>
 
             {/* Right Column - Mailing List */}
             <div>
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 drop-shadow-lg">Join our mailing list!</h3>
-              <div className="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-6">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-5 drop-shadow-lg">Stay Connected</h3>
+              <div className="flex flex-col sm:flex-row gap-2 mb-5 sm:mb-6">
                 <input
                   type="email"
-                  placeholder="Email address"
-                  className="flex-1 px-3 sm:px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/30 text-white text-sm sm:text-base placeholder-white/60 focus:outline-none focus:border-cyan-300 transition-colors"
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm border border-white/30 text-white text-sm sm:text-base placeholder-white/50 focus:outline-none focus:border-cyan-300 focus:bg-white/15 transition-all"
                 />
-                <button className="px-4 sm:px-6 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white text-sm sm:text-base font-semibold rounded-lg transition-colors drop-shadow-md whitespace-nowrap">
-                  Sign Up
+                <button className="px-5 sm:px-6 py-2.5 bg-cyan-500/90 hover:bg-cyan-500 text-white text-sm sm:text-base font-semibold rounded-lg transition-all hover:shadow-lg whitespace-nowrap">
+                  Subscribe
                 </button>
               </div>
 
               {/* Social Icons */}
-              <div className="flex gap-3 sm:gap-4 mb-4 sm:mb-6">
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              <div className="flex gap-3 mb-5 sm:mb-6">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all">
+                  <Mail className="w-5 h-5 text-white" />
                 </a>
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all">
+                  <Instagram className="w-5 h-5 text-white" />
                 </a>
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all">
+                  <Twitter className="w-5 h-5 text-white" />
                 </a>
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Youtube className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all">
+                  <Youtube className="w-5 h-5 text-white" />
                 </a>
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-all">
-                  <Facebook className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                <a href="#" className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all">
+                  <Facebook className="w-5 h-5 text-white" />
                 </a>
               </div>
 
-              <a href="#" className="text-sm sm:text-base text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md underline">
+              <a href="#" className="text-sm sm:text-base text-white/90 hover:text-cyan-200 transition-colors font-medium underline underline-offset-4 hover:underline-offset-8 transition-all">
                 Code of Conduct
               </a>
             </div>
