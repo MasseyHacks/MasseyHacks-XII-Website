@@ -19,6 +19,16 @@ function App() {
   const sponsorsRef = useRef(null);
 
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const imageSrcs = [
+    new URL('./images/mhX1.webp', import.meta.url).href,
+    new URL('./images/mhX2.webp', import.meta.url).href,
+    new URL('./images/mhX4.webp', import.meta.url).href,
+    new URL('./images/mhX5.webp', import.meta.url).href,
+    new URL('./images/mhX7.webp', import.meta.url).href,
+    new URL('./images/mhX8.webp', import.meta.url).href,
+    new URL('./images/mhX9.webp', import.meta.url).href,
+    new URL('./images/mhX10.webp', import.meta.url).href
+  ]
 
   const faqs = [
     { question: "How do I apply?", answer: "Applications have closed. Join our mailing list to be notified when applications open for MasseyHacks X!" },
@@ -157,18 +167,29 @@ function App() {
   }, [logoPopped]);
 
   useEffect(() => {
+    // Auto-advance the carousel every 3s and wrap seamlessly using duplicated slides
     const interval = setInterval(() => {
-      if (carouselScrollRef.current) {
-        const scrollWidth = carouselScrollRef.current.scrollWidth;
-        const clientWidth = carouselScrollRef.current.clientWidth;
-        const currentScroll = carouselScrollRef.current.scrollLeft;
+      if (!carouselScrollRef.current) return;
 
-        if (currentScroll >= scrollWidth - clientWidth - 10) {
-          carouselScrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          carouselScrollRef.current.scrollBy({ left: clientWidth, behavior: 'smooth' });
+      const el = carouselScrollRef.current;
+      const scrollWidth = el.scrollWidth;
+      const clientWidth = el.clientWidth;
+      // we duplicated slides, so the logical loop point is at half the scrollWidth
+      const halfWidth = scrollWidth / 2;
+      const currentScroll = el.scrollLeft;
+
+      const target = currentScroll + clientWidth;
+      el.scrollTo({ left: target, behavior: 'smooth' });
+
+      // after the smooth scroll completes, if we've crossed the half point, jump back by halfWidth
+      // using a timeout slightly longer than the browser's smooth scroll duration
+      setTimeout(() => {
+        if (!carouselScrollRef.current) return;
+        if (carouselScrollRef.current.scrollLeft >= halfWidth) {
+          // subtract halfWidth to wrap to the equivalent slide in the first set
+          carouselScrollRef.current.scrollLeft = carouselScrollRef.current.scrollLeft - halfWidth;
         }
-      }
+      }, 520);
     }, 3000);
 
     return () => clearInterval(interval);
@@ -333,18 +354,13 @@ function App() {
             className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth pb-4 scrollbar-hide"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {Array.from({ length: carouselSlides }).map((_, i) => (
+            {Array.from({ length: carouselSlides * 2 }).map((_, i) => (
               <div
                 key={i}
                 className="flex-shrink-0 w-[280px] h-[200px] sm:w-[400px] sm:h-[280px] md:w-[600px] md:h-[400px] bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-white/20 overflow-hidden relative"
               >
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
-                  <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-white/10 flex items-center justify-center mb-3 sm:mb-4">
-                    <Fish className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 text-white/40" />
-                  </div>
-                  <div className="text-white/60 text-base sm:text-xl md:text-2xl font-medium">
-                    Image {i + 1}
-                  </div>
+                  <img src={imageSrcs[i % imageSrcs.length]} alt={`MasseyHacks gallery image ${ (i % imageSrcs.length) + 1 }`} className="w-full h-full object-cover" />
                 </div>
               </div>
             ))}
