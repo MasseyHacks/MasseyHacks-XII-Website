@@ -35,7 +35,6 @@ function App() {
     { question: "Does it cost anything to attend?", answer: "Nope, MasseyHacks is absolutely free to attend!" },
     { question: "Is MasseyHacks in-person or online?", answer: "MasseyHacks IX will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning." },
     { question: "Will food be provided?", answer: "Yes, meals and snacks will be provided free of cost. We will accommodate any food sensitivities to the best of our ability." },
-    { question: "What about COVID-19?", answer: "We will have masks available and provided upon request. Any individuals who are sick or experiencing symptoms will be moved to an isolation room and asked to go home. This information may be updated in the future to further reflect local, provincial, and federal guidelines." },
     { question: "Do I need a team to participate?", answer: "You don't need to be in a team to participate in MasseyHacks! It's up to you whether you choose to fly solo or group up with your friends. And who knows: you might meet some cool new people during the event!" },
     { question: "Who can participate?", answer: "MasseyHacks welcomes students from grades 7-12." },
     { question: "Do I need programming experience to participate?", answer: "Not at all! At MasseyHacks, we'll teach you the fundamentals you need to know to make your project through beginner workshops and mentors who will assist you if you ever need any help." },
@@ -325,35 +324,21 @@ function App() {
         </div>
         </div>
 
-      {/* About Section */}
-      <section id="about" ref={aboutRef} className="relative py-12 sm:py-16 md:py-24 px-3 sm:px-4 md:px-6">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg px-2">About MasseyHacks</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-            <div className="about-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all">
-              <Calendar className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cyan-300 mb-2 sm:mb-3 md:mb-4" />
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">24-Hour Event</h3>
-              <p className="text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">
-                Join us for an exciting 24-hour hackathon where creativity meets technology. Work with your team to build amazing projects and compete for incredible prizes.
-              </p>
-            </div>
-            <div className="about-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all">
-              <Users className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cyan-300 mb-2 sm:mb-3 md:mb-4" />
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">500+ Students</h3>
-              <p className="text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">
-                Connect with over 500 passionate students from across the region. Network, collaborate, and make lasting friendships with like-minded innovators.
-              </p>
-            </div>
-            <div className="about-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 hover:bg-white/15 transition-all">
-              <Trophy className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cyan-300 mb-2 sm:mb-3 md:mb-4" />
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 drop-shadow-md">Amazing Prizes</h3>
-              <p className="text-sm sm:text-base text-white leading-relaxed drop-shadow-sm">
-                Compete for thousands of dollars in prizes, including the latest tech gadgets, exclusive swag, and opportunities to showcase your work to industry leaders.
-              </p>
+        {/* About Section */}
+        <section id="about" ref={aboutRef} className="relative py-16 sm:py-20 md:py-28 px-3 sm:px-4 md:px-6">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-10 sm:mb-14 md:mb-20 drop-shadow-lg px-2">About MasseyHacks</h2>
+            <div className="grid grid-cols-1 gap-5 sm:gap-6 md:gap-8 justify-center place-items-center w-fit mx-auto">
+              <div className="about-card bg-white/10 backdrop-blur-lg rounded-xl sm:rounded-2xl p-6 sm:p-7 md:p-9 border border-white/20 hover:bg-white/15 shadow-lg hover:shadow-xl transition-all mx-auto">
+                <Calendar className="w-10 h-10 sm:w-11 sm:h-11 md:w-14 md:h-14 text-cyan-300 mb-3 sm:mb-4 md:mb-5" />
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 drop-shadow-md">What is MasseyHacks?</h3>
+                <p className="text-sm sm:text-base text-white/90 leading-relaxed">
+                  MasseyHacks is a high school hackathon perfect for students fascinated by the world of technology. This 24-hour event is an opportunity for students to explore the realm of computer science and bring their creative ideas to life by developing a project of their own. Never written a line of code in your life? Already created a robot to do your homework? No matter your skill level, we invite you to join us as a hacker to participate in workshops, engage in countless activities, and meet other like-minded students! Create memories and guide the story of your STEM journey at MasseyHacks XI!
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Carousel Section */}
       <section id="gallery" ref={carouselRef} className="relative py-16 sm:py-24 px-4 sm:px-6">
@@ -417,25 +402,6 @@ function App() {
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-10 sm:mb-14 md:mb-20 drop-shadow-lg px-2">Our Sponsors</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
-              {/* {sponsors.map((sponsor, index) => (
-                <div
-                  key={index}
-                  className="sponsor-card bg-white/10 backdrop-blur-lg rounded-xl sm:rounded-2xl p-6 sm:p-7 md:p-9 border border-white/20 hover:bg-white/15 shadow-lg hover:shadow-xl transition-all text-center"
-                >
-                  <div className={`w-16 h-16 sm:w-18 sm:h-18 md:w-22 md:h-22 mx-auto mb-3 sm:mb-4 md:mb-5 rounded-full flex items-center justify-center ${
-                    sponsor.tier === 'Platinum' ? 'bg-slate-300/30' :
-                    sponsor.tier === 'Gold' ? 'bg-yellow-300/30' :
-                    sponsor.tier === 'Silver' ? 'bg-gray-300/30' :
-                    'bg-orange-300/30'
-                  }`}>
-                    <span className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                      {sponsor.name.split(' ').map(w => w[0]).join('')}
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2 drop-shadow-md">{sponsor.name}</h3>
-                  <p className="text-white/80 text-xs sm:text-sm uppercase tracking-wider">{sponsor.tier} Sponsor</p>
-                </div>
-              ))} */}
             </div>
           </div>
         </section>
@@ -447,14 +413,14 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-16">
             {/* Left Column - Event Info */}
             <div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-5 drop-shadow-lg">MasseyHacks XI</h3>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-5 drop-shadow-lg">MasseyHacks XII</h3>
               <div className="space-y-2 mb-6">
                 <p className="text-sm sm:text-base text-white/90 leading-relaxed">Vincent Massey Secondary School</p>
                 <p className="text-sm sm:text-base text-white/90 leading-relaxed">1800 Liberty St, Windsor,</p>
                 <p className="text-sm sm:text-base text-white/90 leading-relaxed">ON N9E 1J2</p>
               </div>
               <div className="space-y-1">
-                <p className="text-xs sm:text-sm text-white/70">Copyright © 2024 MasseyHacks</p>
+                <p className="text-xs sm:text-sm text-white/70">Copyright © 2025 MasseyHacks</p>
                 <p className="text-xs sm:text-sm text-white/70">&lt;/&gt; made by the MasseyHacks Team with ❤️</p>
               </div>
             </div>
