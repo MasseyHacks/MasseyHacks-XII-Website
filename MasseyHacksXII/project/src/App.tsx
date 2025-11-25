@@ -228,9 +228,7 @@ function App() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/30 shadow-lg">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-3 md:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center border-2 border-white/50 shadow-md">
-              <span className="text-white font-bold text-[10px] sm:text-xs md:text-sm drop-shadow-md">LOGO</span>
-            </div>
+                <img src={new URL('./images/MHXIILOGO.PNG', import.meta.url).href} alt="MasseyHacks Logo" className="scale-x-125 sm:w-8 sm:h-8 md:w-10 md:h-10" />
             <span className="text-white font-bold text-base sm:text-lg md:text-2xl drop-shadow-lg">MasseyHacks</span>
           </div>
           <div className="flex gap-2 sm:gap-4 md:gap-8">
@@ -289,8 +287,8 @@ function App() {
 
           <div className={`logo-content transition-all duration-1000 ${logoPopped ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} w-full`}>
             <div className="mb-6 sm:mb-8 md:mb-12">
-              <div className="w-28 h-28 sm:w-40 sm:h-40 md:w-56 md:h-56 mx-auto rounded-full bg-white/30 backdrop-blur-sm border-4 border-white/50 flex items-center justify-center shadow-2xl">
-                <span className="text-white font-bold text-xl sm:text-2xl md:text-3xl drop-shadow-lg">LOGO</span>
+              <div className="w-28 h-28 sm:w-40 sm:h-40 md:w-56 md:h-56 mx-auto rounded-full bg-white/30 backdrop-blur-sm border-4 border-white/50 flex items-center justify-center shadow-2xl ">
+                <img src={new URL('./images/MHXIILOGO.PNG', import.meta.url).href} alt="MasseyHacks Logo" className="scale-<100> sm:w-8 sm:h-8 md:w-10 md:h-10" />
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white text-center mt-4 sm:mt-6 md:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-2 sm:px-4">MasseyHacks 2026</h1>
               {/* <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white text-center font-light drop-shadow-lg px-2 sm:px-4">Dive Into Innovation</p> */}
@@ -402,6 +400,7 @@ function App() {
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-10 sm:mb-14 md:mb-20 drop-shadow-lg px-2">Our Sponsors</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
+              
             </div>
           </div>
         </section>
