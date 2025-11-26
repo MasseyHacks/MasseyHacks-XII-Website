@@ -67,7 +67,7 @@ function App() {
   const faqs: FAQ[] = [
     { question: "How do I apply?", answer: "Applications have closed. Join our mailing list to be notified when applications open for MasseyHacks X!" },
     { question: "Does it cost anything to attend?", answer: "Nope, MasseyHacks is absolutely free to attend!" },
-    { question: "Is MasseyHacks in-person or online?", answer: "MasseyHacks IX will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning." },
+    { question: "Is MasseyHacks in-person or online?", answer: "MasseyHacks XII will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning." },
     { question: "Will food be provided?", answer: "Yes, meals and snacks will be provided free of cost. We will accommodate any food sensitivities to the best of our ability." },
     { question: "Do I need a team to participate?", answer: "You don't need to be in a team to participate in MasseyHacks! It's up to you whether you choose to fly solo or group up with your friends. And who knows: you might meet some cool new people during the event!" },
     { question: "Who can participate?", answer: "MasseyHacks welcomes students from grades 7-12." },
@@ -76,7 +76,7 @@ function App() {
     { question: "Where is MasseyHacks being held?", answer: "MasseyHacks will be held at Vincent Massey Secondary School at 1800 Liberty St, Windsor, ON." },
     { question: "Will MasseyHacks run overnight?", answer: "Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to leave the venue Saturday evening and return to the venue Sunday morning. However, we will still be providing mentorship and support for hackers throughout the night as they continue working on their projects." },
     { question: "What do I need to bring?", answer: "We recommend bringing: a piece of photo ID for check-in (e.g. student card, passport, or drivers license), your laptop, and laptop/phone chargers. Food, beverages, and the rest will all be provided! School computers will be available for use during the event, but we cannot guarantee one for everyone." },
-    { question: "What activities and workshops will be at MasseyHacks?", answer: "You can find the schedule on our website." }
+    { question: "What activities and workshops will be at MasseyHacks?", answer: "You can find the schedule on our website (coming soon)." }
   ];
 
   const carouselSlides = 8;
@@ -230,8 +230,8 @@ function App() {
 
   const getBackgroundColor = () => {
     const colors = [
-      { stop: 0, color: '#c6ffff' },
-      { stop: 0.15, color: '#85fcff' },
+      { stop: 0, color: '#b2e0ffff' },
+      { stop: 0.15, color: '#6cebffff' },
       { stop: 0.35, color: '#008199' },
       { stop: 0.5, color: '#21658d' },
       { stop: 0.65, color: '#2e4579' },
@@ -253,8 +253,8 @@ function App() {
   return (
     <div className="relative min-h-screen flex flex-col" style={{ background: getBackgroundColor() }}>
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/30 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-cyan-500/10 backdrop-blur-md border-b border-cyan-400/40 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
             <img src={new URL('./images/MHXIILOGO.PNG', import.meta.url).href} alt="MasseyHacks Logo" className="w-8 h-8 sm:w-10 sm:h-10 md:w-[50px] md:h-[50px] object-contain" />
@@ -290,7 +290,8 @@ function App() {
             mobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="px-4 py-4 bg-black/60 backdrop-blur-lg border-t border-white/20 flex flex-col gap-3">
+          <div className="px-4 py-4 bg-cyan-500/10 backdrop-blur-md flex flex-col gap-3">
+
             <a
               href="#about"
               onClick={() => setMobileMenuOpen(false)}
@@ -374,14 +375,21 @@ function App() {
 
             <div className={`logo-content transition-all duration-1000 ${logoPopped ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} w-full`}>
               <div className="mb-6 sm:mb-8 md:mb-12">
-                <div className="w-28 h-28 sm:w-40 sm:h-40 md:w-[295px] md:h-[250px] mx-auto rounded-full bg-white/30 backdrop-blur-sm border-4 border-white/50 flex items-center justify-center shadow-2xl">
-                  <img src={new URL('./images/MHXIILOGO.PNG', import.meta.url).href} alt="MasseyHacks Logo" className="w-32 h-32 sm:w-48 sm:h-48 md:w-[420px] md:h-[240px] mx-auto" />
-                </div>
-                <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white text-center mt-4 sm:mt-6 md:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-2 sm:px-4" data-testid="hero-title">MasseyHacksXII</h1>
+                <div className="w-28 h-28 sm:w-40 sm:h-40 md:w-72 md:h-72 mx-auto rounded-full bg-white/0 backdrop-blur-sm border-4 border-white/50 flex items-center justify-center shadow-2xl">
+  <img
+    src={new URL('./images/MHXIILOGO.PNG', import.meta.url).href}
+    className="w-32 sm:w-48 md:w-[260px] h-auto mx-auto object-contain"
+  />
+</div>
+
+
+
+
+                <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white text-center mt-4 sm:mt-6 md:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-2 sm:px-4" data-testid="hero-title">MasseyHacks XII</h1>
               </div>
 
               {/* Countdown */}
-              <div className="bg-black/30 backdrop-blur-md rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 border border-white/30 mb-4 sm:mb-6 shadow-2xl w-full" data-testid="countdown-section">
+              <div className="bg-cyan-500/10 backdrop-blur-md rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 border border-white/30 mb-4 sm:mb-6 shadow-2xl w-full" data-testid="countdown-section">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 xs:gap-3 sm:gap-4 md:gap-8 mb-3 sm:mb-4 md:mb-6">
                   <div className="countdown-item text-center" data-testid="countdown-days">
                     <div className="text-xl xs:text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.days}</div>
