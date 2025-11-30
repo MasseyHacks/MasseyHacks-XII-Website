@@ -76,7 +76,7 @@ function App() {
     { question: "Where is MasseyHacks being held?", answer: "MasseyHacks will be held at Vincent Massey Secondary School at 1800 Liberty St, Windsor, ON." },
     { question: "Will MasseyHacks run overnight?", answer: "Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to leave the venue Saturday evening and return to the venue Sunday morning. However, we will still be providing mentorship and support for hackers throughout the night as they continue working on their projects." },
     { question: "What do I need to bring?", answer: "We recommend bringing: a piece of photo ID for check-in (e.g. student card, passport, or drivers license), your laptop, and laptop/phone chargers. Food, beverages, and the rest will all be provided! School computers will be available for use during the event, but we cannot guarantee one for everyone." },
-    { question: "What activities and workshops will be at MasseyHacks?", answer: "You can find the schedule on our website (coming soon)." }
+    { question: "What activities and workshops will be hosted at MasseyHacks?", answer: "You can find the schedule on our website (coming soon)." }
   ];
 
   const carouselSlides = 8;
