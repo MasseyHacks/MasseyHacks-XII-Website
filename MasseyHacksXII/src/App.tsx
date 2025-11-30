@@ -214,21 +214,20 @@ function App() {
       const el = carouselScrollRef.current;
       const scrollWidth = el.scrollWidth;
       const clientWidth = el.clientWidth;
-      const halfWidth = scrollWidth / 2;
       const currentScroll = el.scrollLeft;
 
-      // Scroll by one image width for smoother progression
-      const imageWidth = clientWidth * 0.35; // Approximate image width
-      const target = currentScroll + imageWidth;
-      el.scrollTo({ left: target, behavior: 'smooth' });
-
-      // Reset scroll position for infinite loop
-      setTimeout(() => {
-        if (!carouselScrollRef.current) return;
-        if (carouselScrollRef.current.scrollLeft >= halfWidth - clientWidth) {
-          carouselScrollRef.current.scrollTo({ left: 0, behavior: 'auto' });
-        }
-      }, 600);
+      // Calculate scroll amount based on viewport width
+      const scrollAmount = Math.min(clientWidth * 0.4, 400);
+      const target = currentScroll + scrollAmount;
+      
+      // Check if we're near the end and need to loop
+      if (target >= scrollWidth - clientWidth) {
+        // Jump back to start without animation
+        el.scrollTo({ left: 0, behavior: 'auto' });
+      } else {
+        // Normal smooth scroll
+        el.scrollTo({ left: target, behavior: 'smooth' });
+      }
     }, 3000);
 
     return () => clearInterval(interval);
