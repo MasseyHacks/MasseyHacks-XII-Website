@@ -52,6 +52,8 @@ function App() {
   const sponsorsRef = useRef<HTMLElement>(null);
 
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const [isUserInteracting, setIsUserInteracting] = useState<boolean>(false);
+  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const imageSrcs = [
     new URL('./images/mhX1.webp', import.meta.url).href,
@@ -65,7 +67,7 @@ function App() {
   ];
 
   const faqs: FAQ[] = [
-    { question: "How do I apply?", answer: "Applications have closed. Join our mailing list to be notified when applications open for MasseyHacks X!" },
+    { question: "How do I apply?", answer: "Applications will open for MasseyHacks XII in February!" },
     { question: "Does it cost anything to attend?", answer: "Nope, MasseyHacks is absolutely free to attend!" },
     { question: "Is MasseyHacks in-person or online?", answer: "MasseyHacks XII will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning." },
     { question: "Will food be provided?", answer: "Yes, meals and snacks will be provided free of cost. We will accommodate any food sensitivities to the best of our ability." },
@@ -204,9 +206,10 @@ function App() {
     return () => ctx.revert();
   }, [logoPopped]);
 
+  // Auto-scroll carousel with pause on user interaction
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!carouselScrollRef.current) return;
+      if (!carouselScrollRef.current || isUserInteracting) return;
 
       const el = carouselScrollRef.current;
       const scrollWidth = el.scrollWidth;
@@ -214,19 +217,37 @@ function App() {
       const halfWidth = scrollWidth / 2;
       const currentScroll = el.scrollLeft;
 
-      const target = currentScroll + clientWidth;
+      // Scroll by one image width for smoother progression
+      const imageWidth = clientWidth * 0.35; // Approximate image width
+      const target = currentScroll + imageWidth;
       el.scrollTo({ left: target, behavior: 'smooth' });
 
+      // Reset scroll position for infinite loop
       setTimeout(() => {
         if (!carouselScrollRef.current) return;
-        if (carouselScrollRef.current.scrollLeft >= halfWidth) {
-          carouselScrollRef.current.scrollLeft = carouselScrollRef.current.scrollLeft - halfWidth;
+        if (carouselScrollRef.current.scrollLeft >= halfWidth - clientWidth) {
+          carouselScrollRef.current.scrollTo({ left: 0, behavior: 'auto' });
         }
-      }, 520);
+      }, 600);
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isUserInteracting]);
+
+  // Handle user interaction with carousel
+  const handleCarouselInteraction = () => {
+    setIsUserInteracting(true);
+    
+    // Clear existing timeout
+    if (interactionTimeoutRef.current) {
+      clearTimeout(interactionTimeoutRef.current);
+    }
+    
+    // Resume auto-scroll after 3 seconds of no interaction
+    interactionTimeoutRef.current = setTimeout(() => {
+      setIsUserInteracting(false);
+    }, 3000);
+  };
 
   const getBackgroundColor = () => {
     const colors = [
@@ -438,9 +459,12 @@ function App() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="gallery-title">Gallery</h2>
             <div
               ref={carouselScrollRef}
-              className="flex gap-3 sm:gap-4 md:gap-6 overflow-x-auto scroll-smooth pb-4 scrollbar-hide"
+              className="flex gap-3 sm:gap-4 md:gap-6 overflow-x-auto scroll-smooth pb-4 scrollbar-hide cursor-grab active:cursor-grabbing"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               data-testid="gallery-carousel"
+              onScroll={handleCarouselInteraction}
+              onMouseDown={handleCarouselInteraction}
+              onTouchStart={handleCarouselInteraction}
             >
               {Array.from({ length: carouselSlides * 2 }).map((_, i) => (
                 <div
@@ -461,7 +485,7 @@ function App() {
         <section id="faq" ref={faqRef} className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 drop-shadow-lg" data-testid="faq-title">Frequently Asked Questions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-6 items-start">
               {faqs.map((faq, index) => (
                 <div
                   key={index}

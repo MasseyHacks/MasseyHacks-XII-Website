@@ -88,7 +88,6 @@ body {
   min-height: 100vh;
 }
 
-/* Hide scrollbar for carousel but keep functionality */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -98,12 +97,10 @@ body {
   display: none;
 }
 
-/* Smooth transitions for interactive elements */
 button, a {
   transition: all 0.3s ease;
 }
 
-/* Improved card hover effects */
 .about-card, .faq-item, .sponsor-card {
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
@@ -112,6 +109,3 @@ button, a {
   transform: translateY(-5px);
 }
 
-.faq-item:hover {
-  transform: translateX(5px);
-}
