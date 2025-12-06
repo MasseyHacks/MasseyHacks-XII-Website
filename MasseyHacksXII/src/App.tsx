@@ -331,7 +331,7 @@ function App() {
             <a
               href="#faq"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
+              className="text-white hover:text-cyan-200 transition-colors fontP-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
               data-testid="mobile-nav-faq"
             >
               FAQ
@@ -428,6 +428,10 @@ function App() {
                     <div className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">Seconds</div>
                   </div>
                 </div>
+                <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
+                 MasseyHacks will take place on May 9-10, 2026
+                </div> 
+
                 <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
                   Applications open in February
                 </div>
