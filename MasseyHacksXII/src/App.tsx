@@ -67,7 +67,7 @@ function App() {
   ];
 
   const faqs: FAQ[] = [
-    { question: "How do I apply?", answer: "Applications will open for MasseyHacks XII in February!" },
+    { question: "How do I apply?", answer: "Applications will open for MasseyHacks XII in March!" },
     { question: "Does it cost anything to attend?", answer: "Nope, MasseyHacks is absolutely free to attend!" },
     { question: "Is MasseyHacks in-person or online?", answer: "MasseyHacks XII will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning." },
     { question: "Will food be provided?", answer: "Yes, meals and snacks will be provided free of cost. We will accommodate any food sensitivities to the best of our ability." },
