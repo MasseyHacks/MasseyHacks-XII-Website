@@ -433,7 +433,7 @@ function App() {
                 </div> 
 
                 <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
-                  Applications open in February
+                  Applications open in March!
                 </div>
               </div>
             </div>
