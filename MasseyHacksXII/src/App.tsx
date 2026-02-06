@@ -37,6 +37,47 @@ interface FAQ {
   answer: string;
 }
 
+function MLHTrustBadge() {
+  const [top, setTop] = useState(0);
+
+  useEffect(() => {
+    const update = () => {
+      const nav = document.getElementById("navbar");
+      const h = nav ? nav.getBoundingClientRect().height : 0;
+      setTop(h);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return (
+    <a
+      id="mlh-trust-badge"
+      href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=blue"
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        display: "block",
+        maxWidth: "100px",
+        minWidth: "60px",
+        position: "fixed",
+        right: "50px",
+        top: `${top}px`, // ✅ 0 gap: badge touches navbar bottom
+        width: "10%",
+        zIndex: 10000,
+      }}
+    >
+      <img
+        src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-blue.svg"
+        alt="Major League Hacking 2026 Hackathon Season"
+        style={{ width: "100%", display: "block" }}
+      />
+    </a>
+  );
+}
+
+
 function App() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [logoPopped, setLogoPopped] = useState<boolean>(false);
@@ -273,7 +314,7 @@ function App() {
   return (
     <div className="relative min-h-screen flex flex-col" style={{ background: getBackgroundColor() }}>
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-cyan-500/10 backdrop-blur-md border-b border-cyan-400/40 shadow-lg">
+      <nav id="navbar" className="fixed top-0 left-0 right-0 z-50 bg-cyan-500/10 backdrop-blur-md border-b border-cyan-400/40 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
@@ -347,6 +388,7 @@ function App() {
           </div>
         </div>
       </nav>
+      <MLHTrustBadge />
 
       {/* Background decorations - Bubbles */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
