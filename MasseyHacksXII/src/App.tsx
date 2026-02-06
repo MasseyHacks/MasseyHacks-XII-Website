@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, type ReactNode } from 'react';
+interface FAQ { question: string; answer: ReactNode; }
 import { Fish, Calendar, ChevronDown, Mail, Instagram, Twitter, Youtube, Facebook, Menu, X } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -34,8 +35,9 @@ interface FishItem {
 
 interface FAQ {
   question: string;
-  answer: string;
+  answer: React.ReactNode;
 }
+
 
 function MLHTrustBadge() {
   const [top, setTop] = useState(0);
@@ -107,7 +109,7 @@ function App() {
     new URL('./images/mhX10.webp', import.meta.url).href
   ];
 
-  const faqs: FAQ[] = [
+    const faqs: FAQ[] = [
     { question: "How do I apply?", answer: "Applications will open for MasseyHacks XII in March!" },
     { question: "Does it cost anything to attend?", answer: "Nope, MasseyHacks is absolutely free to attend!" },
     { question: "Is MasseyHacks in-person or online?", answer: "MasseyHacks XII will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning." },
@@ -119,8 +121,26 @@ function App() {
     { question: "Where is MasseyHacks being held?", answer: "MasseyHacks will be held at Vincent Massey Secondary School at 1800 Liberty St, Windsor, ON." },
     { question: "Will MasseyHacks run overnight?", answer: "Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to leave the venue Saturday evening and return to the venue Sunday morning. However, we will still be providing mentorship and support for hackers throughout the night as they continue working on their projects." },
     { question: "What do I need to bring?", answer: "We recommend bringing: a piece of photo ID for check-in (e.g. student card, passport, or drivers license), your laptop, and laptop/phone chargers. Food, beverages, and the rest will all be provided! School computers will be available for use during the event, but we cannot guarantee one for everyone." },
-    { question: "What activities and workshops will be hosted at MasseyHacks?", answer: "You can find the schedule on our website (coming soon)." }
+    { question: "What activities and workshops will be hosted at MasseyHacks?", answer: "You can find the schedule on our website (coming soon)." },
+    {
+      question: "What is the Code of Conduct?",
+      answer: (
+        <>
+          MasseyHacks follows the{" "}
+          <a
+            href="https://mlh.io/code-of-conduct"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors"
+          >
+            MLH Code of Conduct
+          </a>
+          .
+        </>
+      ),
+    },
   ];
+
 
   const carouselSlides = 8;
 
