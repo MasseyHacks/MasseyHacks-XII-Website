@@ -5,6 +5,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import sponsorshipProspectus from './files/Sponsorship Prospectus MHXII.pdf';
 import transparencyReport from './files/transparency-report.pdf';
+import { Code, GraduationCap, Users } from 'lucide-react';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -497,10 +499,37 @@ function App() {
                 <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
                   Applications open in March!
                 </div>
+                <div className="flex flex-col sm:flex-row gap-4 mt-6 sm:mt-8 justify-center items-center">
+                  <button
+                    onClick={() => alert('Hacker applications will open in March 2026!')}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 backdrop-blur-sm"
+                  >
+                    <Code className="w-5 h-5" />
+                    <span>Hacker Application</span>
+                  </button>
+
+                  <button
+                    onClick={() => alert('Mentor applications will open in March 2026!')}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 backdrop-blur-sm"
+                  >
+                    <GraduationCap className="w-5 h-5" />
+                    <span>Mentor Application</span>
+                  </button>
+
+                  <button
+                    onClick={() => alert('Volunteer applications will open in March 2026!')}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 backdrop-blur-sm"
+                  >
+                    <Users className="w-5 h-5" />
+                    <span>Volunteer Application</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        
+
 
         {/* About Section */}
         <section id="about" ref={aboutRef} className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6">
