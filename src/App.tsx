@@ -40,6 +40,26 @@ interface FAQ {
   answer: React.ReactNode;
 }
 
+interface Sponsor {
+  id: string;
+  name: string;
+  logo: string;
+  tier: 'platinum' | 'gold' | 'silver';
+}
+
+const sponsors: Sponsor[] = [
+  { id: '1', name: 'Sponsor 1', logo: '', tier: 'platinum' },
+  { id: '2', name: 'Sponsor 2', logo: '', tier: 'platinum' },
+  { id: '3', name: 'Sponsor 3', logo: '', tier: 'gold' },
+  { id: '4', name: 'Sponsor 4', logo: '', tier: 'gold' },
+  { id: '5', name: 'Sponsor 5', logo: '', tier: 'gold' },
+  { id: '6', name: 'Sponsor 6', logo: '', tier: 'silver' },
+  { id: '7', name: 'Sponsor 7', logo: '', tier: 'silver' },
+  { id: '8', name: 'Sponsor 8', logo: '', tier: 'silver' },
+  { id: '9', name: 'Sponsor 9', logo: '', tier: 'silver' },
+  { id: '10', name: 'Sponsor 10', logo: '', tier: 'silver' },
+];
+
 
 function MLHTrustBadge() {
   const [top, setTop] = useState(0);
@@ -614,9 +634,10 @@ function App() {
         {/* Sponsors Section */}
       <section id="sponsors" ref={sponsorsRef} className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="sponsors-title">Become a Sponsor</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="sponsors-title">Sponsors</h2>
 
-          <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 text-center">
+          {/* Sponsor Information Card */}
+          <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 text-center mb-12 sm:mb-16">
             <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4">
               Interested in becoming a sponsor? Check out our <a href={sponsorshipProspectus} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="sponsorship-link">sponsorship prospectus</a>! Contact us at <a href="mailto:hello@masseyhacks.ca" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors break-all" data-testid="contact-email">hello@masseyhacks.ca</a>
             </p>
@@ -624,6 +645,45 @@ function App() {
               The MasseyHacks XI <a href={transparencyReport} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="transparency-link">transparency report</a> is available here.
             </p>
           </div>
+
+          {/* Platinum Sponsors */}
+          {sponsors.filter(s => s.tier === 'platinum').length > 0 && (
+            <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16 mb-12 sm:mb-16">
+              {sponsors.filter(s => s.tier === 'platinum').map((sponsor) => (
+                <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all w-64 sm:w-80 md:w-96 h-40 sm:h-48 md:h-56 flex items-center justify-center">
+                  {sponsor.logo ? (
+                    <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Gold Sponsors */}
+          {sponsors.filter(s => s.tier === 'gold').length > 0 && (
+            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-10 mb-10 sm:mb-12">
+              {sponsors.filter(s => s.tier === 'gold').map((sponsor) => (
+                <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl p-5 sm:p-6 border border-white/20 hover:bg-white/15 transition-all w-48 sm:w-56 md:w-64 h-32 sm:h-36 md:h-40 flex items-center justify-center">
+                  {sponsor.logo ? (
+                    <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Silver Sponsors */}
+          {sponsors.filter(s => s.tier === 'silver').length > 0 && (
+            <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-5 md:gap-6">
+              {sponsors.filter(s => s.tier === 'silver').map((sponsor) => (
+                <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-lg p-4 sm:p-5 border border-white/20 hover:bg-white/15 transition-all w-32 sm:w-40 md:w-44 h-24 sm:h-28 md:h-32 flex items-center justify-center">
+                  {sponsor.logo ? (
+                    <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
       </main>
