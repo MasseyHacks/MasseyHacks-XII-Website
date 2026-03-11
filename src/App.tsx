@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import sponsorshipProspectus from './files/Sponsorship Prospectus MHXII.pdf';
 import transparencyReport from './files/transparency-report.pdf';
 import { Code, GraduationCap, Users } from 'lucide-react';
+import Schedule from './components/Schedule';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -128,7 +129,15 @@ function App() {
     new URL('./images/mhX7.webp', import.meta.url).href,
     new URL('./images/mhX8.webp', import.meta.url).href,
     new URL('./images/mhX9.webp', import.meta.url).href,
-    new URL('./images/mhX10.webp', import.meta.url).href
+    new URL('./images/mhX10.webp', import.meta.url).href,
+    new URL('./images/mhX11.jpg', import.meta.url).href,
+    new URL('./images/mhX12.jpg', import.meta.url).href,
+    new URL('./images/mhX13.jpg', import.meta.url).href,
+    new URL('./images/mhX14.jpg', import.meta.url).href,
+    new URL('./images/mhX15.jpg', import.meta.url).href,
+    new URL('./images/mhX16.jpg', import.meta.url).href,
+    new URL('./images/mhX17.jpg', import.meta.url).href,
+    new URL('./images/mhX18.jpg', import.meta.url).href
   ];
 
     const faqs: FAQ[] = [
@@ -368,6 +377,7 @@ function App() {
           <div className="hidden md:flex gap-6 lg:gap-8">
             <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-about">About</a>
             <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-gallery">Gallery</a>
+            <a href="#schedule" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-schedule">Schedule</a>
             <a href="#faq" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-faq">FAQ</a>
             <a href="#sponsors" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-sponsors">Sponsors</a>
           </div>
@@ -412,9 +422,17 @@ function App() {
               Gallery
             </a>
             <a
+              href="#schedule"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
+              data-testid="mobile-nav-schedule"
+            >
+              Schedule
+            </a>
+            <a
               href="#faq"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-white hover:text-cyan-200 transition-colors fontP-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
+              className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
               data-testid="mobile-nav-faq"
             >
               FAQ
@@ -595,6 +613,9 @@ function App() {
           </div>
         </section>
 
+        {/* Schedule Section */}
+        <Schedule />
+
         {/* FAQ Section */}
         <section id="faq" ref={faqRef} className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
@@ -713,6 +734,7 @@ function App() {
                 <a href="#" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-home">Home</a>
                 <a href="#about" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-about">About</a>
                 <a href="#gallery" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-gallery">Gallery</a>
+                <a href="#schedule" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-schedule">Schedule</a>
                 <a href="#faq" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-faq">FAQ</a>
                 <a href="#sponsors" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-sponsors">Sponsors</a>
               </nav>
