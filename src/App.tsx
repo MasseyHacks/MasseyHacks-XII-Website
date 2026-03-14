@@ -228,7 +228,11 @@ function App() {
         if (shouldAnimate) {
           gsap.from('.about-card', {
             scrollTrigger: { trigger: aboutRef.current, start: 'top 80%' },
-            y: 100, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out',
+            y: 100,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: 'power3.out',
           });
         }
       }
@@ -238,7 +242,11 @@ function App() {
         if (shouldAnimate) {
           gsap.from('.faq-item', {
             scrollTrigger: { trigger: faqRef.current, start: 'top 80%' },
-            x: -50, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
+            x: -50,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'power2.out',
           });
         }
       }
@@ -248,7 +256,11 @@ function App() {
         if (shouldAnimate) {
           gsap.from('.sponsor-card', {
             scrollTrigger: { trigger: sponsorsRef.current, start: 'top 80%' },
-            scale: 0, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'back.out(1.7)',
+            scale: 0,
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: 'back.out(1.7)',
           });
         }
       }
@@ -302,8 +314,22 @@ function App() {
   };
 
   const tierConfig = {
-    silver: { grid: 'grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10', mb: 'mb-10 sm:mb-14', padding: 'p-6 sm:p-8 md:p-10', rounded: 'rounded-xl', imgSize: 'h-28 sm:h-36 md:h-44' },
-    bronze: { grid: 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8', mb: 'mb-0', padding: 'p-4 sm:p-6 md:p-8', rounded: 'rounded-xl', imgSize: 'h-20 sm:h-28 md:h-36' },
+    silver: {
+      grid: 'grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 justify-items-center',
+      mb: 'mb-10 sm:mb-14',
+      padding: 'p-6 sm:p-8 md:p-10',
+      rounded: 'rounded-xl',
+      imgSize: 'h-28 sm:h-36 md:h-44',
+      cardWidth: 'w-full max-w-md sm:max-w-none',
+    },
+    bronze: {
+      grid: 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 justify-items-center',
+      mb: 'mb-0',
+      padding: 'p-3 sm:p-5 md:p-8',
+      rounded: 'rounded-xl',
+      imgSize: 'h-16 sm:h-24 md:h-36',
+      cardWidth: 'w-full max-w-[160px] sm:max-w-none',
+    },
   };
 
   const tiers: Array<'silver' | 'bronze'> = ['silver', 'bronze'];
@@ -544,47 +570,90 @@ function App() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="sponsors-title">
               Sponsors
             </h2>
+
             <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 text-center mb-12 sm:mb-16">
               <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4">
                 Interested in becoming a sponsor? Check out our{' '}
-                <a href={sponsorshipProspectus} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="sponsorship-link">
+                <a
+                  href={sponsorshipProspectus}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors"
+                  data-testid="sponsorship-link"
+                >
                   sponsorship prospectus
                 </a>
                 ! Contact us at{' '}
-                <a href="mailto:hello@masseyhacks.ca" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors break-all" data-testid="contact-email">
+                <a
+                  href="mailto:hello@masseyhacks.ca"
+                  className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors break-all"
+                  data-testid="contact-email"
+                >
                   hello@masseyhacks.ca
                 </a>
               </p>
               <p className="text-white text-sm sm:text-base md:text-lg">
                 The MasseyHacks XI{' '}
-                <a href={transparencyReport} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="transparency-link">
+                <a
+                  href={transparencyReport}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors"
+                  data-testid="transparency-link"
+                >
                   transparency report
                 </a>{' '}
                 is available here.
               </p>
             </div>
 
-            {tiers.map((tier) => {
-              const tierSponsors = sponsors.filter((s) => s.tier === tier);
-              if (tierSponsors.length === 0) return null;
-              const cfg = tierConfig[tier];
-              return (
-                <div key={tier} className={cfg.mb}>
-                  <div className={cfg.grid}>
-                    {tierSponsors.map((sponsor) => (
-                      <div
-                        key={sponsor.id}
-                        className={`sponsor-card bg-white/10 backdrop-blur-md ${cfg.rounded} ${cfg.padding} border border-white/20 hover:bg-white/15 transition-all w-full flex items-center justify-center`}
-                      >
-                        {sponsor.logo ? (
-                          <img src={sponsor.logo} alt={sponsor.name} className={`w-full ${cfg.imgSize} object-contain`} />
-                        ) : null}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+            {/* Silver */}
+            <div className="mb-14 sm:mb-20">
+              <h3 className="text-center text-white/90 font-bold tracking-[0.3em] uppercase text-sm sm:text-base md:text-lg mb-5 sm:mb-7">
+                Silver
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 md:gap-8">
+                {sponsors
+                  .filter((s) => s.tier === 'silver')
+                  .map((sponsor) => (
+                    <div
+                      key={sponsor.id}
+                      className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 p-6 sm:p-8 md:p-10 min-h-[180px] sm:min-h-[220px] md:min-h-[250px] flex items-center justify-center hover:bg-white/15 transition-all"
+                    >
+                      <img
+                        src={sponsor.logo}
+                        alt={sponsor.name}
+                        className="w-full max-h-24 sm:max-h-32 md:max-h-40 object-contain"
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            {/* Bronze */}
+            <div>
+              <h3 className="text-center text-white/90 font-bold tracking-[0.3em] uppercase text-sm sm:text-base md:text-lg mb-5 sm:mb-7">
+                Bronze
+              </h3>
+
+              <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4 md:gap-6">
+                {sponsors
+                  .filter((s) => s.tier === 'bronze')
+                  .map((sponsor) => (
+                    <div
+                      key={sponsor.id}
+                      className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 p-3 sm:p-4 md:p-5 min-h-[100px] sm:min-h-[120px] md:min-h-[145px] flex items-center justify-center hover:bg-white/15 transition-all"
+                    >
+                      <img
+                        src={sponsor.logo}
+                        alt={sponsor.name}
+                        className="w-full max-h-12 sm:max-h-16 md:max-h-20 object-contain"
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
         </section>
       </main>
