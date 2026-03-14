@@ -88,7 +88,7 @@ function MLHTrustBadge() {
         minWidth: "60px",
         position: "fixed",
         right: "50px",
-        top: `${top}px`, // ✅ 0 gap: badge touches navbar bottom
+        top: `${top}px`,
         width: "10%",
         zIndex: 10000,
       }}
@@ -140,7 +140,7 @@ function App() {
     new URL('./images/mhX18.jpg', import.meta.url).href
   ];
 
-    const faqs: FAQ[] = [
+  const faqs: FAQ[] = [
     { question: "How do I apply?", answer: "Applications will open for MasseyHacks XII in March!" },
     { question: "Does it cost anything to attend?", answer: "Nope, MasseyHacks is absolutely free to attend!" },
     { question: "Is MasseyHacks in-person or online?", answer: "MasseyHacks XII will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning." },
@@ -308,16 +308,12 @@ function App() {
       const clientWidth = el.clientWidth;
       const currentScroll = el.scrollLeft;
 
-      // Calculate scroll amount based on viewport width
       const scrollAmount = Math.min(clientWidth * 0.4, 400);
       const target = currentScroll + scrollAmount;
       
-      // Check if we're near the end and need to loop
       if (target >= scrollWidth - clientWidth) {
-        // Jump back to start without animation
         el.scrollTo({ left: 0, behavior: 'auto' });
       } else {
-        // Normal smooth scroll
         el.scrollTo({ left: target, behavior: 'smooth' });
       }
     }, 3000);
@@ -325,16 +321,13 @@ function App() {
     return () => clearInterval(interval);
   }, [isUserInteracting]);
 
-  // Handle user interaction with carousel
   const handleCarouselInteraction = () => {
     setIsUserInteracting(true);
     
-    // Clear existing timeout
     if (interactionTimeoutRef.current) {
       clearTimeout(interactionTimeoutRef.current);
     }
     
-    // Resume auto-scroll after 3 seconds of no interaction
     interactionTimeoutRef.current = setTimeout(() => {
       setIsUserInteracting(false);
     }, 3000);
@@ -373,7 +366,7 @@ function App() {
             <span className="text-white font-bold text-base sm:text-lg md:text-2xl drop-shadow-lg">MasseyHacks</span>
           </div>
 
-          {/* Desktop Navigation - Hidden on mobile */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex gap-6 lg:gap-8">
             <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-about">About</a>
             <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-gallery">Gallery</a>
@@ -404,47 +397,11 @@ function App() {
           }`}
         >
           <div className="px-4 py-4 bg-cyan-500/10 backdrop-blur-md flex flex-col gap-3">
-
-            <a
-              href="#about"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
-              data-testid="mobile-nav-about"
-            >
-              About
-            </a>
-            <a
-              href="#gallery"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
-              data-testid="mobile-nav-gallery"
-            >
-              Gallery
-            </a>
-            <a
-              href="#schedule"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
-              data-testid="mobile-nav-schedule"
-            >
-              Schedule
-            </a>
-            <a
-              href="#faq"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
-              data-testid="mobile-nav-faq"
-            >
-              FAQ
-            </a>
-            <a
-              href="#sponsors"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg"
-              data-testid="mobile-nav-sponsors"
-            >
-              Sponsors
-            </a>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-about">About</a>
+            <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-gallery">Gallery</a>
+            <a href="#schedule" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-schedule">Schedule</a>
+            <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-faq">FAQ</a>
+            <a href="#sponsors" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-sponsors">Sponsors</a>
           </div>
         </div>
       </nav>
@@ -467,7 +424,6 @@ function App() {
           />
         ))}
 
-        {/* Multi-colored Fish swimming horizontally */}
         {fish.map((fishItem) => (
           <div
             key={fishItem.id}
@@ -498,14 +454,11 @@ function App() {
             <div className={`logo-content transition-all duration-1000 ${logoPopped ? 'opacity-100 scale-100' : 'opacity-0 scale-0'} w-full`}>
               <div className="mb-6 sm:mb-8 md:mb-12">
                 <div className="w-28 h-28 sm:w-40 sm:h-40 md:w-72 md:h-72 mx-auto rounded-full bg-white/0 backdrop-blur-sm border-4 border-white/50 flex items-center justify-center shadow-2xl">
-  <img
-    src={new URL('./images/MHXIILOGO.PNG', import.meta.url).href}
-    className="w-32 sm:w-48 md:w-[260px] h-auto mx-auto object-contain"
-  />
-</div>
-
-
-
+                  <img
+                    src={new URL('./images/MHXIILOGO.PNG', import.meta.url).href}
+                    className="w-32 sm:w-48 md:w-[260px] h-auto mx-auto object-contain"
+                  />
+                </div>
 
                 <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white text-center mt-4 sm:mt-6 md:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-2 sm:px-4" data-testid="hero-title">MasseyHacks XII</h1>
               </div>
@@ -531,32 +484,34 @@ function App() {
                   </div>
                 </div>
                 <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
-                 MasseyHacks will take place on May 9-10, 2026
-                </div> 
-
+                  MasseyHacks will take place on May 9-10, 2026
+                </div>
                 <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
                   Applications open in March!
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mt-6 sm:mt-8 justify-center items-center">
                   <button
-                    onClick={() => alert('Hacker applications will open in March 2026!')}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 backdrop-blur-sm"
+                    disabled
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/40 text-white/60 font-semibold rounded-xl border border-cyan-400/30 cursor-not-allowed backdrop-blur-sm"
+                    title="Applications opening soon!"
                   >
                     <Code className="w-5 h-5" />
                     <span>Hacker Application</span>
                   </button>
 
                   <button
-                    onClick={() => alert('Mentor applications will open in March 2026!')}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 backdrop-blur-sm"
+                    disabled
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/40 text-white/60 font-semibold rounded-xl border border-cyan-400/30 cursor-not-allowed backdrop-blur-sm"
+                    title="Applications opening soon!"
                   >
                     <GraduationCap className="w-5 h-5" />
                     <span>Mentor Application</span>
                   </button>
 
                   <button
-                    onClick={() => alert('Volunteer applications will open in March 2026!')}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 backdrop-blur-sm"
+                    disabled
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/40 text-white/60 font-semibold rounded-xl border border-cyan-400/30 cursor-not-allowed backdrop-blur-sm"
+                    title="Applications opening soon!"
                   >
                     <Users className="w-5 h-5" />
                     <span>Volunteer Application</span>
@@ -566,8 +521,6 @@ function App() {
             </div>
           </div>
         </div>
-        
-
 
         {/* About Section */}
         <section id="about" ref={aboutRef} className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6">
@@ -653,60 +606,60 @@ function App() {
         </section>
 
         {/* Sponsors Section */}
-      <section id="sponsors" ref={sponsorsRef} className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="sponsors-title">Sponsors</h2>
+        <section id="sponsors" ref={sponsorsRef} className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="sponsors-title">Sponsors</h2>
 
-          {/* Sponsor Information Card */}
-          <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 text-center mb-12 sm:mb-16">
-            <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4">
-              Interested in becoming a sponsor? Check out our <a href={sponsorshipProspectus} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="sponsorship-link">sponsorship prospectus</a>! Contact us at <a href="mailto:hello@masseyhacks.ca" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors break-all" data-testid="contact-email">hello@masseyhacks.ca</a>
-            </p>
-            <p className="text-white text-sm sm:text-base md:text-lg">
-              The MasseyHacks XI <a href={transparencyReport} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="transparency-link">transparency report</a> is available here.
-            </p>
+            {/* Sponsor Information Card */}
+            <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 text-center mb-12 sm:mb-16">
+              <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4">
+                Interested in becoming a sponsor? Check out our <a href={sponsorshipProspectus} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="sponsorship-link">sponsorship prospectus</a>! Contact us at <a href="mailto:hello@masseyhacks.ca" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors break-all" data-testid="contact-email">hello@masseyhacks.ca</a>
+              </p>
+              <p className="text-white text-sm sm:text-base md:text-lg">
+                The MasseyHacks XI <a href={transparencyReport} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="transparency-link">transparency report</a> is available here.
+              </p>
+            </div>
+
+            {/* Platinum Sponsors */}
+            {sponsors.filter(s => s.tier === 'platinum').length > 0 && (
+              <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16 mb-12 sm:mb-16">
+                {sponsors.filter(s => s.tier === 'platinum').map((sponsor) => (
+                  <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all w-64 sm:w-80 md:w-96 h-40 sm:h-48 md:h-56 flex items-center justify-center">
+                    {sponsor.logo ? (
+                      <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Gold Sponsors */}
+            {sponsors.filter(s => s.tier === 'gold').length > 0 && (
+              <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-10 mb-10 sm:mb-12">
+                {sponsors.filter(s => s.tier === 'gold').map((sponsor) => (
+                  <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl p-5 sm:p-6 border border-white/20 hover:bg-white/15 transition-all w-48 sm:w-56 md:w-64 h-32 sm:h-36 md:h-40 flex items-center justify-center">
+                    {sponsor.logo ? (
+                      <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Silver Sponsors */}
+            {sponsors.filter(s => s.tier === 'silver').length > 0 && (
+              <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-5 md:gap-6">
+                {sponsors.filter(s => s.tier === 'silver').map((sponsor) => (
+                  <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-lg p-4 sm:p-5 border border-white/20 hover:bg-white/15 transition-all w-32 sm:w-40 md:w-44 h-24 sm:h-28 md:h-32 flex items-center justify-center">
+                    {sponsor.logo ? (
+                      <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-
-          {/* Platinum Sponsors */}
-          {sponsors.filter(s => s.tier === 'platinum').length > 0 && (
-            <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16 mb-12 sm:mb-16">
-              {sponsors.filter(s => s.tier === 'platinum').map((sponsor) => (
-                <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all w-64 sm:w-80 md:w-96 h-40 sm:h-48 md:h-56 flex items-center justify-center">
-                  {sponsor.logo ? (
-                    <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Gold Sponsors */}
-          {sponsors.filter(s => s.tier === 'gold').length > 0 && (
-            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-10 mb-10 sm:mb-12">
-              {sponsors.filter(s => s.tier === 'gold').map((sponsor) => (
-                <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl p-5 sm:p-6 border border-white/20 hover:bg-white/15 transition-all w-48 sm:w-56 md:w-64 h-32 sm:h-36 md:h-40 flex items-center justify-center">
-                  {sponsor.logo ? (
-                    <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Silver Sponsors */}
-          {sponsors.filter(s => s.tier === 'silver').length > 0 && (
-            <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-5 md:gap-6">
-              {sponsors.filter(s => s.tier === 'silver').map((sponsor) => (
-                <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-lg p-4 sm:p-5 border border-white/20 hover:bg-white/15 transition-all w-32 sm:w-40 md:w-44 h-24 sm:h-28 md:h-32 flex items-center justify-center">
-                  {sponsor.logo ? (
-                    <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+        </section>
       </main>
 
       {/* Footer */}
@@ -786,8 +739,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
