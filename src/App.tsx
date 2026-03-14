@@ -1,13 +1,18 @@
 import { useEffect, useState, useRef, type ReactNode } from 'react';
-interface FAQ { question: string; answer: ReactNode; }
-import { Fish, Calendar, ChevronDown, Mail, Instagram, Twitter, Youtube, Facebook, Menu, X } from 'lucide-react';
+import { Fish, Calendar, ChevronDown, Mail, Instagram, Twitter, Youtube, Facebook, Menu, X, Code, GraduationCap, Users } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import sponsorshipProspectus from './files/Sponsorship Prospectus MHXII.pdf';
 import transparencyReport from './files/transparency-report.pdf';
-import { Code, GraduationCap, Users } from 'lucide-react';
-import Schedule from './components/Schedule';
+// import Schedule from './components/Schedule';
 
+// Sponsor logo imports
+import brilliantLogo from './sponsors/Bronze/Brilliant.png';
+import codecrafterLogo from './sponsors/Bronze/codecrafter.png';
+import laaLogo from './sponsors/Bronze/laa.png';
+import mnsiLogo from './sponsors/Bronze/Mnsi.png';
+import lendCityLogo from './sponsors/Silver/LendCity.png';
+import waterlooscienceLogo from './sponsors/Silver/waterlooscience.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,42 +43,37 @@ interface FishItem {
 
 interface FAQ {
   question: string;
-  answer: React.ReactNode;
+  answer: ReactNode;
 }
 
 interface Sponsor {
   id: string;
   name: string;
   logo: string;
-  tier: 'platinum' | 'gold' | 'silver';
+  tier: 'silver' | 'bronze';
 }
 
 const sponsors: Sponsor[] = [
-  { id: '1', name: 'Sponsor 1', logo: '', tier: 'platinum' },
-  { id: '2', name: 'Sponsor 2', logo: '', tier: 'platinum' },
-  { id: '3', name: 'Sponsor 3', logo: '', tier: 'gold' },
-  { id: '4', name: 'Sponsor 4', logo: '', tier: 'gold' },
-  { id: '5', name: 'Sponsor 5', logo: '', tier: 'gold' },
-  { id: '6', name: 'Sponsor 6', logo: '', tier: 'silver' },
-  { id: '7', name: 'Sponsor 7', logo: '', tier: 'silver' },
-  { id: '8', name: 'Sponsor 8', logo: '', tier: 'silver' },
-  { id: '9', name: 'Sponsor 9', logo: '', tier: 'silver' },
-  { id: '10', name: 'Sponsor 10', logo: '', tier: 'silver' },
+  { id: '1', name: 'LendCity', logo: lendCityLogo, tier: 'silver' },
+  { id: '2', name: 'Waterloo Science', logo: waterlooscienceLogo, tier: 'silver' },
+  { id: '3', name: 'Brilliant', logo: brilliantLogo, tier: 'bronze' },
+  { id: '4', name: 'CodeCrafter', logo: codecrafterLogo, tier: 'bronze' },
+  { id: '5', name: 'LAA', logo: laaLogo, tier: 'bronze' },
+  { id: '6', name: 'MNSI', logo: mnsiLogo, tier: 'bronze' },
 ];
-
 
 function MLHTrustBadge() {
   const [top, setTop] = useState(0);
 
   useEffect(() => {
     const update = () => {
-      const nav = document.getElementById("navbar");
+      const nav = document.getElementById('navbar');
       const h = nav ? nav.getBoundingClientRect().height : 0;
       setTop(h);
     };
     update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
   }, []);
 
   return (
@@ -83,25 +83,24 @@ function MLHTrustBadge() {
       target="_blank"
       rel="noopener noreferrer"
       style={{
-        display: "block",
-        maxWidth: "100px",
-        minWidth: "60px",
-        position: "fixed",
-        right: "50px",
+        display: 'block',
+        maxWidth: '100px',
+        minWidth: '60px',
+        position: 'fixed',
+        right: '50px',
         top: `${top}px`,
-        width: "10%",
+        width: '10%',
         zIndex: 10000,
       }}
     >
       <img
         src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-blue.svg"
         alt="Major League Hacking 2026 Hackathon Season"
-        style={{ width: "100%", display: "block" }}
+        style={{ width: '100%', display: 'block' }}
       />
     </a>
   );
 }
-
 
 function App() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -120,7 +119,7 @@ function App() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [isUserInteracting, setIsUserInteracting] = useState<boolean>(false);
   const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const imageSrcs = [
     new URL('./images/mhX1.webp', import.meta.url).href,
     new URL('./images/mhX2.webp', import.meta.url).href,
@@ -137,33 +136,28 @@ function App() {
     new URL('./images/mhX15.jpg', import.meta.url).href,
     new URL('./images/mhX16.jpg', import.meta.url).href,
     new URL('./images/mhX17.jpg', import.meta.url).href,
-    new URL('./images/mhX18.jpg', import.meta.url).href
+    new URL('./images/mhX18.jpg', import.meta.url).href,
   ];
 
   const faqs: FAQ[] = [
-    { question: "How do I apply?", answer: "Applications will open for MasseyHacks XII in March!" },
-    { question: "Does it cost anything to attend?", answer: "Nope, MasseyHacks is absolutely free to attend!" },
-    { question: "Is MasseyHacks in-person or online?", answer: "MasseyHacks XII will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning." },
-    { question: "Will food be provided?", answer: "Yes, meals and snacks will be provided free of cost. We will accommodate any food sensitivities to the best of our ability." },
-    { question: "Do I need a team to participate?", answer: "You don't need to be in a team to participate in MasseyHacks! It's up to you whether you choose to fly solo or group up with your friends. And who knows: you might meet some cool new people during the event!" },
-    { question: "Who can participate?", answer: "MasseyHacks welcomes students from grades 7-12." },
-    { question: "Do I need programming experience to participate?", answer: "Not at all! At MasseyHacks, we'll teach you the fundamentals you need to know to make your project through beginner workshops and mentors who will assist you if you ever need any help." },
-    { question: "How many people can I have on my team?", answer: "You can have as many as 4 people per team!" },
-    { question: "Where is MasseyHacks being held?", answer: "MasseyHacks will be held at Vincent Massey Secondary School at 1800 Liberty St, Windsor, ON." },
-    { question: "Will MasseyHacks run overnight?", answer: "Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to leave the venue Saturday evening and return to the venue Sunday morning. However, we will still be providing mentorship and support for hackers throughout the night as they continue working on their projects." },
-    { question: "What do I need to bring?", answer: "We recommend bringing: a piece of photo ID for check-in (e.g. student card, passport, or drivers license), your laptop, and laptop/phone chargers. Food, beverages, and the rest will all be provided! School computers will be available for use during the event, but we cannot guarantee one for everyone." },
-    { question: "What activities and workshops will be hosted at MasseyHacks?", answer: "You can find the schedule on our website (coming soon)." },
+    { question: 'How do I apply?', answer: 'Applications are open! Click the Hacker Application button above.' },
+    { question: 'Does it cost anything to attend?', answer: 'Nope, MasseyHacks is absolutely free to attend!' },
+    { question: 'Is MasseyHacks in-person or online?', answer: 'MasseyHacks XII will be in-person. Hackers will not have the option to participate fully virtually as we return to a more traditional form of MasseyHacks. Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to go home for the night and return in the morning.' },
+    { question: 'Will food be provided?', answer: 'Yes, meals and snacks will be provided free of cost. We will accommodate any food sensitivities to the best of our ability.' },
+    { question: 'Do I need a team to participate?', answer: "You don't need to be in a team to participate in MasseyHacks! It's up to you whether you choose to fly solo or group up with your friends. And who knows: you might meet some cool new people during the event!" },
+    { question: 'Who can participate?', answer: 'MasseyHacks welcomes students from grades 7-12.' },
+    { question: 'Do I need programming experience to participate?', answer: "Not at all! At MasseyHacks, we'll teach you the fundamentals you need to know to make your project through beginner workshops and mentors who will assist you if you ever need any help." },
+    { question: 'How many people can I have on my team?', answer: 'You can have as many as 4 people per team!' },
+    { question: 'Where is MasseyHacks being held?', answer: 'MasseyHacks will be held at Vincent Massey Secondary School at 1800 Liberty St, Windsor, ON.' },
+    { question: 'Will MasseyHacks run overnight?', answer: 'Unfortunately, we cannot provide overnight accommodation at the MasseyHacks venue, so hackers will be required to leave the venue Saturday evening and return to the venue Sunday morning. However, we will still be providing mentorship and support for hackers throughout the night as they continue working on their projects.' },
+    { question: 'What do I need to bring?', answer: 'We recommend bringing: a piece of photo ID for check-in (e.g. student card, passport, or drivers license), your laptop, and laptop/phone chargers. Food, beverages, and the rest will all be provided! School computers will be available for use during the event, but we cannot guarantee one for everyone.' },
+    { question: 'What activities and workshops will be hosted at MasseyHacks?', answer: 'You can find the schedule on our website (coming soon).' },
     {
-      question: "What is the Code of Conduct?",
+      question: 'What is the Code of Conduct?',
       answer: (
         <>
-          MasseyHacks follows the{" "}
-          <a
-            href="https://mlh.io/code-of-conduct"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors"
-          >
+          MasseyHacks follows the{' '}
+          <a href="https://mlh.io/code-of-conduct" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors">
             MLH Code of Conduct
           </a>
           .
@@ -172,27 +166,22 @@ function App() {
     },
   ];
 
-
   const carouselSlides = 8;
 
   useEffect(() => {
     const targetDate = new Date('May 9, 2026 00:00:00').getTime();
-
     const updateCountdown = () => {
       const now = new Date().getTime();
       const distance = targetDate - now;
-
       setTimeLeft({
         days: Math.floor(distance / (1000 * 60 * 60 * 24)),
         hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
         minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000)
+        seconds: Math.floor((distance % (1000 * 60)) / 1000),
       });
     };
-
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -204,7 +193,7 @@ function App() {
       size: Math.random() * 30 + 10,
       delay: Math.random() * 5,
       duration: Math.random() * 10 + 15,
-      zIndex: Math.random() > 0.5 ? 10 : 1
+      zIndex: Math.random() > 0.5 ? 10 : 1,
     }));
     setBubbles(newBubbles);
 
@@ -214,14 +203,11 @@ function App() {
       y: Math.random() * 90 + 5,
       delay: Math.random() * 5,
       duration: Math.random() * 15 + 10,
-      color: fishColors[Math.floor(Math.random() * fishColors.length)]
+      color: fishColors[Math.floor(Math.random() * fishColors.length)],
     }));
     setFish(newFish);
 
-    const timer = setTimeout(() => {
-      setLogoPopped(true);
-    }, 3000);
-
+    const timer = setTimeout(() => setLogoPopped(true), 3000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -231,13 +217,7 @@ function App() {
 
       if (logoPopped && heroRef.current) {
         if (shouldAnimate) {
-          gsap.from('.countdown-item', {
-            scale: 0,
-            opacity: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'back.out(1.7)'
-          });
+          gsap.from('.countdown-item', { scale: 0, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'back.out(1.7)' });
         } else {
           gsap.set('.countdown-item', { opacity: 1, scale: 1 });
         }
@@ -247,15 +227,8 @@ function App() {
         gsap.set('.about-card', { opacity: 1, y: 0 });
         if (shouldAnimate) {
           gsap.from('.about-card', {
-            scrollTrigger: {
-              trigger: aboutRef.current,
-              start: 'top 80%',
-            },
-            y: 100,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: 'power3.out'
+            scrollTrigger: { trigger: aboutRef.current, start: 'top 80%' },
+            y: 100, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out',
           });
         }
       }
@@ -264,15 +237,8 @@ function App() {
         gsap.set('.faq-item', { opacity: 1, x: 0 });
         if (shouldAnimate) {
           gsap.from('.faq-item', {
-            scrollTrigger: {
-              trigger: faqRef.current,
-              start: 'top 80%',
-            },
-            x: -50,
-            opacity: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'power2.out'
+            scrollTrigger: { trigger: faqRef.current, start: 'top 80%' },
+            x: -50, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out',
           });
         }
       }
@@ -281,15 +247,8 @@ function App() {
         gsap.set('.sponsor-card', { opacity: 1, scale: 1 });
         if (shouldAnimate) {
           gsap.from('.sponsor-card', {
-            scrollTrigger: {
-              trigger: sponsorsRef.current,
-              start: 'top 80%',
-            },
-            scale: 0,
-            opacity: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: 'back.out(1.7)'
+            scrollTrigger: { trigger: sponsorsRef.current, start: 'top 80%' },
+            scale: 0, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'back.out(1.7)',
           });
         }
       }
@@ -298,39 +257,28 @@ function App() {
     return () => ctx.revert();
   }, [logoPopped]);
 
-  // Auto-scroll carousel with pause on user interaction
   useEffect(() => {
     const interval = setInterval(() => {
       if (!carouselScrollRef.current || isUserInteracting) return;
-
       const el = carouselScrollRef.current;
       const scrollWidth = el.scrollWidth;
       const clientWidth = el.clientWidth;
       const currentScroll = el.scrollLeft;
-
       const scrollAmount = Math.min(clientWidth * 0.4, 400);
       const target = currentScroll + scrollAmount;
-      
       if (target >= scrollWidth - clientWidth) {
         el.scrollTo({ left: 0, behavior: 'auto' });
       } else {
         el.scrollTo({ left: target, behavior: 'smooth' });
       }
     }, 3000);
-
     return () => clearInterval(interval);
   }, [isUserInteracting]);
 
   const handleCarouselInteraction = () => {
     setIsUserInteracting(true);
-    
-    if (interactionTimeoutRef.current) {
-      clearTimeout(interactionTimeoutRef.current);
-    }
-    
-    interactionTimeoutRef.current = setTimeout(() => {
-      setIsUserInteracting(false);
-    }, 3000);
+    if (interactionTimeoutRef.current) clearTimeout(interactionTimeoutRef.current);
+    interactionTimeoutRef.current = setTimeout(() => setIsUserInteracting(false), 3000);
   };
 
   const getBackgroundColor = () => {
@@ -342,72 +290,72 @@ function App() {
       { stop: 0.65, color: '#2e4579' },
       { stop: 0.8, color: '#12306a' },
       { stop: 0.9, color: '#002332' },
-      { stop: 1, color: '#00101e' }
+      { stop: 1, color: '#00101e' },
     ];
-
     let gradientString = 'linear-gradient(to bottom, ';
     colors.forEach((c, i) => {
       gradientString += `${c.color} ${c.stop * 100}%`;
       if (i < colors.length - 1) gradientString += ', ';
     });
     gradientString += ')';
-
     return gradientString;
   };
+
+  const tierConfig = {
+    silver: { grid: 'grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10', mb: 'mb-10 sm:mb-14', padding: 'p-6 sm:p-8 md:p-10', rounded: 'rounded-xl', imgSize: 'h-28 sm:h-36 md:h-44' },
+    bronze: { grid: 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8', mb: 'mb-0', padding: 'p-4 sm:p-6 md:p-8', rounded: 'rounded-xl', imgSize: 'h-20 sm:h-28 md:h-36' },
+  };
+
+  const tiers: Array<'silver' | 'bronze'> = ['silver', 'bronze'];
 
   return (
     <div className="relative min-h-screen flex flex-col" style={{ background: getBackgroundColor() }}>
       {/* Navbar */}
       <nav id="navbar" className="fixed top-0 left-0 right-0 z-50 bg-cyan-500/10 backdrop-blur-md border-b border-cyan-400/40 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between">
-          {/* Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
             <img src={new URL('./images/MHXIILOGO.PNG', import.meta.url).href} alt="MasseyHacks Logo" className="w-8 h-8 sm:w-10 sm:h-10 md:w-[50px] md:h-[50px] object-contain" />
             <span className="text-white font-bold text-base sm:text-lg md:text-2xl drop-shadow-lg">MasseyHacks</span>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex gap-6 lg:gap-8">
-            <a href="#about" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-about">About</a>
-            <a href="#gallery" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-gallery">Gallery</a>
-            <a href="#schedule" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-schedule">Schedule</a>
-            <a href="#faq" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-faq">FAQ</a>
-            <a href="#sponsors" className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base" data-testid="nav-sponsors">Sponsors</a>
+            {['about', 'gallery', 'schedule', 'faq', 'sponsors'].map((section) => (
+              <a key={section} href={`#${section}`} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-sm lg:text-base capitalize" data-testid={`nav-${section}`}>
+                {section}
+              </a>
+            ))}
           </div>
 
-          {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-all"
             aria-label="Toggle menu"
             data-testid="mobile-menu-toggle"
           >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu Dropdown */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            mobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-          }`}
-        >
+        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}`}>
           <div className="px-4 py-4 bg-cyan-500/10 backdrop-blur-md flex flex-col gap-3">
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-about">About</a>
-            <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-gallery">Gallery</a>
-            <a href="#schedule" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-schedule">Schedule</a>
-            <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-faq">FAQ</a>
-            <a href="#sponsors" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg" data-testid="mobile-nav-sponsors">Sponsors</a>
+            {['about', 'gallery', 'schedule', 'faq', 'sponsors'].map((section) => (
+              <a
+                key={section}
+                href={`#${section}`}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-white hover:text-cyan-200 transition-colors font-semibold drop-shadow-md text-base py-2 hover:bg-white/10 px-3 rounded-lg capitalize"
+                data-testid={`mobile-nav-${section}`}
+              >
+                {section}
+              </a>
+            ))}
           </div>
         </div>
       </nav>
+
       <MLHTrustBadge />
 
-      {/* Background decorations - Bubbles */}
+      {/* Background decorations */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
         {bubbles.map((bubble) => (
           <div
@@ -419,11 +367,10 @@ function App() {
               width: `${bubble.size}px`,
               height: `${bubble.size}px`,
               animation: `float ${bubble.duration}s ease-in-out ${bubble.delay}s infinite`,
-              zIndex: bubble.zIndex
+              zIndex: bubble.zIndex,
             }}
           />
         ))}
-
         {fish.map((fishItem) => (
           <div
             key={fishItem.id}
@@ -432,7 +379,7 @@ function App() {
               top: `${fishItem.y}%`,
               left: '-100px',
               animation: `swim ${fishItem.duration}s linear ${fishItem.delay}s infinite`,
-              zIndex: 5
+              zIndex: 5,
             }}
           >
             <Fish className="w-8 h-8 sm:w-10 sm:h-10" style={{ color: fishItem.color, filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.3))' }} />
@@ -440,7 +387,6 @@ function App() {
         ))}
       </div>
 
-      {/* Main Content Wrapper */}
       <main className="flex-1 relative" style={{ zIndex: 1 }}>
         {/* Hero Section */}
         <div ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-24 sm:pt-28 pb-12 px-4 sm:px-6">
@@ -457,31 +403,23 @@ function App() {
                   <img
                     src={new URL('./images/MHXIILOGO.PNG', import.meta.url).href}
                     className="w-32 sm:w-48 md:w-[260px] h-auto mx-auto object-contain"
+                    alt="MasseyHacks XII Logo"
                   />
                 </div>
-
-                <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white text-center mt-4 sm:mt-6 md:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-2 sm:px-4" data-testid="hero-title">MasseyHacks XII</h1>
+                <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white text-center mt-4 sm:mt-6 md:mt-10 mb-2 sm:mb-3 drop-shadow-2xl px-2 sm:px-4" data-testid="hero-title">
+                  MasseyHacks XII
+                </h1>
               </div>
 
               {/* Countdown */}
               <div className="bg-cyan-500/10 backdrop-blur-md rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 border border-white/30 mb-4 sm:mb-6 shadow-2xl w-full" data-testid="countdown-section">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 xs:gap-3 sm:gap-4 md:gap-8 mb-3 sm:mb-4 md:mb-6">
-                  <div className="countdown-item text-center" data-testid="countdown-days">
-                    <div className="text-xl xs:text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.days}</div>
-                    <div className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">Days</div>
-                  </div>
-                  <div className="countdown-item text-center" data-testid="countdown-hours">
-                    <div className="text-xl xs:text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.hours}</div>
-                    <div className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">Hours</div>
-                  </div>
-                  <div className="countdown-item text-center" data-testid="countdown-minutes">
-                    <div className="text-xl xs:text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.minutes}</div>
-                    <div className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">Minutes</div>
-                  </div>
-                  <div className="countdown-item text-center" data-testid="countdown-seconds">
-                    <div className="text-xl xs:text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft.seconds}</div>
-                    <div className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">Seconds</div>
-                  </div>
+                  {(['days', 'hours', 'minutes', 'seconds'] as const).map((unit) => (
+                    <div key={unit} className="countdown-item text-center" data-testid={`countdown-${unit}`}>
+                      <div className="text-xl xs:text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">{timeLeft[unit]}</div>
+                      <div className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">{unit}</div>
+                    </div>
+                  ))}
                 </div>
                 <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
                   MasseyHacks will take place on May 9-10, 2026
@@ -497,7 +435,6 @@ function App() {
                     <Code className="w-5 h-5" />
                     <span>Hacker Application</span>
                   </button>
-
                   <button
                     onClick={() => window.open('https://forms.gle/pnfMqnn2fdMAgRHb7', '_blank')}
                     className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 backdrop-blur-sm"
@@ -505,7 +442,6 @@ function App() {
                     <GraduationCap className="w-5 h-5" />
                     <span>Mentor Application</span>
                   </button>
-
                   <button
                     onClick={() => window.open('https://forms.gle/Pgtk9ZWHk5YAvY5T9', '_blank')}
                     className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30 backdrop-blur-sm"
@@ -522,23 +458,27 @@ function App() {
         {/* About Section */}
         <section id="about" ref={aboutRef} className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 drop-shadow-lg" data-testid="about-title">About MasseyHacks</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 drop-shadow-lg" data-testid="about-title">
+              About MasseyHacks
+            </h2>
             <div className="grid grid-cols-1 gap-5 sm:gap-6 md:gap-8 justify-center place-items-center w-full max-w-4xl mx-auto">
               <div className="about-card bg-white/10 backdrop-blur-lg rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 lg:p-9 border border-white/20 hover:bg-white/15 shadow-lg hover:shadow-xl transition-all w-full" data-testid="about-card">
                 <Calendar className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-cyan-300 mb-3 sm:mb-4 md:mb-5" />
                 <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-3 sm:mb-4 drop-shadow-md">What is MasseyHacks?</h3>
                 <p className="text-xs sm:text-sm md:text-base text-white/90 leading-relaxed">
-                  MasseyHacks is a high school hackathon perfect for students fascinated by the world of technology. This 24-hour event is an opportunity for students to explore the realm of computer science and bring their creative ideas to life by developing a project of their own. Never written a line of code in your life? Already created a robot to do your homework? No matter your skill level, we invite you to join us as a hacker to participate in workshops, engage in countless activities, and meet other like-minded students! Create memories and guide the story of your STEM journey at MasseyHacks XI!
+                  MasseyHacks is a high school hackathon perfect for students fascinated by the world of technology. This 24-hour event is an opportunity for students to explore the realm of computer science and bring their creative ideas to life by developing a project of their own. Never written a line of code in your life? Already created a robot to do your homework? No matter your skill level, we invite you to join us as a hacker to participate in workshops, engage in countless activities, and meet other like-minded students! Create memories and guide the story of your STEM journey at MasseyHacks XII!
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Carousel Section */}
+        {/* Gallery Section */}
         <section id="gallery" ref={carouselRef} className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="gallery-title">Gallery</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="gallery-title">
+              Gallery
+            </h2>
             <div
               ref={carouselScrollRef}
               className="flex gap-3 sm:gap-4 md:gap-6 overflow-x-auto scroll-smooth pb-4 scrollbar-hide cursor-grab active:cursor-grabbing"
@@ -564,12 +504,14 @@ function App() {
         </section>
 
         {/* Schedule Section */}
-        <Schedule />
+        {/* <Schedule /> */}
 
         {/* FAQ Section */}
         <section id="faq" ref={faqRef} className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 drop-shadow-lg" data-testid="faq-title">Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 drop-shadow-lg" data-testid="faq-title">
+              Frequently Asked Questions
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-6 items-start">
               {faqs.map((faq, index) => (
                 <div
@@ -583,18 +525,12 @@ function App() {
                     data-testid={`faq-question-${index}`}
                   >
                     <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white drop-shadow-md pr-2">{faq.question}</h3>
-                    <ChevronDown
-                      className={`w-5 h-5 md:w-6 md:h-6 text-white flex-shrink-0 transition-transform duration-300 ${
-                        openFAQ === index ? 'rotate-180' : ''
-                      }`}
-                    />
+                    <ChevronDown className={`w-5 h-5 md:w-6 md:h-6 text-white flex-shrink-0 transition-transform duration-300 ${openFAQ === index ? 'rotate-180' : ''}`} />
                   </button>
-                  <div
-                    className={`overflow-hidden transition-all duration-300 ${
-                      openFAQ === index ? 'max-h-[500px]' : 'max-h-0'
-                    }`}
-                  >
-                    <p className="px-4 sm:px-5 md:px-6 lg:px-7 pb-4 sm:pb-5 md:pb-6 lg:pb-7 text-xs sm:text-sm md:text-base text-white/90 leading-relaxed" data-testid={`faq-answer-${index}`}>{faq.answer}</p>
+                  <div className={`overflow-hidden transition-all duration-300 ${openFAQ === index ? 'max-h-[500px]' : 'max-h-0'}`}>
+                    <p className="px-4 sm:px-5 md:px-6 lg:px-7 pb-4 sm:pb-5 md:pb-6 lg:pb-7 text-xs sm:text-sm md:text-base text-white/90 leading-relaxed" data-testid={`faq-answer-${index}`}>
+                      {faq.answer}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -605,56 +541,50 @@ function App() {
         {/* Sponsors Section */}
         <section id="sponsors" ref={sponsorsRef} className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="sponsors-title">Sponsors</h2>
-
-            {/* Sponsor Information Card */}
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg" data-testid="sponsors-title">
+              Sponsors
+            </h2>
             <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 border border-white/20 text-center mb-12 sm:mb-16">
               <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4">
-                Interested in becoming a sponsor? Check out our <a href={sponsorshipProspectus} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="sponsorship-link">sponsorship prospectus</a>! Contact us at <a href="mailto:hello@masseyhacks.ca" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors break-all" data-testid="contact-email">hello@masseyhacks.ca</a>
+                Interested in becoming a sponsor? Check out our{' '}
+                <a href={sponsorshipProspectus} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="sponsorship-link">
+                  sponsorship prospectus
+                </a>
+                ! Contact us at{' '}
+                <a href="mailto:hello@masseyhacks.ca" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors break-all" data-testid="contact-email">
+                  hello@masseyhacks.ca
+                </a>
               </p>
               <p className="text-white text-sm sm:text-base md:text-lg">
-                The MasseyHacks XI <a href={transparencyReport} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="transparency-link">transparency report</a> is available here.
+                The MasseyHacks XI{' '}
+                <a href={transparencyReport} target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:text-cyan-200 underline underline-offset-2 transition-colors" data-testid="transparency-link">
+                  transparency report
+                </a>{' '}
+                is available here.
               </p>
             </div>
 
-            {/* Platinum Sponsors */}
-            {sponsors.filter(s => s.tier === 'platinum').length > 0 && (
-              <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16 mb-12 sm:mb-16">
-                {sponsors.filter(s => s.tier === 'platinum').map((sponsor) => (
-                  <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/20 hover:bg-white/15 transition-all w-64 sm:w-80 md:w-96 h-40 sm:h-48 md:h-56 flex items-center justify-center">
-                    {sponsor.logo ? (
-                      <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
-                    ) : null}
+            {tiers.map((tier) => {
+              const tierSponsors = sponsors.filter((s) => s.tier === tier);
+              if (tierSponsors.length === 0) return null;
+              const cfg = tierConfig[tier];
+              return (
+                <div key={tier} className={cfg.mb}>
+                  <div className={cfg.grid}>
+                    {tierSponsors.map((sponsor) => (
+                      <div
+                        key={sponsor.id}
+                        className={`sponsor-card bg-white/10 backdrop-blur-md ${cfg.rounded} ${cfg.padding} border border-white/20 hover:bg-white/15 transition-all w-full flex items-center justify-center`}
+                      >
+                        {sponsor.logo ? (
+                          <img src={sponsor.logo} alt={sponsor.name} className={`w-full ${cfg.imgSize} object-contain`} />
+                        ) : null}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            )}
-
-            {/* Gold Sponsors */}
-            {sponsors.filter(s => s.tier === 'gold').length > 0 && (
-              <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-10 mb-10 sm:mb-12">
-                {sponsors.filter(s => s.tier === 'gold').map((sponsor) => (
-                  <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl p-5 sm:p-6 border border-white/20 hover:bg-white/15 transition-all w-48 sm:w-56 md:w-64 h-32 sm:h-36 md:h-40 flex items-center justify-center">
-                    {sponsor.logo ? (
-                      <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
-                    ) : null}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Silver Sponsors */}
-            {sponsors.filter(s => s.tier === 'silver').length > 0 && (
-              <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-5 md:gap-6">
-                {sponsors.filter(s => s.tier === 'silver').map((sponsor) => (
-                  <div key={sponsor.id} className="sponsor-card bg-white/10 backdrop-blur-md rounded-lg p-4 sm:p-5 border border-white/20 hover:bg-white/15 transition-all w-32 sm:w-40 md:w-44 h-24 sm:h-28 md:h-32 flex items-center justify-center">
-                    {sponsor.logo ? (
-                      <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
-                    ) : null}
-                  </div>
-                ))}
-              </div>
-            )}
+                </div>
+              );
+            })}
           </div>
         </section>
       </main>
@@ -663,7 +593,6 @@ function App() {
       <footer className="relative bg-black/40 backdrop-blur-lg border-t border-white/30 py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 mt-auto" style={{ zIndex: 1 }} data-testid="footer">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-16">
-            {/* Left Column - Event Info */}
             <div>
               <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-4 md:mb-5 drop-shadow-lg">MasseyHacks XII</h3>
               <div className="space-y-1 sm:space-y-2 mb-4 sm:mb-6">
@@ -677,20 +606,24 @@ function App() {
               </div>
             </div>
 
-            {/* Middle Column - Links */}
             <div>
               <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 drop-shadow-lg">Quick Links</h3>
               <nav className="flex flex-col gap-2 sm:gap-3">
-                <a href="#" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-home">Home</a>
-                <a href="#about" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-about">About</a>
-                <a href="#gallery" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-gallery">Gallery</a>
-                <a href="#schedule" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-schedule">Schedule</a>
-                <a href="#faq" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-faq">FAQ</a>
-                <a href="#sponsors" className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid="footer-link-sponsors">Sponsors</a>
+                {[
+                  { href: '#', label: 'Home', testid: 'footer-link-home' },
+                  { href: '#about', label: 'About', testid: 'footer-link-about' },
+                  { href: '#gallery', label: 'Gallery', testid: 'footer-link-gallery' },
+                  { href: '#schedule', label: 'Schedule', testid: 'footer-link-schedule' },
+                  { href: '#faq', label: 'FAQ', testid: 'footer-link-faq' },
+                  { href: '#sponsors', label: 'Sponsors', testid: 'footer-link-sponsors' },
+                ].map(({ href, label, testid }) => (
+                  <a key={label} href={href} className="text-white/90 hover:text-cyan-200 transition-colors font-medium text-sm sm:text-base md:text-lg hover:translate-x-1 inline-block transition-transform" data-testid={testid}>
+                    {label}
+                  </a>
+                ))}
               </nav>
             </div>
 
-            {/* Right Column - Mailing List */}
             <div className="sm:col-span-2 md:col-span-1">
               <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-3 sm:mb-4 md:mb-5 drop-shadow-lg">Stay Connected</h3>
               <div className="flex flex-col sm:flex-row gap-2 mb-4 sm:mb-5 md:mb-6">
@@ -705,23 +638,18 @@ function App() {
                 </button>
               </div>
 
-              {/* Social Icons */}
               <div className="flex gap-2 sm:gap-3 mb-4 sm:mb-5 md:mb-6">
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all" data-testid="social-mail">
-                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </a>
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all" data-testid="social-instagram">
-                  <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </a>
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all" data-testid="social-twitter">
-                  <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </a>
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all" data-testid="social-youtube">
-                  <Youtube className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </a>
-                <a href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all" data-testid="social-facebook">
-                  <Facebook className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </a>
+                {[
+                  { icon: <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-white" />, testid: 'social-mail' },
+                  { icon: <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white" />, testid: 'social-instagram' },
+                  { icon: <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white" />, testid: 'social-twitter' },
+                  { icon: <Youtube className="w-4 h-4 sm:w-5 sm:h-5 text-white" />, testid: 'social-youtube' },
+                  { icon: <Facebook className="w-4 h-4 sm:w-5 sm:h-5 text-white" />, testid: 'social-facebook' },
+                ].map(({ icon, testid }) => (
+                  <a key={testid} href="#" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 hover:border-cyan-300 hover:scale-110 transition-all" data-testid={testid}>
+                    {icon}
+                  </a>
+                ))}
               </div>
 
               <a href="#" className="text-xs sm:text-sm md:text-base text-white/90 hover:text-cyan-200 transition-colors font-medium underline underline-offset-4 hover:underline-offset-8 transition-all" data-testid="code-of-conduct">
