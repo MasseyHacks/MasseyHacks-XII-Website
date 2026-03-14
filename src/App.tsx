@@ -339,8 +339,8 @@ function App() {
 
   // Tier label config
   const tierConfig = {
-    silver: { cardSize: 'w-32 sm:w-40 md:w-44 h-24 sm:h-28 md:h-32', gap: 'gap-4 sm:gap-5 md:gap-6', mb: 'mb-8 sm:mb-10', padding: 'p-4 sm:p-5', rounded: 'rounded-lg' },
-    bronze: { cardSize: 'w-28 sm:w-32 md:w-36 h-20 sm:h-24 md:h-28', gap: 'gap-3 sm:gap-4 md:gap-5', mb: 'mb-0',          padding: 'p-3 sm:p-4', rounded: 'rounded-lg' },
+    silver: { grid: 'grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10', mb: 'mb-10 sm:mb-14', padding: 'p-6 sm:p-8 md:p-10', rounded: 'rounded-xl', imgSize: 'h-28 sm:h-36 md:h-44' },
+    bronze: { grid: 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8', mb: 'mb-0', padding: 'p-4 sm:p-6 md:p-8', rounded: 'rounded-xl', imgSize: 'h-20 sm:h-28 md:h-36' },
   };
 
   const tiers: Array<'silver' | 'bronze'> = ['silver', 'bronze'];
@@ -604,14 +604,14 @@ function App() {
               const cfg = tierConfig[tier];
               return (
                 <div key={tier} className={`${cfg.mb}`}>
-                  <div className={`flex flex-wrap justify-center items-center ${cfg.gap}`}>
+                  <div className={`${cfg.grid}`}>
                     {tierSponsors.map((sponsor) => (
                       <div
                         key={sponsor.id}
-                        className={`sponsor-card bg-white/10 backdrop-blur-md ${cfg.rounded} ${cfg.padding} border border-white/20 hover:bg-white/15 transition-all ${cfg.cardSize} flex items-center justify-center`}
+                        className={`sponsor-card bg-white/10 backdrop-blur-md ${cfg.rounded} ${cfg.padding} border border-white/20 hover:bg-white/15 transition-all w-full flex items-center justify-center`}
                       >
                         {sponsor.logo ? (
-                          <img src={sponsor.logo} alt={sponsor.name} className="max-w-full max-h-full object-contain" />
+                          <img src={sponsor.logo} alt={sponsor.name} className={`w-full ${cfg.imgSize} object-contain`} />
                         ) : null}
                       </div>
                     ))}
