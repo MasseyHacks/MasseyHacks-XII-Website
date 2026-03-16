@@ -14,6 +14,8 @@
     "deploy": "gh-pages -d dist -t"
   },
   "dependencies": {
+    "@splidejs/react-splide": "^0.7.12",
+    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
     "@supabase/supabase-js": "^2.57.4",
     "gsap": "^3.13.0",
     "lucide-react": "^0.344.0",

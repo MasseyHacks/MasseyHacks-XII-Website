@@ -2,6 +2,9 @@ import { useEffect, useState, useRef, type ReactNode } from 'react';
 import { Fish, Calendar, ChevronDown, Mail, Instagram, Twitter, Youtube, Facebook, Menu, X, Code, GraduationCap, Users } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+import '@splidejs/react-splide/css';
 import sponsorshipProspectus from './files/Sponsorship Prospectus MHXII.pdf';
 import transparencyReport from './files/transparency-report.pdf';
 // import Schedule from './components/Schedule';
@@ -187,8 +190,6 @@ function App() {
     },
   ];
 
-  const carouselSlides = imageSrcs.length;
-
   useEffect(() => {
     const targetDate = new Date('May 9, 2026 00:00:00').getTime();
 
@@ -328,6 +329,26 @@ function App() {
     return gradientString;
   };
 
+  const splideOptions = {
+    type: 'loop' as const,
+    fixedWidth: typeof window !== 'undefined' && window.innerWidth < 768 ? '280px' : '500px',
+    fixedHeight: typeof window !== 'undefined' && window.innerWidth < 768 ? '200px' : '350px',
+    gap: '16px',
+    pagination: false,
+    arrows: false,
+    drag: 'free' as const,
+    snap: false,
+    flickPower: 100,
+    pauseOnHover: false,
+    pauseOnFocus: false,
+    autoScroll: {
+      speed: 1.3,
+      rewind: false,
+      pauseOnHover: false,
+      pauseOnFocus: false,
+    },
+  };
+
   return (
     <div className="relative min-h-screen flex flex-col" style={{ background: getBackgroundColor() }}>
       <nav id="navbar" className="fixed top-0 left-0 right-0 z-50 bg-cyan-500/10 backdrop-blur-md border-b border-cyan-400/40 shadow-lg">
@@ -418,7 +439,11 @@ function App() {
       </div>
 
       <main className="flex-1 relative" style={{ zIndex: 1 }}>
-        <div ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-24 sm:pt-28 pb-12 px-4 sm:px-6">
+        {/* ── HERO ── */}
+        <div
+          ref={heroRef}
+          className="relative min-h-screen flex items-start justify-center pt-24 sm:pt-28 pb-16 px-4 sm:px-6"
+        >
           <div className="relative z-10 flex flex-col items-center w-full max-w-4xl">
             {!logoPopped && (
               <div className="logo-bubble absolute inset-0 flex items-center justify-center">
@@ -445,7 +470,7 @@ function App() {
               </div>
 
               <div
-                className="bg-cyan-500/10 backdrop-blur-md rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 border border-white/30 mb-4 sm:mb-6 shadow-2xl w-full"
+                className="bg-cyan-500/10 backdrop-blur-md rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 border border-white/30 mb-6 sm:mb-8 shadow-2xl w-full"
                 data-testid="countdown-section"
               >
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 xs:gap-3 sm:gap-4 md:gap-8 mb-3 sm:mb-4 md:mb-6">
@@ -498,6 +523,7 @@ function App() {
           </div>
         </div>
 
+        {/* ── ABOUT ── */}
         <section id="about" ref={aboutRef} className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto">
             <h2
@@ -524,43 +550,39 @@ function App() {
           </div>
         </section>
 
-        <section id="gallery" ref={carouselRef} className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
-          <div className="max-w-7xl mx-auto">
+        {/* ── GALLERY ── */}
+        <section id="gallery" ref={carouselRef} className="relative py-12 sm:py-16 md:py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <h2
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 sm:mb-12 md:mb-16 drop-shadow-lg"
               data-testid="gallery-title"
             >
               Gallery
             </h2>
-
-            <div
-              className="flex gap-3 sm:gap-4 md:gap-6 overflow-x-auto pb-4 scrollbar-hide"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              data-testid="gallery-carousel"
-            >
-              {Array.from({ length: carouselSlides }).map((_, i) => (
-                <div
-                  key={i}
-                  className="flex-shrink-0 w-[240px] h-[180px] xs:w-[280px] xs:h-[200px] sm:w-[350px] sm:h-[250px] md:w-[500px] md:h-[350px] lg:w-[600px] lg:h-[400px] bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl md:rounded-3xl border border-white/20 overflow-hidden relative"
-                  data-testid={`gallery-image-${i}`}
-                >
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
-                    <img
-                      src={imageSrcs[i % imageSrcs.length]}
-                      alt={`MasseyHacks gallery image ${(i % imageSrcs.length) + 1}`}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
+
+          <Splide
+            options={splideOptions}
+            extensions={{ AutoScroll }}
+            aria-label="MasseyHacks Gallery"
+          >
+            {imageSrcs.map((src, i) => (
+              <SplideSlide key={i}>
+                <img
+                  src={src}
+                  alt={`MasseyHacks gallery image ${i + 1}`}
+                  className="w-full h-full object-cover rounded-2xl"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </SplideSlide>
+            ))}
+          </Splide>
         </section>
 
         {/* <Schedule /> */}
 
+        {/* ── FAQ ── */}
         <section id="faq" ref={faqRef} className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <h2
@@ -606,6 +628,7 @@ function App() {
           </div>
         </section>
 
+        {/* ── SPONSORS ── */}
         <section id="sponsors" ref={sponsorsRef} className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <h2
@@ -702,6 +725,7 @@ function App() {
         </section>
       </main>
 
+      {/* ── FOOTER ── */}
       <footer
         className="relative bg-black/40 backdrop-blur-lg border-t border-white/30 py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 mt-auto"
         style={{ zIndex: 1 }}
