@@ -60,7 +60,7 @@ interface Sponsor {
 
 const sponsors: Sponsor[] = [
   { id: '1', name: 'LendCity', logo: lendCityLogo, tier: 'silver', link: 'https://lendcity.ca/' },
-  { id: '2', name: 'University of Waterloo Faculty of Science', logo: ubc, tier: 'silver', link: 'https://uwaterloo.ca/science/' },
+  { id: '2', name: 'University of Waterloo Faculty of Science', logo: ubc, tier: 'bronze', link: 'https://uwaterloo.ca/science/' },
   { id: '3', name: 'University of British Columbia - Faculty of Applied Science', logo: waterlooscienceLogo, tier: 'silver', link: 'https://engineering.ubc.ca' },
   { id: '4', name: 'Brilliant', logo: brilliantLogo, tier: 'bronze', link: 'https://brilliant.org/' },
   { id: '5', name: 'CodeCrafters', logo: codecrafterLogo, tier: 'bronze', link: 'https://codecrafters.io/' },
@@ -681,9 +681,9 @@ function App() {
                 Silver
               </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 md:gap-8 mb-5 sm:mb-6 md:mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 md:gap-8">
                 {sponsors
-                  .filter((s) => s.tier === 'silver' && (s.id === '1' || s.id === '2'))
+                  .filter((s) => s.tier === 'silver')
                   .map((sponsor) => (
                     <a key={sponsor.id} href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block">
                       <div className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 p-6 sm:p-8 md:p-10 min-h-[180px] sm:min-h-[220px] md:min-h-[250px] flex items-center justify-center hover:bg-white/15 hover:scale-[1.02] transition-all">
@@ -698,39 +698,18 @@ function App() {
                     </a>
                   ))}
               </div>
-
-              <div className="flex justify-center">
-                <div className="w-full sm:w-1/2 md:w-1/2">
-                  {sponsors
-                    .filter((s) => s.tier === 'silver' && s.id === '3')
-                    .map((sponsor) => (
-                      <a key={sponsor.id} href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block">
-                        <div className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 p-6 sm:p-8 md:p-10 min-h-[180px] sm:min-h-[220px] md:min-h-[250px] flex items-center justify-center hover:bg-white/15 hover:scale-[1.02] transition-all">
-                          <img
-                            src={sponsor.logo}
-                            alt={sponsor.name}
-                            className="w-full max-h-24 sm:max-h-32 md:max-h-40 object-contain"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        </div>
-                      </a>
-                    ))}
-                </div>
-              </div>
             </div>
-
 
             <div>
               <h3 className="text-center text-white/90 font-bold tracking-[0.3em] uppercase text-sm sm:text-base md:text-lg mb-5 sm:mb-7">
                 Bronze
               </h3>
 
-              <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4 md:gap-6">
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-5 md:gap-6">
                 {sponsors
                   .filter((s) => s.tier === 'bronze')
                   .map((sponsor) => (
-                    <a key={sponsor.id} href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block">
+                  <a key={sponsor.id} href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block w-[calc(50%-8px)] sm:w-[calc(25%-15px)]">
                       <div className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 p-2 sm:p-3 md:p-4 min-h-[90px] sm:min-h-[105px] md:min-h-[130px] flex items-center justify-center hover:bg-white/15 hover:scale-[1.02] transition-all">
                         <img
                           src={sponsor.logo}
