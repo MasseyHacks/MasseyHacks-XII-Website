@@ -16,6 +16,7 @@ import laaLogo from './sponsors/Bronze/laa.png';
 import mnsiLogo from './sponsors/Bronze/Mnsi.png';
 import lendCityLogo from './sponsors/Silver/LendCity.png';
 import waterlooscienceLogo from './sponsors/Silver/waterlooscience.png';
+import ubc from './sponsors/Silver/ubc.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,11 +60,12 @@ interface Sponsor {
 
 const sponsors: Sponsor[] = [
   { id: '1', name: 'LendCity', logo: lendCityLogo, tier: 'silver', link: 'https://lendcity.ca/' },
-  { id: '2', name: 'University of Waterloo Faculty of Science', logo: waterlooscienceLogo, tier: 'silver', link: 'https://uwaterloo.ca/science/' },
-  { id: '3', name: 'Brilliant', logo: brilliantLogo, tier: 'bronze', link: 'https://brilliant.org/' },
-  { id: '4', name: 'CodeCrafters', logo: codecrafterLogo, tier: 'bronze', link: 'https://codecrafters.io/' },
-  { id: '5', name: 'Leading Aces', logo: laaLogo, tier: 'bronze', link: 'https://www.leadingaces.com/' },
-  { id: '6', name: 'MNSi', logo: mnsiLogo, tier: 'bronze', link: 'https://www.mnsi.net/' },
+  { id: '2', name: 'University of Waterloo Faculty of Science', logo: ubc, tier: 'silver', link: 'https://uwaterloo.ca/science/' },
+  { id: '3', name: 'University of British Columbia - Faculty of Applied Science', logo: waterlooscienceLogo, tier: 'silver', link: 'https://engineering.ubc.ca' },
+  { id: '4', name: 'Brilliant', logo: brilliantLogo, tier: 'bronze', link: 'https://brilliant.org/' },
+  { id: '5', name: 'CodeCrafters', logo: codecrafterLogo, tier: 'bronze', link: 'https://codecrafters.io/' },
+  { id: '6', name: 'Leading Aces', logo: laaLogo, tier: 'bronze', link: 'https://www.leadingaces.com/' },
+  { id: '7', name: 'MNSi', logo: mnsiLogo, tier: 'bronze', link: 'https://www.mnsi.net/' },
 ];
 
 function MLHTrustBadge() {
@@ -363,7 +365,7 @@ function App() {
           </div>
 
           <div className="hidden md:flex gap-6 lg:gap-8">
-            {['about', 'gallery', 'schedule', 'faq', 'sponsors'].map((section) => (
+            {['about', 'gallery', 'schedule', 'FAQ', 'sponsors'].map((section) => (
               <a
                 key={section}
                 href={`#${section}`}
@@ -679,9 +681,9 @@ function App() {
                 Silver
               </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 md:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 md:gap-8 mb-5 sm:mb-6 md:mb-8">
                 {sponsors
-                  .filter((s) => s.tier === 'silver')
+                  .filter((s) => s.tier === 'silver' && (s.id === '1' || s.id === '2'))
                   .map((sponsor) => (
                     <a key={sponsor.id} href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block">
                       <div className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 p-6 sm:p-8 md:p-10 min-h-[180px] sm:min-h-[220px] md:min-h-[250px] flex items-center justify-center hover:bg-white/15 hover:scale-[1.02] transition-all">
@@ -696,7 +698,28 @@ function App() {
                     </a>
                   ))}
               </div>
+
+              <div className="flex justify-center">
+                <div className="w-full sm:w-1/2 md:w-1/2">
+                  {sponsors
+                    .filter((s) => s.tier === 'silver' && s.id === '3')
+                    .map((sponsor) => (
+                      <a key={sponsor.id} href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block">
+                        <div className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 p-6 sm:p-8 md:p-10 min-h-[180px] sm:min-h-[220px] md:min-h-[250px] flex items-center justify-center hover:bg-white/15 hover:scale-[1.02] transition-all">
+                          <img
+                            src={sponsor.logo}
+                            alt={sponsor.name}
+                            className="w-full max-h-24 sm:max-h-32 md:max-h-40 object-contain"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                      </a>
+                    ))}
+                </div>
+              </div>
             </div>
+
 
             <div>
               <h3 className="text-center text-white/90 font-bold tracking-[0.3em] uppercase text-sm sm:text-base md:text-lg mb-5 sm:mb-7">
