@@ -60,8 +60,7 @@ interface Sponsor {
 
 const sponsors: Sponsor[] = [
   { id: '1', name: 'LendCity', logo: lendCityLogo, tier: 'silver', link: 'https://lendcity.ca/' },
-  { id: '2', name: 'University of Waterloo Faculty of Science', logo: ubc, tier: 'bronze', link: 'https://uwaterloo.ca/science/' },
-  { id: '3', name: 'University of British Columbia - Faculty of Applied Science', logo: waterlooscienceLogo, tier: 'silver', link: 'https://engineering.ubc.ca' },
+  { id: '2', name: 'University of Waterloo Faculty of Science', logo: ubc, tier: 'bronze', link: 'https://engineering.ubc.ca' },
   { id: '4', name: 'Brilliant', logo: brilliantLogo, tier: 'bronze', link: 'https://brilliant.org/' },
   { id: '5', name: 'CodeCrafters', logo: codecrafterLogo, tier: 'bronze', link: 'https://codecrafters.io/' },
   { id: '6', name: 'Leading Aces', logo: laaLogo, tier: 'bronze', link: 'https://www.leadingaces.com/' },
