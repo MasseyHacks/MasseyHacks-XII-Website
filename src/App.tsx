@@ -581,6 +581,10 @@ function App() {
           </Splide>
         </section>
 
+<<<<<<< Updated upstream
+=======
+        {/* Schedule Section */}
+>>>>>>> Stashed changes
         {/* <Schedule /> */}
 
         {/* ── FAQ ── */}
