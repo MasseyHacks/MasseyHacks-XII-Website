@@ -7,7 +7,7 @@ import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 import '@splidejs/react-splide/css';
 import sponsorshipProspectus from './files/Sponsorship Prospectus MHXII.pdf';
 import transparencyReport from './files/transparency-report.pdf';
-// import Schedule from './components/Schedule';
+import Schedule from './components/Schedule';
 
 // Sponsor logo imports
 import brilliantLogo from './sponsors/Bronze/Brilliant.png';
@@ -582,7 +582,7 @@ function App() {
           </Splide>
         </section>
 
-        {/* <Schedule /> */}
+        <Schedule />
 
         {/* ── FAQ ── */}
         <section id="faq" ref={faqRef} className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6">

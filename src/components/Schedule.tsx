@@ -2,211 +2,251 @@ import { useEffect, useRef, useState } from 'react';
 import '../styles/schedule.css';
 
 interface ScheduleEvent {
-  row: number;
-  col: number;
-  startGap: number;
-  duration: number;
+  lane: number;
+  startH: number;
+  dur: number;
   title: string;
-  description: string;
+  sub: string;
   color: string;
   info: string;
 }
 
-const colAmt = 34;
-const rowAmt = 4;
-const eventStartTime = 9;
-const lineHeight = '90px';
+// Layout constants
+const COL_W = 300; // px per hour
+const TOTAL_HOURS = 31.5; // 9AM Sat → 3:30PM Sun
+const SAT_START_HOUR = 9;
+const LANES = ['Logistics', 'Food', 'Workshops', 'Activities', 'Hacking'];
 
+// startH = hours elapsed since 9AM Saturday
 const scheduleEvents: ScheduleEvent[] = [
-  { row: 1, col: 1, startGap: 0, duration: 1, title: 'Check-In', description: '9:00AM - 10:00AM | Front Desk', color: '#FFC3C3', info: 'Check in at the front desk to receive your hacker badge and welcome package!' },
-  { row: 1, col: 2, startGap: 0.5, duration: 0.5, title: 'Opening Ceremony', description: '10:30AM - 11:00AM | North Gym', color: '#9EF1EB', info: 'Join us for the official kickoff of MasseyHacks XII! Learn about the event schedule, rules, and prizes.' },
-  { row: 4, col: 3, startGap: 0, duration: 24, title: 'Hacking Period', description: '11:00AM - 11:00AM | ', color: '#a8d4ff', info: 'Work on your projects with your team! Mentors will be available to help throughout the hacking period.' },
-  { row: 3, col: 3, startGap: 0, duration: 0.5, title: 'Team Formation', description: '11:00AM - 11:30AM | North Gym', color: '#E1BDFF', info: 'Looking for team members? Join us to meet other hackers and form your dream team!' },
-  { row: 2, col: 1, startGap: 0, duration: 1.25, title: 'Breakfast Snacks', description: '9:00AM - 10:15AM | Cafeteria', color: '#FFA4D5', info: '' },
-  { row: 2, col: 5, startGap: 0, duration: 1.25, title: 'Lunch', description: '1:00PM - 2:15PM | Cafeteria', color: '#FFA4D5', info: '' },
-  { row: 1, col: 3, startGap: 0.75, duration: 1, title: 'Intro to Web Dev', description: '11:45AM - 12:45PM | Room 149', color: '#ABFF80', info: 'Learn the basics of web development with HTML, CSS, and JavaScript. Perfect for beginners!' },
-  { row: 2, col: 3, startGap: 0.75, duration: 1, title: 'React Workshop', description: '11:45AM - 12:45PM | Room 101', color: '#ABFF80', info: 'Build your first React application in this hands-on workshop.' },
-  { row: 1, col: 6, startGap: 0.5, duration: 1, title: 'Python Basics', description: '2:30PM - 3:30PM | Room 149', color: '#ABFF80', info: 'Introduction to Python programming. Learn variables, loops, and functions!' },
-  { row: 2, col: 6, startGap: 0.5, duration: 1, title: 'API Development', description: '2:30PM - 3:30PM | Room 101', color: '#ABFF80', info: 'Learn how to build RESTful APIs and integrate them into your projects.' },
-  { row: 1, col: 7, startGap: 0.5, duration: 1, title: 'Cupstacking', description: '3:30PM - 4:30PM | Cafeteria', color: '#E1BDFF', info: 'A MasseyHacks favourite! Create the tallest cup tower possible!' },
-  { row: 1, col: 9, startGap: 0, duration: 1, title: 'GitHub Workshop', description: '5:00PM - 6:00PM | Room 101', color: '#ABFF80', info: 'Learn version control with Git and GitHub. Essential for any developer!' },
-  { row: 2, col: 9, startGap: 0, duration: 1, title: 'Hardware Hacking', description: '5:00PM - 6:00PM | Cafeteria', color: '#ABFF80', info: 'Get hands-on with Arduino and Raspberry Pi. Build your first IoT project!' },
-  { row: 2, col: 10, startGap: 0.25, duration: 1.25, title: 'Dinner', description: '6:15PM - 7:30PM | Cafeteria', color: '#FFA4D5', info: '' },
-  { row: 1, col: 11, startGap: 0.5, duration: 0.5, title: 'Careers in Tech', description: '7:30PM - 8:00PM | Cafeteria', color: '#ABFF80', info: 'Learn about different career paths in technology from industry professionals!' },
-  { row: 1, col: 12, startGap: 0, duration: 1, title: 'AI/ML Workshop', description: '8:00PM - 9:00PM | Room 101', color: '#ABFF80', info: 'Introduction to Artificial Intelligence and Machine Learning concepts.' },
-  { row: 2, col: 13, startGap: 0, duration: 1, title: 'Karaoke', description: '9:00PM - 10:00PM | Cafeteria', color: '#E1BDFF', info: 'Take a break and show off your singing skills!' },
-  { row: 1, col: 14, startGap: 0, duration: 0.5, title: 'Check-Out', description: '10:00PM - 10:30PM | Front Desk', color: '#FFC3C3', info: 'Check out for the evening. See you tomorrow morning!' },
-  { row: 3, col: 10, startGap: 0, duration: 18, title: 'Hackenger Hunt', description: '6:00PM - 12:00PM | Online', color: '#9BA3FF', info: 'Solve tech-related challenges for prizes and swag!' },
-  { row: 2, col: 15, startGap: 0.5, duration: 1, title: 'Skribbl.io', description: '11:30PM - 12:30AM | Online', color: '#E1BDFF', info: '' },
-  { row: 2, col: 17, startGap: 0, duration: 1, title: 'Minecraft Tournament', description: '1:00AM - 2:00AM | Online', color: '#E1BDFF', info: '' },
-  { row: 1, col: 24, startGap: 0, duration: 1, title: 'Check-In', description: '8:00AM - 9:00AM | Front Desk', color: '#FFC3C3', info: 'Welcome back! Check in to continue working on your projects.' },
-  { row: 2, col: 24, startGap: 0.5, duration: 1, title: 'Pancake Breakfast', description: '8:30AM - 9:30AM | Cafeteria', color: '#FFA4D5', info: '' },
-  { row: 2, col: 26, startGap: 0, duration: 1.5, title: 'Therapy Dogs', description: '10:00AM - 11:30AM | Room 101', color: '#E1BDFF', info: '' },
-  { row: 2, col: 28, startGap: 0.5, duration: 1.5, title: 'Lunch', description: '12:30PM - 2:00PM | Cafeteria', color: '#FFA4D5', info: '' },
-  { row: 3, col: 30, startGap: 0, duration: 2, title: 'Judging', description: '2:00PM - 4:00PM | Cafeteria', color: '#9EF1EB', info: '' },
-  { row: 1, col: 32, startGap: 0.5, duration: 0.5, title: 'Closing Ceremony', description: '4:30PM - 5:00PM | North Gym', color: '#9EF1EB', info: 'Join us for the final ceremony where we announce winners and celebrate everyone\'s hard work!' },
-  { row: 2, col: 32, startGap: 0, duration: 0.5, title: 'Trivia', description: '4:00PM - 4:30PM | Cafeteria', color: '#E1BDFF', info: 'Test your MasseyHacks knowledge with fun trivia questions!' },
-  { row: 2, col: 33, startGap: 0, duration: 0.5, title: 'Check-Out', description: '5:00PM - 5:30PM | Front Desk', color: '#FFC3C3', info: 'Thank you for participating in MasseyHacks XII!' }
+  // --- SATURDAY MAY 9 ---
+  { lane: 0, startH: 0,     dur: 1,    title: 'Check-In',          sub: '9:00AM – 10:00AM · Front Desk',      color: '#FFC3C3', info: 'Check in at the front desk to receive your hacker badge and welcome package!' },
+  { lane: 1, startH: 0,     dur: 1.25, title: 'Breakfast Snacks',  sub: '9:00AM – 10:15AM · Cafeteria',       color: '#FFA4D5', info: '' },
+  { lane: 0, startH: 1.5,   dur: 0.5,  title: 'Opening Ceremony',  sub: '10:30AM – 11:00AM · Gym',            color: '#9EF1EB', info: 'Join us for the official kickoff of MasseyHacks XII! Learn about the event schedule, rules, and prizes.' },
+  { lane: 4, startH: 2,     dur: 23.5, title: 'Hacking Period',    sub: '11:00AM SAT – 10:30AM SUN',          color: '#a8d4ff', info: 'Work on your projects with your team! Mentors will be available to help throughout the hacking period.' },
+  { lane: 3, startH: 2,     dur: 0.5,  title: 'Team Formation',    sub: '11:00AM – 11:30AM · Gym',            color: '#E1BDFF', info: 'Looking for team members? Join us to meet other hackers and form your dream team!' },
+  { lane: 2, startH: 2.5,   dur: 1,    title: 'Workshop Incoming!', sub: '11:30AM – 12:30PM · TBD',           color: '#ABFF80', info: 'Workshop details coming soon!' },
+  { lane: 1, startH: 3.75,  dur: 1.25, title: 'Lunch',             sub: '12:45PM – 2:00PM · Cafeteria',       color: '#FFA4D5', info: '' },
+  { lane: 3, startH: 5,     dur: 21,   title: 'HackengerHunt',     sub: '2:00PM SAT – 11:00AM SUN · Online',  color: '#9BA3FF', info: 'Solve tech-related challenges for prizes and swag!' },
+  { lane: 2, startH: 5.25,  dur: 1,    title: 'Workshop Incoming!', sub: '2:15PM – 3:15PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
+  { lane: 2, startH: 6.5,   dur: 1,    title: 'Workshop Incoming!', sub: '3:30PM – 4:30PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
+  { lane: 3, startH: 6.5,   dur: 1,    title: 'Cupstacking',       sub: '3:30PM – 4:30PM · Cafeteria',        color: '#E1BDFF', info: 'A MasseyHacks favourite! Create the tallest cup tower possible!' },
+  { lane: 2, startH: 7.75,  dur: 1,    title: 'Workshop Incoming!', sub: '4:45PM – 5:45PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
+  { lane: 2, startH: 8.75,  dur: 0.5,  title: 'Workshop Incoming!', sub: '5:45PM – 6:15PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
+  { lane: 1, startH: 9.25,  dur: 1.25, title: 'Dinner',            sub: '6:15PM – 7:30PM · Cafeteria',        color: '#FFA4D5', info: '' },
+  { lane: 2, startH: 10.75, dur: 1,    title: 'Workshop Incoming!', sub: '7:45PM – 8:45PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
+  { lane: 3, startH: 12,    dur: 1,    title: 'Logic Puzzles',     sub: '9:00PM – 10:00PM · TBD',             color: '#E1BDFF', info: '' },
+  { lane: 0, startH: 13,    dur: 0.5,  title: 'Check-Out',         sub: '10:00PM – 10:30PM · Front Desk',     color: '#FFC3C3', info: 'Check out for the evening. See you tomorrow morning!' },
+  { lane: 0, startH: 14,    dur: 2,    title: 'Minecraft',         sub: '11:00PM – 1:00AM · Online',          color: '#E1BDFF', info: '' },
+  { lane: 1, startH: 14,    dur: 2,    title: 'League of Legends', sub: '11:00PM – 1:00AM · Online',          color: '#E1BDFF', info: '' },
+  { lane: 3, startH: 14,    dur: 1,    title: 'Clash Royale',      sub: '11:00PM – 12:00AM · Online',         color: '#E1BDFF', info: '' },
+  // --- SUNDAY MAY 10 --- (startH = hours since 9AM Sat; 8AM Sun = +23h)
+  { lane: 0, startH: 23,    dur: 1,    title: 'Check-In',          sub: '8:00AM – 9:00AM · Front Desk',       color: '#FFC3C3', info: 'Welcome back! Check in to continue working on your projects.' },
+  { lane: 1, startH: 23.5,  dur: 1,    title: 'Breakfast',         sub: '8:30AM – 9:30AM · Cafeteria',        color: '#FFA4D5', info: '' },
+  { lane: 2, startH: 24.75, dur: 1,    title: 'Workshop Incoming!', sub: '9:45AM – 10:45AM · TBD',            color: '#ABFF80', info: 'Workshop details coming soon!' },
+  { lane: 1, startH: 26,    dur: 1.5,  title: 'Group A Lunch',     sub: '11:00AM – 12:30PM · Cafeteria',      color: '#FFA4D5', info: '' },
+  { lane: 2, startH: 26,    dur: 1.5,  title: 'Group B Judging',   sub: '11:00AM – 12:30PM · Cafeteria',      color: '#9EF1EB', info: '' },
+  { lane: 1, startH: 27.5,  dur: 1.5,  title: 'Group B Lunch',     sub: '12:30PM – 2:00PM · Cafeteria',       color: '#FFA4D5', info: '' },
+  { lane: 2, startH: 27.5,  dur: 1.5,  title: 'Group A Judging',   sub: '12:30PM – 2:00PM · Cafeteria',       color: '#9EF1EB', info: '' },
+  { lane: 3, startH: 29,    dur: 0.5,  title: 'Trivia',            sub: '2:00PM – 2:30PM · Cafeteria',        color: '#E1BDFF', info: 'Test your MasseyHacks knowledge with fun trivia questions!' },
+  { lane: 0, startH: 29.5,  dur: 0.5,  title: 'Closing Ceremony',  sub: '2:30PM – 3:00PM · Gym',              color: '#9EF1EB', info: "Join us for the final ceremony where we announce winners and celebrate everyone's hard work!" },
+  { lane: 0, startH: 30,    dur: 0.5,  title: 'Check-Out',         sub: '3:00PM – 3:30PM · Front Desk',       color: '#FFC3C3', info: 'Thank you for participating in MasseyHacks XII!' },
 ];
 
-export default function Schedule() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [activePopup, setActivePopup] = useState<number | null>(null);
+function darkenHex(hex: string, amount = 0.45): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgb(${Math.round(r * amount)},${Math.round(g * amount)},${Math.round(b * amount)})`;
+}
 
+function hourLabel(h: number): string {
+  const abs = SAT_START_HOUR + h;
+  const hr = abs % 24;
+  const disp = hr === 0 ? 12 : hr > 12 ? hr - 12 : hr;
+  const ampm = hr < 12 ? 'AM' : 'PM';
+  return `${disp}${ampm}`;
+}
+
+export default function Schedule() {
+  const [activePopup, setActivePopup] = useState<number | null>(null);
+  const [popupPos, setPopupPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const totalWidth = TOTAL_HOURS * COL_W;
+
+  // Close popup on outside click
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest('.popup')) {
+    const handler = (e: MouseEvent) => {
+      if (!(e.target as HTMLElement).closest('.sch-event')) {
         setActivePopup(null);
       }
     };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
   }, []);
 
-  const renderTimeline = () => {
-    const columns: JSX.Element[][] = Array.from({ length: colAmt }, () => []);
-
-    scheduleEvents.forEach((event, eventIndex) => {
-      const { row, col, startGap, duration, title, description, color, info } = event;
-      const [desc1, desc2] = description.split(' | ');
-
-      const remainingGap = 1 - startGap - Math.floor(startGap);
-      let durationFilled;
-      let width;
-
-      if (duration <= remainingGap) {
-        durationFilled = duration;
-        width = `${duration * 100}%`;
-      } else {
-        durationFilled = remainingGap;
-        width = `${remainingGap * 110}%`;
+  // Shift+scroll → horizontal scroll
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handler = (e: WheelEvent) => {
+      if (e.shiftKey) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
       }
+    };
+    el.addEventListener('wheel', handler, { passive: false });
+    return () => el.removeEventListener('wheel', handler);
+  }, []);
 
-      const left = `${(startGap - Math.floor(startGap)) * 100}%`;
+  function handleEventClick(e: React.MouseEvent, idx: number) {
+    e.stopPropagation();
+    if (activePopup === idx) {
+      setActivePopup(null);
+      return;
+    }
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    let top = rect.bottom + 8;
+    let left = rect.left;
+    if (left + 320 > window.innerWidth) left = window.innerWidth - 328;
+    if (left < 8) left = 8;
+    if (top + 130 > window.innerHeight) top = rect.top - 138;
+    setPopupPos({ top, left });
+    setActivePopup(idx);
+  }
 
-      const handleClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setActivePopup(activePopup === eventIndex ? null : eventIndex);
-      };
+  // Hour tick marks — every 2 hours
+  const hourTicks: number[] = [];
+  for (let h = 0; h <= TOTAL_HOURS; h += 2) hourTicks.push(h);
 
-      const firstCell = (
-        <div
-          key={`event-${eventIndex}-0`}
-          className="timeline-event popup"
-          style={{
-            width,
-            left,
-            height: lineHeight,
-            backgroundColor: color,
-            position: 'absolute',
-            boxShadow: '0 3px 10px -8px rgb(0 0 0 / 0.3)',
-            borderRadius: '10px',
-            marginLeft: remainingGap === 1 ? '2px' : '0',
-          }}
-          onClick={handleClick}
-        >
-          <div className="timeline-text-section">
-            <h5>{title}</h5>
-            <p>{desc1}</p>
-            {desc2 && <p>{desc2}</p>}
-          </div>
-          <div className={`popuptext ${activePopup === eventIndex ? 'show' : ''}`} style={{ bottom: row === 2 || row === 3 ? 'unset' : '0', top: row === 2 || row === 3 ? '0' : 'unset' }}>
-            <h2>{title}</h2>
-            <p>{description}</p>
-            {info && <p>{info}</p>}
-          </div>
-        </div>
-      );
+  // All hour grid lines (every 1 hour)
+  const gridLines: number[] = [];
+  for (let h = 0; h <= TOTAL_HOURS; h++) gridLines.push(h);
 
-      if (columns[col - 1] && columns[col - 1][row - 1] === undefined) {
-        columns[col - 1][row - 1] = firstCell;
-      }
-
-      let time = durationFilled;
-      let colCounter = 1;
-
-      while (time + 2 <= Math.floor(duration)) {
-        const fullCell = (
-          <div
-            key={`event-${eventIndex}-${colCounter}`}
-            className="timeline-event"
-            style={{
-              width: '100%',
-              height: lineHeight,
-              backgroundColor: color,
-              position: 'absolute'
-            }}
-            onClick={handleClick}
-          />
-        );
-
-        if (columns[col - 1 + colCounter]) {
-          columns[col - 1 + colCounter][row - 1] = fullCell;
-        }
-        time++;
-        colCounter++;
-      }
-
-      if (duration - time > 0.001 && time < duration) {
-        const endCell = (
-          <div
-            key={`event-${eventIndex}-${colCounter}`}
-            className="timeline-event"
-            style={{
-              width: `${(duration - time) * 100 + 10}%`,
-              marginLeft: '-30px',
-              height: lineHeight,
-              backgroundColor: color,
-              boxShadow: '0 3px 10px -8px rgb(0 0 0 / 0.3)',
-              borderRadius: '10px',
-              position: 'relative'
-            }}
-            onClick={handleClick}
-          />
-        );
-
-        if (columns[col - 1 + colCounter]) {
-          columns[col - 1 + colCounter][row - 1] = endCell;
-        }
-      }
-    });
-
-    return columns.map((column, colIndex) => {
-      const hour = ((eventStartTime + colIndex - 1) % 12) + 1;
-      const period = (eventStartTime + colIndex) % 24 >= 12 ? 'PM' : 'AM';
-
-      return (
-        <div key={colIndex} className="timeline-col-container">
-          <div className="timeline-label">{`${hour}:00 ${period}`}</div>
-          {Array.from({ length: rowAmt }).map((_, rowIndex) => (
-            <div key={rowIndex}>
-              <div className="timeline-cell">
-                {column[rowIndex]}
-              </div>
-              <div className="divvy" />
-            </div>
-          ))}
-        </div>
-      );
-    });
-  };
+  const activeEvent = activePopup !== null ? scheduleEvents[activePopup] : null;
 
   return (
     <section id="schedule" className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
       <div className="schedule-container">
+
+        {/* Title */}
         <div className="schedule-title">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-2 sm:mb-3 drop-shadow-lg">Schedule</h1>
-          <h5 className="text-sm sm:text-base md:text-lg text-white/90 text-center drop-shadow-md">Click on the events for more info!</h5>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-2 sm:mb-3 drop-shadow-lg">
+            Schedule
+          </h1>
+          <h5 className="text-sm sm:text-base md:text-lg text-white/90 text-center drop-shadow-md">
+            Click on the events for more info!
+          </h5>
         </div>
-        <div ref={wrapperRef} className="timeline-wrapper">
-          {renderTimeline()}
+
+        {/* Scrollable timeline */}
+        <div ref={scrollRef} className="timeline-wrapper">
+          <div style={{ width: totalWidth + 100, minWidth: 'max-content', paddingRight: 24, paddingBottom: 8 }}>
+
+            {/* Hour labels */}
+            <div className="sch-header-row">
+              <div className="sch-lane-label-col" />
+              <div style={{ position: 'relative', width: totalWidth, height: 28, flexShrink: 0 }}>
+                {hourTicks.map(h => (
+                  <span
+                    key={h}
+                    className="sch-hour-label"
+                    style={{ left: h * COL_W }}
+                  >
+                    {hourLabel(h)}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Saturday label */}
+            <div className="sch-day-divider">
+              <div className="sch-lane-label-col" />
+              <div className="sch-day-line" />
+              <span className="sch-day-text">Saturday, May 9</span>
+              <div className="sch-day-line" />
+            </div>
+
+            {/* Lanes */}
+            {LANES.map((laneName, laneIdx) => (
+              <div key={laneIdx} className="sch-lane-row">
+                {/* Lane label */}
+                <div className="sch-lane-label-col">
+                  <span className="sch-lane-label">{laneName}</span>
+                </div>
+
+                {/* Lane track */}
+                <div className="sch-lane-track" style={{ width: totalWidth }}>
+
+                  {/* Grid lines */}
+                  {gridLines.map(h => (
+                    <div
+                      key={h}
+                      className={h % 2 === 0 ? 'sch-grid-line' : 'sch-grid-line-half'}
+                      style={{ left: h * COL_W }}
+                    />
+                  ))}
+
+                  {/* Sunday marker */}
+                  <div className="sch-sunday-marker" style={{ left: 23 * COL_W }} />
+
+                  {/* Events in this lane */}
+                  {scheduleEvents.map((ev, evIdx) => {
+                    if (ev.lane !== laneIdx) return null;
+                    const textColor = darkenHex(ev.color);
+                    return (
+                      <div
+                        key={evIdx}
+                        className="sch-event"
+                        style={{
+                          left: ev.startH * COL_W + 2,
+                          width: ev.dur * COL_W - 4,
+                          background: ev.color,
+                        }}
+                        onClick={(e) => handleEventClick(e, evIdx)}
+                      >
+                        <span className="sch-event-title" style={{ color: textColor }}>
+                          {ev.title}
+                        </span>
+                        <span className="sch-event-sub" style={{ color: textColor }}>
+                          {ev.sub}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {/* Sunday label */}
+            <div className="sch-day-divider" style={{ marginTop: 8 }}>
+              <div className="sch-lane-label-col" />
+              <div className="sch-day-line" />
+              <span className="sch-day-text">Sunday, May 10</span>
+              <div className="sch-day-line" />
+            </div>
+
+          </div>
         </div>
-        <h5 id="scroll_tip" className="text-xs sm:text-sm text-white/70 text-center italic mt-4">
+
+        <p id="scroll_tip" className="text-xs sm:text-sm text-white/70 text-center italic mt-4">
           Tip: shift + scroll to scroll horizontally
-        </h5>
+        </p>
       </div>
+
+      {/* Popup — fixed position, outside scroll container */}
+      {activeEvent && (
+        <div
+          className="sch-popup"
+          style={{ top: popupPos.top, left: popupPos.left }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h2>{activeEvent.title}</h2>
+          <p>{activeEvent.sub}</p>
+          {activeEvent.info && <p>{activeEvent.info}</p>}
+        </div>
+      )}
     </section>
   );
 }
