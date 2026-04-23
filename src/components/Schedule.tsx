@@ -15,44 +15,66 @@ interface ScheduleEvent {
 const COL_W = 300; // px per hour
 const TOTAL_HOURS = 31.5; // 9AM Sat → 3:30PM Sun
 const SAT_START_HOUR = 9;
-const LANES = ['Logistics', 'Food', 'Workshops', 'Activities', 'Hacking'];
+const LANES = ['Logistics', 'Food', 'Workshops', 'Activities', 'Activities 2', 'Hacking'];
 
-// startH = hours elapsed since 9AM Saturday
 const scheduleEvents: ScheduleEvent[] = [
   // --- SATURDAY MAY 9 ---
-  { lane: 0, startH: 0,     dur: 1,    title: 'Check-In',          sub: '9:00AM – 10:00AM · Front Desk',      color: '#FFC3C3', info: 'Check in at the front desk to receive your hacker badge and welcome package!' },
-  { lane: 1, startH: 0,     dur: 1.25, title: 'Breakfast Snacks',  sub: '9:00AM – 10:15AM · Cafeteria',       color: '#FFA4D5', info: '' },
-  { lane: 0, startH: 1.5,   dur: 0.5,  title: 'Opening Ceremony',  sub: '10:30AM – 11:00AM · Gym',            color: '#9EF1EB', info: 'Join us for the official kickoff of MasseyHacks XII! Learn about the event schedule, rules, and prizes.' },
-  { lane: 4, startH: 2,     dur: 23.5, title: 'Hacking Period',    sub: '11:00AM SAT – 10:30AM SUN',          color: '#a8d4ff', info: 'Work on your projects with your team! Mentors will be available to help throughout the hacking period.' },
-  { lane: 3, startH: 2,     dur: 0.5,  title: 'Team Formation',    sub: '11:00AM – 11:30AM · Gym',            color: '#E1BDFF', info: 'Looking for team members? Join us to meet other hackers and form your dream team!' },
-  { lane: 2, startH: 2.5,   dur: 1,    title: 'Workshop Incoming!', sub: '11:30AM – 12:30PM · TBD',           color: '#ABFF80', info: 'Workshop details coming soon!' },
-  { lane: 1, startH: 3.75,  dur: 1.25, title: 'Lunch',             sub: '12:45PM – 2:00PM · Cafeteria',       color: '#FFA4D5', info: '' },
-  { lane: 3, startH: 5,     dur: 21,   title: 'HackengerHunt',     sub: '2:00PM SAT – 11:00AM SUN · Online',  color: '#9BA3FF', info: 'Solve tech-related challenges for prizes and swag!' },
-  { lane: 2, startH: 5.25,  dur: 1,    title: 'Workshop Incoming!', sub: '2:15PM – 3:15PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
-  { lane: 2, startH: 6.5,   dur: 1,    title: 'Workshop Incoming!', sub: '3:30PM – 4:30PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
-  { lane: 3, startH: 6.5,   dur: 1,    title: 'Cupstacking',       sub: '3:30PM – 4:30PM · Cafeteria',        color: '#E1BDFF', info: 'A MasseyHacks favourite! Create the tallest cup tower possible!' },
-  { lane: 2, startH: 7.75,  dur: 1,    title: 'Workshop Incoming!', sub: '4:45PM – 5:45PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
-  { lane: 2, startH: 8.75,  dur: 0.5,  title: 'Workshop Incoming!', sub: '5:45PM – 6:15PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
-  { lane: 1, startH: 9.25,  dur: 1.25, title: 'Dinner',            sub: '6:15PM – 7:30PM · Cafeteria',        color: '#FFA4D5', info: '' },
-  { lane: 2, startH: 10.75, dur: 1,    title: 'Workshop Incoming!', sub: '7:45PM – 8:45PM · TBD',             color: '#ABFF80', info: 'Workshop details coming soon!' },
-  { lane: 3, startH: 12,    dur: 1,    title: 'Logic Puzzles',     sub: '9:00PM – 10:00PM · TBD',             color: '#E1BDFF', info: '' },
-  { lane: 0, startH: 13,    dur: 0.5,  title: 'Check-Out',         sub: '10:00PM – 10:30PM · Front Desk',     color: '#FFC3C3', info: 'Check out for the evening. See you tomorrow morning!' },
-  { lane: 0, startH: 14,    dur: 2,    title: 'Minecraft',         sub: '11:00PM – 1:00AM · Online',          color: '#E1BDFF', info: '' },
-  { lane: 1, startH: 14,    dur: 2,    title: 'League of Legends', sub: '11:00PM – 1:00AM · Online',          color: '#E1BDFF', info: '' },
-  { lane: 3, startH: 14,    dur: 1,    title: 'Clash Royale',      sub: '11:00PM – 12:00AM · Online',         color: '#E1BDFF', info: '' },
-  // --- SUNDAY MAY 10 --- (startH = hours since 9AM Sat; 8AM Sun = +23h)
-  { lane: 0, startH: 23,    dur: 1,    title: 'Check-In',          sub: '8:00AM – 9:00AM · Front Desk',       color: '#FFC3C3', info: 'Welcome back! Check in to continue working on your projects.' },
-  { lane: 1, startH: 23.5,  dur: 1,    title: 'Breakfast',         sub: '8:30AM – 9:30AM · Cafeteria',        color: '#FFA4D5', info: '' },
-  { lane: 2, startH: 24.75, dur: 1,    title: 'Workshop Incoming!', sub: '9:45AM – 10:45AM · TBD',            color: '#ABFF80', info: 'Workshop details coming soon!' },
-  { lane: 1, startH: 26,    dur: 1.5,  title: 'Group A Lunch',     sub: '11:00AM – 12:30PM · Cafeteria',      color: '#FFA4D5', info: '' },
-  { lane: 2, startH: 26,    dur: 1.5,  title: 'Group B Judging',   sub: '11:00AM – 12:30PM · Cafeteria',      color: '#9EF1EB', info: '' },
-  { lane: 1, startH: 27.5,  dur: 1.5,  title: 'Group B Lunch',     sub: '12:30PM – 2:00PM · Cafeteria',       color: '#FFA4D5', info: '' },
-  { lane: 2, startH: 27.5,  dur: 1.5,  title: 'Group A Judging',   sub: '12:30PM – 2:00PM · Cafeteria',       color: '#9EF1EB', info: '' },
-  { lane: 3, startH: 29,    dur: 0.5,  title: 'Trivia',            sub: '2:00PM – 2:30PM · Cafeteria',        color: '#E1BDFF', info: 'Test your MasseyHacks knowledge with fun trivia questions!' },
-  { lane: 0, startH: 29.5,  dur: 0.5,  title: 'Closing Ceremony',  sub: '2:30PM – 3:00PM · Gym',              color: '#9EF1EB', info: "Join us for the final ceremony where we announce winners and celebrate everyone's hard work!" },
-  { lane: 0, startH: 30,    dur: 0.5,  title: 'Check-Out',         sub: '3:00PM – 3:30PM · Front Desk',       color: '#FFC3C3', info: 'Thank you for participating in MasseyHacks XII!' },
-];
+  // Lane 0 - Logistics
+  { lane: 0, startH: 0,     dur: 1,    title: 'Check-In',                        sub: '9:00AM – 10:00AM · Front Rotunda',    color: '#FFC3C3', info: 'Check in at the front desk to receive your hacker badge and welcome package!' },
+  { lane: 0, startH: 1.5,   dur: 0.5,  title: 'Opening Ceremony',                sub: '10:30AM – 11:00AM · Gym',             color: '#9EF1EB', info: 'Join us for the official kickoff of MasseyHacks XII!' },
+  { lane: 0, startH: 13,    dur: 0.5,  title: 'Check-Out',                       sub: '10:00PM – 10:30PM · Front Rotunda',   color: '#FFC3C3', info: 'Check out for the evening. See you tomorrow morning!' },
 
+  // Lane 1 - Food
+  { lane: 1, startH: 0,     dur: 1.25, title: 'Breakfast Snacks',                sub: '9:00AM – 10:15AM · Cafeteria',        color: '#FFA4D5', info: '' },
+  { lane: 1, startH: 3.75,  dur: 1.25, title: 'Lunch',                           sub: '12:45PM – 2:00PM · Cafeteria',        color: '#FFA4D5', info: '' },
+  { lane: 1, startH: 9.25,  dur: 1.25, title: 'Dinner',                          sub: '6:15PM – 7:30PM · Cafeteria',         color: '#FFA4D5', info: '' },
+
+  // Lane 2 - Workshops
+  { lane: 2, startH: 2,     dur: 0.5,  title: 'Team Formation',                  sub: '11:00AM – 11:30AM · Gym',             color: '#E1BDFF', info: 'Looking for team members? Join us to meet other hackers and form your dream team!' },
+  { lane: 2, startH: 2.5,   dur: 1,    title: 'Alex Millerman',                  sub: '11:30AM – 12:30PM · Workshop Room 1', color: '#ABFF80', info: 'Workshop TBD' },
+  { lane: 2, startH: 5.25,  dur: 1,    title: 'Adam Mehdi',                      sub: '2:15PM – 3:15PM · Workshop Room 1',   color: '#ABFF80', info: 'Workshop TBD' },
+  { lane: 2, startH: 6.5,   dur: 1,    title: 'Mr. McKenzie ',                    sub: '3:30PM – 4:30PM · Workshop Room 1',   color: '#ABFF80', info: 'Workshop TBD' },
+  { lane: 2, startH: 7.75,  dur: 1,    title: 'Origami',                         sub: '4:45PM – 5:45PM · Workshop Room 1',   color: '#ABFF80', info: '' },
+  { lane: 2, startH: 8.75,  dur: 0.5,  title: 'Odette School of Business Talk',  sub: '5:45PM – 6:15PM · Workshop Room 1',   color: '#FF69B4', info: '' },
+  { lane: 2, startH: 10.75, dur: 1,    title: 'MLH',                             sub: '7:45PM – 8:45PM · Workshop Room 1',   color: '#ABFF80', info: '' },
+
+  // Lane 3 - Workshop Room 2 / Activities
+  { lane: 3, startH: 2.5,   dur: 1,    title: 'Claire Andrews',                  sub: '11:30AM – 12:30PM · Workshop Room 2', color: '#ABFF80', info: 'Workshop TBD' },
+  { lane: 3, startH: 4.5,   dur: 0.5, title: 'Karaoke',                         sub: '1:30PM – 2PM · Cafeteria',         color: '#E1BDFF', info: '' },
+  { lane: 3, startH: 5,     dur: 21,   title: 'HackengerHunt',                   sub: '2:00PM SAT – 11:00AM SUN · Online',   color: '#9BA3FF', info: 'Solve tech-related challenges for prizes and swag!' },
+  { lane: 3, startH: 6.5,   dur: 1,    title: 'Cupstacking',                     sub: '3:15PM – 4:15PM · Cafeteria',         color: '#E1BDFF', info: 'A MasseyHacks favourite! Create the tallest cup tower possible!' },
+  { lane: 3, startH: 12,    dur: 1,    title: 'Logic Puzzles & Riddles',          sub: '9:00PM – 10:00PM · Cafeteria',        color: '#E1BDFF', info: '' },
+  { lane: 3, startH: 14,    dur: 2,    title: 'Clash Royale',                    sub: '11:00PM – 1:00AM · Online',          color: '#E1BDFF', info: '' },
+
+  // Lane 4 - Activities 2
+  { lane: 4, startH: 7.5,  dur: 0.5,  title: 'Tech Together',                   sub: '4:15PM – 4:45PM · Cafeteria',         color: '#E1BDFF', info: '' },
+  { lane: 4, startH: 14,    dur: 2,    title: 'Minecraft',                       sub: '11:00PM – 1:00AM · Online',           color: '#E1BDFF', info: '' },
+  { lane: 4, startH: 14,    dur: 2,    title: 'League of Legends',               sub: '11:00PM – 1:00AM · Online',           color: '#E1BDFF', info: '' },
+
+  // Lane 5 - Hacking
+  { lane: 5, startH: 2,     dur: 23.5, title: 'Hacking Period',                  sub: '11:00AM SAT – 10:30AM SUN',           color: '#a8d4ff', info: 'Work on your projects with your team! Mentors will be available throughout.' },
+
+  // --- SUNDAY MAY 10 --- (startH = hours since 9AM Sat; 8AM Sun = +23h)
+  // Lane 0 - Logistics
+  { lane: 0, startH: 23,    dur: 1,    title: 'Check-In',                        sub: '8:00AM – 9:00AM · Front Rotunda',     color: '#FFC3C3', info: 'Welcome back! Check in to continue working on your projects.' },
+  { lane: 0, startH: 29,    dur: 0.5,  title: 'Trivia',                          sub: '2:00PM – 2:30PM · Cafeteria',         color: '#E1BDFF', info: 'Test your MasseyHacks knowledge with fun trivia questions!' },
+  { lane: 0, startH: 29.5,  dur: 0.5,  title: 'Closing Ceremony',                sub: '2:30PM – 3:00PM · Gym',               color: '#9EF1EB', info: "Join us for the final ceremony where we announce winners and celebrate everyone's hard work!" },
+  { lane: 0, startH: 30,    dur: 0.5,  title: 'Check-Out',                       sub: '3:00PM – 3:30PM · Front Rotunda',     color: '#FFC3C3', info: 'Thank you for participating in MasseyHacks XII!' },
+
+  // Lane 1 - Food
+  { lane: 1, startH: 23.5,  dur: 1,    title: 'Breakfast',                       sub: '8:30AM – 9:30AM · Cafeteria',         color: '#FFA4D5', info: '' },
+  { lane: 1, startH: 26,    dur: 1.5,  title: 'Group A Lunch',                   sub: '11:00AM – 12:30PM · Cafeteria',       color: '#FFA4D5', info: '' },
+  { lane: 1, startH: 27.5,  dur: 1.5,  title: 'Group B Lunch',                   sub: '12:30PM – 2:00PM · Cafeteria',        color: '#FFA4D5', info: '' },
+
+  // Lane 2 - Workshops
+  { lane: 2, startH: 24.75, dur: 1,    title: 'Rocket Innovation',                          sub: '9:45AM – 10:45AM · Workshop Room 1',  color: '#ABFF80', info: '' },
+  { lane: 2, startH: 26,    dur: 1.5,  title: 'Group B Judging',                 sub: '11:00AM – 12:30PM · Cafeteria',       color: '#9EF1EB', info: '' },
+  { lane: 2, startH: 27.5,  dur: 1.5,  title: 'Group A Judging',                 sub: '12:30PM – 2:00PM · Cafeteria',        color: '#9EF1EB', info: '' },
+
+  // Lane 3 - Activities
+  { lane: 3, startH: 25,    dur: 0.5,  title: 'Submission Help',                 sub: '10:00AM – 10:30AM · TBD',             color: '#E1BDFF', info: '' },
+  { lane: 4, startH: 24.83, dur: 1,    title: 'Startup Pitch Game',              sub: '9:50AM – 10:50AM · TBD',              color: '#E1BDFF', info: '' },
+];
 function darkenHex(hex: string, amount = 0.45): string {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);

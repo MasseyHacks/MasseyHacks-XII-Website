@@ -17,6 +17,7 @@ import mnsiLogo from './sponsors/Bronze/Mnsi.png';
 import lendCityLogo from './sponsors/Silver/LendCity.png';
 import waterlooscienceLogo from './sponsors/Silver/waterlooscience.png';
 import ubc from './sponsors/Silver/ubc.png';
+import uoft from './sponsors/Bronze/uoft.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,6 +67,7 @@ const sponsors: Sponsor[] = [
   { id: '5', name: 'CodeCrafters', logo: codecrafterLogo, tier: 'bronze', link: 'https://codecrafters.io/' },
   { id: '6', name: 'Leading Aces', logo: laaLogo, tier: 'bronze', link: 'https://www.leadingaces.com/' },
   { id: '7', name: 'MNSi', logo: mnsiLogo, tier: 'bronze', link: 'https://www.mnsi.net/' },
+  { id: '8', name: 'Uoft', logo: uoft, tier: 'bronze', link: 'https://web.cs.toronto.edu' },
 ];
 
 function MLHTrustBadge() {
