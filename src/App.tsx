@@ -18,6 +18,10 @@ import lendCityLogo from './sponsors/Silver/LendCity.png';
 import waterlooscienceLogo from './sponsors/Silver/waterlooscience.png';
 import ubc from './sponsors/Silver/ubc.png';
 import uoft from './sponsors/Bronze/uoft.png';
+import uwin from './sponsors/Bronze/uwin.png';
+import rocket from './sponsors/Bronze/rocket.png';
+import ie from './sponsors/Bronze/ie.png';
+import shopify from './sponsors/Bronze/shopify.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,6 +72,10 @@ const sponsors: Sponsor[] = [
   { id: '6', name: 'Leading Aces', logo: laaLogo, tier: 'bronze', link: 'https://www.leadingaces.com/' },
   { id: '7', name: 'MNSi', logo: mnsiLogo, tier: 'bronze', link: 'https://www.mnsi.net/' },
   { id: '8', name: 'Uoft', logo: uoft, tier: 'bronze', link: 'https://web.cs.toronto.edu' },
+  { id: '9', name: 'uwin', logo: uwin, tier: 'bronze', link: 'https://www.uwindsor.ca/business/' },
+  { id: '10', name: 'shopify', logo: shopify, tier: 'bronze', link: 'https://www.shopify.com/ppc/online-store?term=shopify&adid=784124018876&campaignid=15436644439&branded_enterprise=1&BOID=brand&utm_medium=cpc&utm_source=google&matchtype=e&network=g&gad_source=1&gad_campaignid=15436644439&gbraid=0AAAAADp4t0prWvdvQ0aqaglABe8lJsDuU&gclid=CjwKCAjwtcHPBhADEiwAWo3sJp7-Bj43OSdQXsLJ1SfERgf8U-brOWC16bMt-TWFq9-WJZ1VCD0F6xoCZMgQAvD_BwE' },
+  { id: '11', name: 'rocket', logo: rocket, tier: 'bronze', link: 'https://rocketinnovationstudio.ca' },
+  { id: '12', name: 'ie', logo: ie, tier: 'bronze', link: 'https://windsor.ieee.ca' },
 ];
 
 function MLHTrustBadge() {

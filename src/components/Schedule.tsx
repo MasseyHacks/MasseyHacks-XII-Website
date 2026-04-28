@@ -31,15 +31,15 @@ const scheduleEvents: ScheduleEvent[] = [
 
   // Lane 2 - Workshops
   { lane: 2, startH: 2,     dur: 0.5,  title: 'Team Formation',                  sub: '11:00AM – 11:30AM · Gym',             color: '#E1BDFF', info: 'Looking for team members? Join us to meet other hackers and form your dream team!' },
-  { lane: 2, startH: 2.5,   dur: 1,    title: 'Alex Millerman',                  sub: '11:30AM – 12:30PM · Workshop Room 1', color: '#ABFF80', info: 'Workshop TBD' },
-  { lane: 2, startH: 5.25,  dur: 1,    title: 'Adam Mehdi',                      sub: '2:15PM – 3:15PM · Workshop Room 1',   color: '#ABFF80', info: 'Workshop TBD' },
-  { lane: 2, startH: 6.5,   dur: 1,    title: 'Mr. McKenzie ',                    sub: '3:30PM – 4:30PM · Workshop Room 1',   color: '#ABFF80', info: 'Workshop TBD' },
+  { lane: 2, startH: 2.5,   dur: 1,    title: 'Workshop Incoming',                  sub: '11:30AM – 12:30PM · Workshop Room 1', color: '#ABFF80', info: 'Workshop TBD' },
+  { lane: 2, startH: 5.25,  dur: 1,    title: 'Workshop Incoming',                      sub: '2:15PM – 3:15PM · Workshop Room 1',   color: '#ABFF80', info: 'Workshop TBD' },
+  { lane: 2, startH: 6.5,   dur: 1,    title: 'Workshop Incoming ',                    sub: '3:30PM – 4:30PM · Workshop Room 1',   color: '#ABFF80', info: 'Workshop TBD' },
   { lane: 2, startH: 7.75,  dur: 1,    title: 'Origami',                         sub: '4:45PM – 5:45PM · Workshop Room 1',   color: '#ABFF80', info: '' },
   { lane: 2, startH: 8.75,  dur: 0.5,  title: 'Odette School of Business Talk',  sub: '5:45PM – 6:15PM · Workshop Room 1',   color: '#FF69B4', info: '' },
   { lane: 2, startH: 10.75, dur: 1,    title: 'MLH',                             sub: '7:45PM – 8:45PM · Workshop Room 1',   color: '#ABFF80', info: '' },
 
   // Lane 3 - Workshop Room 2 / Activities
-  { lane: 3, startH: 2.5,   dur: 1,    title: 'Claire Andrews',                  sub: '11:30AM – 12:30PM · Workshop Room 2', color: '#ABFF80', info: 'Workshop TBD' },
+  { lane: 3, startH: 2.5,   dur: 1,    title: 'Workshop Incoming',                  sub: '11:30AM – 12:30PM · Workshop Room 2', color: '#ABFF80', info: 'Workshop TBD' },
   { lane: 3, startH: 4.5,   dur: 0.5, title: 'Karaoke',                         sub: '1:30PM – 2PM · Cafeteria',         color: '#E1BDFF', info: '' },
   { lane: 3, startH: 5,     dur: 21,   title: 'HackengerHunt',                   sub: '2:00PM SAT – 11:00AM SUN · Online',   color: '#9BA3FF', info: 'Solve tech-related challenges for prizes and swag!' },
   { lane: 3, startH: 6.5,   dur: 1,    title: 'Cupstacking',                     sub: '3:15PM – 4:15PM · Cafeteria',         color: '#E1BDFF', info: 'A MasseyHacks favourite! Create the tallest cup tower possible!' },
