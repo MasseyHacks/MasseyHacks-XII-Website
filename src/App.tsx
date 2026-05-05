@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, type ReactNode } from 'react';
-import { Fish, Calendar, ChevronDown, Mail, Instagram, Twitter, Youtube, Facebook, Menu, X, Code, GraduationCap, Users } from 'lucide-react';
+import { Fish, Calendar, ChevronDown, Mail, Instagram, Twitter, Youtube, Facebook, Menu, X } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
@@ -60,7 +60,7 @@ interface Sponsor {
   id: string;
   name: string;
   logo: string;
-  tier: 'silver' | 'bronze' | 'gold';
+  tier: 'gold' | 'silver' | 'bronze';
   link: string;
 }
 
@@ -504,33 +504,7 @@ function App() {
                   MasseyHacks will take place on May 9-10, 2026
                 </div>
                 <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
-                  MasseyHacks is back! APPLY NOW!
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4 mt-6 sm:mt-8 justify-center items-center">
-                  <button
-                    onClick={() => window.open('https://forms.gle/jXom8b7VVBQGjgqv9', '_blank')}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
-                  >
-                    <Code className="w-5 h-5" />
-                    <span>Hacker Application</span>
-                  </button>
-
-                  <button
-                    onClick={() => window.open('https://forms.gle/pnfMqnn2fdMAgRHb7', '_blank')}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
-                  >
-                    <GraduationCap className="w-5 h-5" />
-                    <span>Mentor Application</span>
-                  </button>
-
-                  <button
-                    onClick={() => window.open('https://forms.gle/Pgtk9ZWHk5YAvY5T9', '_blank')}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl border border-cyan-400/50 hover:border-cyan-300 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
-                  >
-                    <Users className="w-5 h-5" />
-                    <span>Volunteer Application</span>
-                  </button>
+                  Application results are released!
                 </div>
               </div>
             </div>
@@ -642,7 +616,7 @@ function App() {
           </div>
         </section>
 
-{/* ── SPONSORS ── */}
+        {/* ── SPONSORS ── */}
         <section id="sponsors" ref={sponsorsRef} className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <h2
@@ -690,7 +664,7 @@ function App() {
 
             {/* Gold */}
             <div className="mb-14 sm:mb-20">
-              <h3 className="text-center text-white/90 font-bold tracking-[0.3em] uppercase text-base sm:text-base md:text-lg mb-5 sm:mb-7">
+              <h3 className="text-center text-white/90 font-bold tracking-[0.3em] uppercase text-base sm:text-lg md:text-xl mb-5 sm:mb-7">
                 Gold
               </h3>
               <div className="grid grid-cols-1 gap-5 sm:gap-6 md:gap-8 max-w-3xl mx-auto">
