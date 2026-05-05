@@ -15,8 +15,7 @@ interface ScheduleEvent {
 const COL_W = 300; // px per hour
 const TOTAL_HOURS = 31.5; // 9AM Sat → 3:30PM Sun
 const SAT_START_HOUR = 9;
-const LANES = ['Logistics', 'Food', 'Workshops', 'Activities', 'Activities 2', 'Hacking'];
-
+const LANES = ['Logistics', 'Food', 'Workshops', 'Activities', 'Activities', 'Activities', 'Hacking'];
 const scheduleEvents: ScheduleEvent[] = [
   // ─── SATURDAY MAY 9 ───────────────────────────────────────────────────────
 
@@ -47,14 +46,9 @@ const scheduleEvents: ScheduleEvent[] = [
   { lane: 3, startH: 8.75,  dur: 1,    title: 'Start-up Pitch Game',              sub: '5:45PM – 6:45PM · Cafeteria',          color: '#E1BDFF', info: '' },
   { lane: 3, startH: 12,    dur: 1,    title: 'Karaoke',                           sub: '9:00PM – 10:00PM · Cafeteria',         color: '#E1BDFF', info: '' },
   { lane: 3, startH: 14.5,  dur: 1,    title: 'Clash Royale',                      sub: '11:30PM – 12:30AM · Online',           color: '#E1BDFF', info: '' },
-
-  // Lane 4 – Activities 2
-  { lane: 4, startH: 5,     dur: 21,   title: 'HackengerHunt',                    sub: '2:00PM SAT – 11:00AM SUN · Online',    color: '#9BA3FF', info: 'Solve tech-related challenges for prizes and swag!' },
-  { lane: 4, startH: 14.5,  dur: 1.5,  title: 'Minecraft Bedwars',                sub: '11:30PM – 1:00AM · Online',            color: '#E1BDFF', info: '' },
-  { lane: 4, startH: 14.5,  dur: 1.5,  title: 'League of Legends',                sub: '11:30PM – 1:00AM · Online',            color: '#C8E6C9', info: '' },
-
-  // Lane 5 – Hacking
-  { lane: 5, startH: 2,     dur: 23.5, title: 'Hacking Period',                   sub: '11:00AM SAT – 10:30AM SUN',            color: '#a8d4ff', info: 'Work on your projects with your team! Mentors will be available throughout.' },
+  { lane: 4, startH: 14.5, dur: 1.5, title: 'League of Legends', sub: '11:30PM – 1:00AM · Online',  color: '#C8E6C9', info: '' },
+  { lane: 5, startH: 14.5, dur: 1.5, title: 'Minecraft Bedwars', sub: '11:30PM – 1:00AM · Online',  color: '#E1BDFF', info: '' },
+  { lane: 6, startH: 2,     dur: 23.5, title: 'Hacking Period',                   sub: '11:00AM SAT – 10:30AM SUN',            color: '#a8d4ff', info: 'Work on your projects with your team! Mentors will be available throughout.' },
 
   // ─── SUNDAY MAY 10 ────────────────────────────────────────────────────────
 
