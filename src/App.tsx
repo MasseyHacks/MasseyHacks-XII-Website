@@ -22,6 +22,7 @@ import uwin from './sponsors/Bronze/uwin.png';
 import rocket from './sponsors/Bronze/rocket.png';
 import ie from './sponsors/Bronze/ie.png';
 import shopify from './sponsors/Bronze/shopify.png';
+import st from './sponsors/Gold/st.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,7 +60,7 @@ interface Sponsor {
   id: string;
   name: string;
   logo: string;
-  tier: 'silver' | 'bronze';
+  tier: 'silver' | 'bronze' | 'gold';
   link: string;
 }
 
@@ -76,6 +77,7 @@ const sponsors: Sponsor[] = [
   { id: '10', name: 'shopify', logo: shopify, tier: 'bronze', link: 'https://www.shopify.com/ppc/online-store?term=shopify&adid=784124018876&campaignid=15436644439&branded_enterprise=1&BOID=brand&utm_medium=cpc&utm_source=google&matchtype=e&network=g&gad_source=1&gad_campaignid=15436644439&gbraid=0AAAAADp4t0prWvdvQ0aqaglABe8lJsDuU&gclid=CjwKCAjwtcHPBhADEiwAWo3sJp7-Bj43OSdQXsLJ1SfERgf8U-brOWC16bMt-TWFq9-WJZ1VCD0F6xoCZMgQAvD_BwE' },
   { id: '11', name: 'rocket', logo: rocket, tier: 'bronze', link: 'https://rocketinnovationstudio.ca' },
   { id: '12', name: 'ie', logo: ie, tier: 'bronze', link: 'https://windsor.ieee.ca' },
+  { id: '13', name: 'st', logo: st, tier: 'gold', link: 'https://www.stclaircollege.ca' },
 ];
 
 function MLHTrustBadge() {
@@ -640,7 +642,7 @@ function App() {
           </div>
         </section>
 
-        {/* ── SPONSORS ── */}
+{/* ── SPONSORS ── */}
         <section id="sponsors" ref={sponsorsRef} className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             <h2
@@ -686,11 +688,35 @@ function App() {
               </p>
             </div>
 
+            {/* Gold */}
+            <div className="mb-14 sm:mb-20">
+              <h3 className="text-center text-white/90 font-bold tracking-[0.3em] uppercase text-base sm:text-base md:text-lg mb-5 sm:mb-7">
+                Gold
+              </h3>
+              <div className="grid grid-cols-1 gap-5 sm:gap-6 md:gap-8 max-w-3xl mx-auto">
+                {sponsors
+                  .filter((s) => s.tier === 'gold')
+                  .map((sponsor) => (
+                    <a key={sponsor.id} href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block">
+                      <div className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 p-12 sm:p-16 md:p-20 min-h-[300px] sm:min-h-[380px] md:min-h-[420px] flex items-center justify-center hover:bg-white/15 hover:scale-[1.02] transition-all">
+                        <img
+                          src={sponsor.logo}
+                          alt={sponsor.name}
+                          className="w-full max-h-44 sm:max-h-60 md:max-h-72 object-contain"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    </a>
+                  ))}
+              </div>
+            </div>
+
+            {/* Silver */}
             <div className="mb-14 sm:mb-20">
               <h3 className="text-center text-white/90 font-bold tracking-[0.3em] uppercase text-sm sm:text-base md:text-lg mb-5 sm:mb-7">
                 Silver
               </h3>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 md:gap-8">
                 {sponsors
                   .filter((s) => s.tier === 'silver')
@@ -710,16 +736,16 @@ function App() {
               </div>
             </div>
 
+            {/* Bronze */}
             <div>
               <h3 className="text-center text-white/90 font-bold tracking-[0.3em] uppercase text-sm sm:text-base md:text-lg mb-5 sm:mb-7">
                 Bronze
               </h3>
-
               <div className="flex flex-wrap justify-center gap-4 sm:gap-5 md:gap-6">
                 {sponsors
                   .filter((s) => s.tier === 'bronze')
                   .map((sponsor) => (
-                  <a key={sponsor.id} href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block w-[calc(50%-8px)] sm:w-[calc(25%-15px)]">
+                    <a key={sponsor.id} href={sponsor.link} target="_blank" rel="noopener noreferrer" className="block w-[calc(50%-8px)] sm:w-[calc(25%-15px)]">
                       <div className="sponsor-card bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 p-2 sm:p-3 md:p-4 min-h-[90px] sm:min-h-[105px] md:min-h-[130px] flex items-center justify-center hover:bg-white/15 hover:scale-[1.02] transition-all">
                         <img
                           src={sponsor.logo}
@@ -733,6 +759,7 @@ function App() {
                   ))}
               </div>
             </div>
+
           </div>
         </section>
       </main>
