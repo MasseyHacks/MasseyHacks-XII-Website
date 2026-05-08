@@ -76,7 +76,7 @@ const scheduleEvents: ScheduleEvent[] = [
   { lane: 2, startH: 27.5,  dur: 1.5,  title: 'Group A Judging',                  sub: '12:30PM – 2:00PM · Cafeteria',         color: '#9EF1EB', info: '' },
 
   // Lane 3 – Activities
-  { lane: 3, startH: 25,    dur: 0.5,  title: 'Submission Help',                  sub: '10:00AM – 10:30AM · TBD',              color: '#E1BDFF', info: '' },
+  { lane: 4, startH: 25,    dur: 0.5,  title: 'Submission Help',                  sub: '10:00AM – 10:30AM · TBD',              color: '#E1BDFF', info: '' },
   { lane: 3, startH: 24.83, dur: 1,    title: 'Startup Pitch Game',               sub: '9:50AM – 10:50AM · TBD',               color: '#E1BDFF', info: '' },
 ];
 
