@@ -15,38 +15,47 @@ interface ScheduleEvent {
 const COL_W = 300; // px per hour
 const TOTAL_HOURS = 31.5; // 9AM Sat → 3:30PM Sun
 const SAT_START_HOUR = 9;
-const LANES = ['Logistics', 'Food', 'Workshops', 'Activities', 'Activities','Activties', 'Hacking'];
+const LANES = ['Logistics', 'Food', 'Workshops', 'Activities', 'Activities 2', 'Activites 3','Hacking'];
 
 const scheduleEvents: ScheduleEvent[] = [
   // ─── SATURDAY MAY 9 ───────────────────────────────────────────────────────
 
+  // Lane 0 – Logistics
   { lane: 0, startH: 0,     dur: 1,    title: 'Check-In',                          sub: '9:00AM – 10:00AM · Front Rotunda',     color: '#FFC3C3', info: 'Check in at the front desk to receive your hacker badge and welcome package!' },
   { lane: 0, startH: 1.5,   dur: 0.5,  title: 'Opening Ceremony',                  sub: '10:30AM – 11:00AM · Gym',              color: '#9EF1EB', info: 'Join us for the official kickoff of MasseyHacks XII!' },
   { lane: 0, startH: 13,    dur: 0.5,  title: 'Check-Out',                         sub: '10:00PM – 10:30PM · Front Rotunda',    color: '#FFC3C3', info: 'Check out for the evening. See you tomorrow morning!' },
+
+  // Lane 1 – Food
   { lane: 1, startH: 0,     dur: 1.25, title: 'Breakfast Snacks',                  sub: '9:00AM – 10:15AM · Cafeteria',         color: '#FFA4D5', info: '' },
   { lane: 1, startH: 3.75,  dur: 1.25, title: 'Lunch',                             sub: '12:45PM – 2:00PM · Cafeteria',         color: '#FFA4D5', info: '' },
   { lane: 1, startH: 9.25,  dur: 1.25, title: 'Dinner',                            sub: '6:15PM – 7:30PM · Cafeteria',          color: '#FFA4D5', info: '' },
+
+  // Lane 2 – Workshops Room 101
   { lane: 2, startH: 2,     dur: 0.5,  title: 'Team Formation',                    sub: '11:00AM – 11:30AM · Gym',              color: '#E1BDFF', info: 'Looking for team members? Join us to meet other hackers and form your dream team!' },
-  { lane: 2, startH: 2.5,   dur: 1,    title: 'Developing and Debugging Websites', sub: '11:30AM – 12:30PM · Room 149',         color: '#ABFF80', info: '' },
-  { lane: 2, startH: 5.25,  dur: 1,    title: 'Game Development with Godot',       sub: '2:15PM – 3:15PM · Room 149',           color: '#ABFF80', info: '' },
-  { lane: 2, startH: 7.75,  dur: 1,    title: 'Origami',                           sub: '4:45PM – 5:45PM · Room 149',           color: '#ABFF80', info: '' },
-  { lane: 2, startH: 8.75,  dur: 0.5,  title: 'Odette School of Business Talk',    sub: '5:45PM – 6:15PM · TBD',               color: '#FF69B4', info: '' },
-  { lane: 2, startH: 10.75, dur: 1,    title: 'Github Copilot',                    sub: '7:45PM – 8:45PM · Room 149',           color: '#ABFF80', info: '' },
+  { lane: 2, startH: 2.5,   dur: 1,    title: 'Developing and Debugging Websites', sub: '11:30AM – 12:30PM · Room 101',         color: '#ABFF80', info: 'Planning to make a website? Come learn tips and tricks from a seasoned professional Web Developer. Topics include front-end frameworks, making the most of your debug tools, and back-end architecture. Whether you\'ve never touched web code or made websites before, there\'s something for everyone. Hosted by Alex Millerman. Prerequisites: editor of choice (e.g. VSCode) and your browser.' },
+  { lane: 2, startH: 5.25,  dur: 1,    title: 'Game Development with Godot',       sub: '2:15PM – 3:15PM · Room 101',           color: '#ABFF80', info: 'Get a hands-on introduction to the Godot game engine! Learn what a game engine does behind the scenes, walk through the basics of the editor and GDScript, and build a simple playable maze game. Hosted by Adam Mehdi. Prerequisites: knowledge of if statements, loops, and lists; install Godot beforehand.' },
+  { lane: 2, startH: 7.75,  dur: 1,    title: 'Origami',                           sub: '4:45PM – 5:45PM · Room 101',           color: '#E1BDFF', info: 'Create your own sea animal origami while learning simple paper-folding techniques. A relaxing, beginner-friendly activity where you can work alongside fellow participants to make your favourite sea creatures!' },
+  { lane: 2, startH: 8.75,  dur: 0.5,  title: 'Odette School of Business Talk',    sub: '5:45PM – 6:15PM · Sponsor Booths',     color: '#FF69B4', info: 'Learn more about the Odette School of Business and the programs that they offer!' },
+  { lane: 2, startH: 10.5,  dur: 0.75, title: 'Github Copilot',                    sub: '7:30PM – 8:15PM · Room 149',           color: '#ABFF80', info: 'Elevate your hackathon game! Join this workshop on Making Better Hacks, Faster with GitHub Copilot, and discover how this AI companion transforms the coding experience for beginners and seasoned developers. Copilot isn\'t just another tool — it\'s like having another hacker on your team! Hosted by Major League Hacking.' },
 
-  { lane: 3, startH: 2.5,   dur: 1,    title: 'Introduction to Python with mckPy', sub: '11:30AM – 12:30PM · Room 101',         color: '#ABFF80', info: '' },
-  { lane: 3, startH: 5,     dur: 1,    title: 'St. Clair College Talk',            sub: '2:00PM – 3:00PM · Cafeteria',          color: '#9EF1EB', info: '' },
-  { lane: 2, startH: 6.5,   dur: 1,    title: 'Debugging C++ with Visual Studio',  sub: '3:30PM – 4:30PM · Room 101',           color: '#ABFF80', info: '' },
-  { lane: 3, startH: 6.25,  dur: 1,    title: 'Cupstacking',                       sub: '3:15PM – 4:15PM · Cafeteria',          color: '#E1BDFF', info: 'A MasseyHacks favourite! Create the tallest cup tower possible!' },
-  { lane: 3, startH: 7.5,   dur: 0.5,  title: 'Tech Together',                    sub: '4:15PM – 4:45PM · Cafeteria',          color: '#E1BDFF', info: '' },
-  { lane: 3, startH: 8.75,  dur: 1,    title: 'Start-up Pitch Game',              sub: '5:45PM – 6:45PM · Cafeteria',          color: '#E1BDFF', info: '' },
-  { lane: 3, startH: 12,    dur: 1,    title: 'Karaoke',                           sub: '9:00PM – 10:00PM · Cafeteria',         color: '#E1BDFF', info: '' },
-  { lane: 3, startH: 14.5,  dur: 1,    title: 'Clash Royale',                      sub: '11:30PM – 12:30AM · Online',           color: '#E1BDFF', info: '' },
+  // Lane 3 – Activities / Room 149
+  { lane: 3, startH: 2.5,   dur: 1,    title: 'Introduction to Python with mckPy', sub: '11:30AM – 12:30PM · Room 149',         color: '#ABFF80', info: 'An introduction to programming and how to think like a programmer, using a custom package (mckPy) built on pygame. Learn to draw shapes, create graphical programs, and build interactive projects. Hosted by Mr. McKenzie. Prerequisites: install Python with pygame.' },
+  { lane: 3, startH: 5,     dur: 1,    title: 'St. Clair College Talk',            sub: '2:00PM – 3:00PM · Room 149',           color: '#9EF1EB', info: 'Learn more about the programs available in the Zekelman School of IT at St. Clair College. Hosted by Darren Takaki.' },
+  { lane: 3, startH: 6.5,   dur: 1,    title: 'Debugging C++ with Visual Studio',  sub: '3:30PM – 4:30PM · Room 149',           color: '#ABFF80', info: 'Don\'t be the person who only uses print statements! Learn how to use Visual Studio\'s GUI-based debugger — skills that generalize to other debuggers too. An interactive session with simple steps to get comfortable fast. Hosted by Claire Andrews. Prerequisites: Visual Studio 2019 or later with "Desktop development with C++" workload.' },
+  { lane: 4, startH: 6.25,  dur: 1,    title: 'Cupstacking',                       sub: '3:15PM – 4:15PM · Cafeteria',          color: '#E1BDFF', info: 'Work together in teams to complete fast-paced cup stacking challenges that test communication, coordination, and problem-solving skills. A quick and fun way to break the ice and build teamwork!' },
+  { lane: 3, startH: 7.5,   dur: 0.5,  title: 'Tech Together',                     sub: '4:15PM – 4:45PM · Cafeteria',          color: '#E1BDFF', info: 'An underrepresented genders (and allies!) meetup — connect, share ideas, and meet other hackers who identify as an underrepresented gender.' },
+  { lane: 3, startH: 8.5,   dur: 1,    title: 'Start-up Pitch Game',               sub: '5:30PM – 6:30PM · Room 149',           color: '#E1BDFF', info: 'Pitch the next billion dollar startup using a completely random slideshow you\'ve never seen before! Think slideshow karaoke, but startup edition. Improvise your way through wild ideas, unexpected products, and chaotic investor pitches.' },
+  { lane: 3, startH: 11.5,  dur: 1,    title: 'Werewolf',                           sub: '8:30PM – 9:30PM · Cafeteria',          color: '#E1BDFF', info: 'A classic social deduction game where villagers work together to uncover the hidden werewolves before it\'s too late. Bluff, debate, and survive the night!' },
+  { lane: 4, startH: 12,    dur: 1,    title: 'Karaoke',                            sub: '9:00PM – 10:00PM · Cafeteria',         color: '#E1BDFF', info: 'Sing your favorite songs with friends in a fun and relaxed karaoke session! Whether you\'re a great singer or just here for the chaos, everyone is welcome to grab the mic and join in.' },
+  { lane: 3, startH: 14.5,  dur: 1,    title: 'Clash Royale',                       sub: '11:30PM – 12:30AM · Online',           color: '#E1BDFF', info: 'Play Clash Royale online with fellow hackers! Find us on the MasseyHacks XII Discord server.' },
 
+  // Lane 4 – Activities 2
   { lane: 5, startH: 5,     dur: 21,   title: 'HackengerHunt',                    sub: '2:00PM SAT – 11:00AM SUN · Online',    color: '#9BA3FF', info: 'Solve tech-related challenges for prizes and swag!' },
-  { lane: 4, startH: 14.5,  dur: 1.5,  title: 'League of Legends',                sub: '11:30PM – 1:00AM · Online',            color: '#C8E6C9', info: '' },
-  
+  { lane: 4, startH: 14.5,  dur: 1.5,  title: 'Minecraft Bedwars',                sub: '11:30PM – 1:00AM · Online',            color: '#E1BDFF', info: '' },
+  { lane: 5, startH: 14.5,  dur: 1.5,  title: 'League of Legends',                sub: '11:30PM – 1:00AM · Online',            color: '#C8E6C9', info: '' },
+
+  // Lane 6 – Hacking
   { lane: 6, startH: 2,     dur: 23.5, title: 'Hacking Period',                   sub: '11:00AM SAT – 10:30AM SUN',            color: '#a8d4ff', info: 'Work on your projects with your team! Mentors will be available throughout.' },
-  { lane: 5, startH: 14.5,  dur: 1.5,  title: 'Minecraft Bedwars',                sub: '11:30PM – 1:00AM · Online',            color: '#E1BDFF', info: '' },
 
   // ─── SUNDAY MAY 10 ────────────────────────────────────────────────────────
 
