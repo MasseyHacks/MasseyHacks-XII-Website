@@ -66,12 +66,12 @@ const scheduleEvents: ScheduleEvent[] = [
 
   // Lane 1 – Food
   { lane: 1, startH: 23.5,  dur: 1,    title: 'Breakfast',                        sub: '8:30AM – 9:30AM · Cafeteria',          color: '#FFA4D5', info: '' },
-  { lane: 1, startH: 26.5,    dur: 1.5,  title: 'Group A Lunch',                    sub: '11:00AM – 12:30PM · Cafeteria',        color: '#FFA4D5', info: '' },
+  { lane: 1, startH: 26.5,    dur: 1.5,  title: 'Group A Lunch',                    sub: '11:30AM – 12:30PM · Cafeteria',        color: '#FFA4D5', info: '' },
   { lane: 1, startH: 28,  dur: 1.5,  title: 'Group B Lunch',                    sub: '12:30PM – 2:00PM · Cafeteria',         color: '#FFA4D5', info: '' },
 
   // Lane 2 – Workshops
   { lane: 2, startH: 24.75, dur: 1,    title: 'Humans in the Loop: How AI, Social Media, and You Shape Modern Applications', sub: '9:45AM – 10:45AM · Room 149', color: '#ABFF80', info: 'Explore how Instagram, TikTok, and YouTube work behind the scenes—how your actions, algorithms, and AI all shape what you see online. Then take part in a live, guided build where we create a small app together using an AI coding assistant. Hosted by Sasanka Vithanage (Rocket Innovation Studio).' },
-  { lane: 2, startH: 26.5,    dur: 1.5,  title: 'Group B Judging',                  sub: '11:00AM – 12:30PM · Cafeteria',        color: '#9EF1EB', info: '' },
+  { lane: 2, startH: 26.5,    dur: 1.5,  title: 'Group B Judging',                  sub: '11:30AM – 12:30PM · Cafeteria',        color: '#9EF1EB', info: '' },
   { lane: 2, startH: 28,  dur: 1.5,  title: 'Group A Judging',                  sub: '12:30PM – 2:00PM · Cafeteria',         color: '#9EF1EB', info: '' },
 
   // Lane 3 – Activities
