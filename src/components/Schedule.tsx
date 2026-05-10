@@ -50,7 +50,7 @@ const scheduleEvents: ScheduleEvent[] = [
   { lane: 3, startH: 14.5,  dur: 1,    title: 'Clash Royale',                       sub: '11:30PM – 12:30AM · Online',           color: '#E1BDFF', info: 'Play Clash Royale online with fellow hackers! Find us on the MasseyHacks XII Discord server.' },
 
   // Lane 4 – Activities 2
-  { lane: 5, startH: 5,     dur: 21,   title: 'HackengerHunt',                    sub: '2:00PM SAT – 11:00AM SUN · Online',    color: '#9BA3FF', info: 'Solve tech-related challenges for prizes and swag!' },
+  { lane: 5, startH: 10,     dur: 21,   title: 'HackengerHunt',                    sub: '7:00PM SAT – 11:00AM SUN · Online',    color: '#9BA3FF', info: 'Solve tech-related challenges for prizes and swag!' },
   { lane: 4, startH: 14.5,  dur: 1.5,  title: 'Minecraft Bedwars',                sub: '11:30PM – 1:00AM · Online',            color: '#E1BDFF', info: '' },
   { lane: 5, startH: 14.5,  dur: 1.5,  title: 'League of Legends',                sub: '11:30PM – 1:00AM · Online',            color: '#C8E6C9', info: '' },
 
@@ -61,22 +61,21 @@ const scheduleEvents: ScheduleEvent[] = [
 
   // Lane 0 – Logistics
   { lane: 0, startH: 23,    dur: 1,    title: 'Check-In',                         sub: '8:00AM – 9:00AM · Front Rotunda',      color: '#FFC3C3', info: 'Welcome back! Check in to continue working on your projects.' },
-  { lane: 0, startH: 29,    dur: 0.5,  title: 'Trivia',                           sub: '2:00PM – 2:30PM · Cafeteria',          color: '#E1BDFF', info: 'Test your MasseyHacks knowledge with fun trivia questions!' },
   { lane: 0, startH: 29.5,  dur: 0.5,  title: 'Closing Ceremony',                 sub: '2:30PM – 3:00PM · Gym',                color: '#9EF1EB', info: "Join us for the final ceremony where we announce winners and celebrate everyone's hard work!" },
   { lane: 0, startH: 30,    dur: 0.5,  title: 'Check-Out',                        sub: '3:00PM – 3:30PM · Front Rotunda',      color: '#FFC3C3', info: 'Thank you for participating in MasseyHacks XII!' },
 
   // Lane 1 – Food
   { lane: 1, startH: 23.5,  dur: 1,    title: 'Breakfast',                        sub: '8:30AM – 9:30AM · Cafeteria',          color: '#FFA4D5', info: '' },
-  { lane: 1, startH: 26,    dur: 1.5,  title: 'Group A Lunch',                    sub: '11:00AM – 12:30PM · Cafeteria',        color: '#FFA4D5', info: '' },
-  { lane: 1, startH: 27.5,  dur: 1.5,  title: 'Group B Lunch',                    sub: '12:30PM – 2:00PM · Cafeteria',         color: '#FFA4D5', info: '' },
+  { lane: 1, startH: 26.5,    dur: 1.5,  title: 'Group A Lunch',                    sub: '11:00AM – 12:30PM · Cafeteria',        color: '#FFA4D5', info: '' },
+  { lane: 1, startH: 28,  dur: 1.5,  title: 'Group B Lunch',                    sub: '12:30PM – 2:00PM · Cafeteria',         color: '#FFA4D5', info: '' },
 
   // Lane 2 – Workshops
   { lane: 2, startH: 24.75, dur: 1,    title: 'Humans in the Loop: How AI, Social Media, and You Shape Modern Applications', sub: '9:45AM – 10:45AM · Room 149', color: '#ABFF80', info: 'Explore how Instagram, TikTok, and YouTube work behind the scenes—how your actions, algorithms, and AI all shape what you see online. Then take part in a live, guided build where we create a small app together using an AI coding assistant. Hosted by Sasanka Vithanage (Rocket Innovation Studio).' },
-  { lane: 2, startH: 26,    dur: 1.5,  title: 'Group B Judging',                  sub: '11:00AM – 12:30PM · Cafeteria',        color: '#9EF1EB', info: '' },
-  { lane: 2, startH: 27.5,  dur: 1.5,  title: 'Group A Judging',                  sub: '12:30PM – 2:00PM · Cafeteria',         color: '#9EF1EB', info: '' },
+  { lane: 2, startH: 26.5,    dur: 1.5,  title: 'Group B Judging',                  sub: '11:00AM – 12:30PM · Cafeteria',        color: '#9EF1EB', info: '' },
+  { lane: 2, startH: 28,  dur: 1.5,  title: 'Group A Judging',                  sub: '12:30PM – 2:00PM · Cafeteria',         color: '#9EF1EB', info: '' },
 
   // Lane 3 – Activities
-  { lane: 4, startH: 25,    dur: 0.5,  title: 'Submission Help',                  sub: '10:00AM – 10:30AM · TBD',              color: '#E1BDFF', info: '' },
+  { lane: 4, startH: 25,    dur: 1.5,  title: 'Submission Help',                  sub: '10:00AM – 10:30AM · TBD',              color: '#E1BDFF', info: '' },
   { lane: 3, startH: 24.83, dur: 1,    title: 'Startup Pitch Game',               sub: '9:50AM – 10:50AM · TBD',               color: '#E1BDFF', info: '' },
 ];
 
