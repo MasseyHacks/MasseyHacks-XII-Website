@@ -26,13 +26,6 @@ import st from './sponsors/Gold/st.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface TimeLeft {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
 interface Bubble {
   id: number;
   x: number;
@@ -122,7 +115,6 @@ function MLHTrustBadge() {
 }
 
 function App() {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [logoPopped, setLogoPopped] = useState<boolean>(false);
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [fish, setFish] = useState<FishItem[]>([]);
@@ -203,31 +195,6 @@ function App() {
       ),
     },
   ];
-
-  useEffect(() => {
-    const targetDate = new Date('May 9, 2026 00:00:00').getTime();
-
-    const updateCountdown = () => {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-
-      if (distance <= 0) {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        return;
-      }
-
-      setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
-      });
-    };
-
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -487,24 +454,8 @@ function App() {
                 className="bg-cyan-500/10 backdrop-blur-md rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 border border-white/30 mb-6 sm:mb-8 shadow-2xl w-full"
                 data-testid="countdown-section"
               >
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 xs:gap-3 sm:gap-4 md:gap-8 mb-3 sm:mb-4 md:mb-6">
-                  {(['days', 'hours', 'minutes', 'seconds'] as const).map((unit) => (
-                    <div key={unit} className="countdown-item text-center" data-testid={`countdown-${unit}`}>
-                      <div className="text-xl xs:text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">
-                        {timeLeft[unit]}
-                      </div>
-                      <div className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm text-white/80 uppercase tracking-wider">
-                        {unit}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
-                  MasseyHacks will take place on May 9-10, 2026
-                </div>
-                <div className="text-center text-white text-xs xs:text-sm sm:text-base md:text-xl font-semibold drop-shadow-md px-2">
-                  Application results are released!
+                <div className="text-center text-white text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-md px-2">
+                  MasseyHacks XII has concluded! See you at MasseyHacks XIII in 2027!
                 </div>
               </div>
             </div>
